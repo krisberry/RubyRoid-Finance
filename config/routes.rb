@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
   get 'home/index'
 
-  devise_for :users
+  devise_scope :user do
+    get 'users/auth/:provider/callback', to: 'users/sessions#create'
+    get 'users/auth/failure', to: redirect('/')
+    get 'signout', to: 'users/sessions#destroy'
+  end
+
+  devise_for :users, controllers: { sessions: "users/sessions", :omniauth_callbacks => 'users/omniauth_callbacks' }
   root 'home#index'
-  # The priority is based upon order of creation: first created -> highest priority.
+  # The priority is based upon order of creation: first created -> highest iority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
