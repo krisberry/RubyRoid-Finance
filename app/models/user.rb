@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   has_many :authorizations
 
   def self.from_omniauth(auth)
-    joins(:authorizations).where(authorizations: auth.slice(:provider, :uid).deep_symbolize_keys).first_or_initialize.tap do |user|
+    provider, uid = auth.slice(:provider, :uid)
+    includes(:authorizations).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email , provider,  uid).references(:authorizations).first do |user|
       user.email = auth.info.email
       user.first_name = auth.info.first_name
       user.last_name = auth.info.last_name

@@ -2,23 +2,25 @@ class Users::SessionsController < Devise::SessionsController
   before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+
+  def new
+    super
+  end
 
   # POST /resource/sign_in
   def create
-    user = User.from_omniauth(env["omniauth.auth"])
-    session[:user_id] = user.id
-    redirect_to root_url
+    if params[:user]
+      super
+    elsif env["omniauth.auth"]
+      self.resource = User.from_omniauth(env["omniauth.auth"])
+      set_flash_message(:notice, :signed_in)
+      sign_in(resource_name, resource)
+      yield resource if block_given?
+      redirect_to root_path
+    end
   end
 
   # DELETE /resource/sign_out
-  def destroy
-    session[:user_id] = nil
-    redirect_to root_path
-  end
-
   protected
 
   # If you have extra params to permit, append them to the sanitizer.
