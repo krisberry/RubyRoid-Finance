@@ -1,3 +1,5 @@
-%h3 Hello
-- if current_user
-	= button_to 'Logout', destroy_user_session_path, method: :delete
+.row
+  .col-lg-12
+    %h3 Hello
+    - if current_user
+      %h2 Wellcome, #{current_user.first_name} #{current_user.last_name}

@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   devise_scope :user do
-    get 'users/auth/:provider/callback', to: 'users/sessions#create'
-    # get 'users/auth/failure', to: redirect('/')
+    get 'users/auth/:provider/callback', to: 'users/sessions#create', as: 'omniauth'
     get 'signout', to: 'users/sessions#destroy'
     # root 'users/sessions#new'
   end

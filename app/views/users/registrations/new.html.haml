@@ -1,18 +1,18 @@
-%h2 Sign up
+.container
+  %h2 Sign up
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = f.error_notification
-  .form-inputs
-    = f.text_field :first_name, autofocus: true, :placeholder => "First name"
-    %br/
-    = f.text_field :last_name, :placeholder => "Last name"
-    %br/
-    = f.date_field :birthday
-    %br/
-    = f.input :email, required: true, autofocus: true, :placeholder => "Email"
-    = f.text_field :phone, :placeholder => "Phone number"
-    %br/
-    = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
-    = f.input :password_confirmation, required: true
-  .form-actions
-    = f.button :submit, "Sign up"
-= render "users/shared/links"
+  .form
+    .form-inputs.col-md-4.col-md-offset-4
+      = f.input :first_name, autofocus: true, :placeholder => "First name"
+      = f.input :last_name, :placeholder => "Last name"
+      = f.label :birthday, "Born on"
+      %br/
+      = f.date_select :birthday, start_year: Date.today.year, end_year: Date.today.year - 50
+      = f.input :phone, :placeholder => "Phone number"
+      = f.input :email, required: true, autofocus: true, :placeholder => "Email"
+      = f.input :password, required: true, :placeholder => "Password", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+      = f.input :password_confirmation, required: true, :placeholder => "Password confirmation"
+    .form-actions.col-md-4.col-md-offset-4
+      = f.button :submit, "Sign up"
+      = render "users/shared/links"
