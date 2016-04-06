@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     # root 'users/sessions#new'
   end
 
-  devise_for :users, controllers: { sessions: "users/sessions", :omniauth_callbacks => 'users/omniauth_callbacks', registrations: "users/registrations" }
+  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
 
   # The priority is based upon order of creation: first created -> highest iority.
   # See how all your routes lay out with "rake routes".

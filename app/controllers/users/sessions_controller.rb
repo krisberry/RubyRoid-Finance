@@ -9,6 +9,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    # binding.pry
     if params[:user]
       super
     elsif env["omniauth.auth"]
@@ -25,6 +26,6 @@ class Users::SessionsController < Devise::SessionsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_in_params
-    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :password_confirmation, :first_name, :last_name, :provider, :uid, :birthday, :phone ) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :password_confirmation, :first_name, :last_name, :provider, :uid, :birthday, :phone, image_attributes: [:photo] ) }
   end
 end
