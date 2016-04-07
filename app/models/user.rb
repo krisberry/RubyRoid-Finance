@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
       user.birthday = Date.strptime(auth.extra.raw_info.birthday, "%m/%d/%Y") if auth.extra.raw_info.birthday
       user.build_image({photo: open(auth.info.image)})
       user.authorizations.build({provider: auth.provider, uid: auth.uid, token: auth.credentials.token})
-      user.save!
+      user.save
     end
   end
 end

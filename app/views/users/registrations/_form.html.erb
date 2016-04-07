@@ -1,0 +1,21 @@
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+      = f.error_notification
+      .container
+        .form.form-group
+          .form-inputs.col-md-6.col-md-offset-3
+            = f.input :first_name, autofocus: true, :placeholder => "First name"
+            = f.input :last_name, :placeholder => "Last name"
+            = f.simple_fields_for :image do |ff|
+              = ff.input :photo, as: :file
+            = f.label :birthday, "Born on"
+            %br/
+            = f.date_select :birthday, {start_year: Date.today.year, end_year: Date.today.year - 50}, {class: 'date-color'}
+            = f.input :phone, :placeholder => "Phone number"
+            = f.input :email, required: true, autofocus: true
+            - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+              %p
+                Currently waiting confirmation for: #{resource.unconfirmed_email}
+            = f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false
+            = f.input :password_confirmation, required: false
+            = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
+            = f.button :submit, "Update"
