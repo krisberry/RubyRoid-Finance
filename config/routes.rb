@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     # root 'users/sessions#new'
   end
 
+  namespace :admin do
+    root 'dashboard#index'
+    get 'invitations', to: 'invitations#new'
+    post 'invitations', to: 'invitations#create'
+  end  
+
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
 
   # The priority is based upon order of creation: first created -> highest iority.

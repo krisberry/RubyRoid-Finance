@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20160406112651) do
     t.datetime "birthday"
     t.string   "phone"
     t.string   "role"
+    t.string   "invited_code"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

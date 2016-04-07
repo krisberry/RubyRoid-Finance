@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_one :image, :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :image
 
+  enum role: { admin: '0', tax_collector: '1' }
+
   def self.from_omniauth(auth)
     provider, uid = auth.slice(:provider, :uid)
     includes(:authorizations, :image).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email , provider,  uid).references(:authorizations).first_or_initialize do |user|

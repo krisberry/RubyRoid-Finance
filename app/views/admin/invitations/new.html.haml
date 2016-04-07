@@ -1,0 +1,8 @@
+.container
+  %h2 Invite user
+  = simple_form_for @user, url: admin_invitations_path, method: :post do |f|
+    = f.error_notification
+    .form
+      .form-inputs.col-md-4.col-md-offset-4
+        = f.input :email, :placeholder => "E-mail"
+        = f.button :submit, 'Send invitation' 

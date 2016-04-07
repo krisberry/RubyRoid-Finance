@@ -7,10 +7,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     self.resource.build_image
     respond_with self.resource
-  end  
+  end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:first_name, :last_name, :birthday, :phone, image_attributes: [:photo] )
-    devise_parameter_sanitizer.for(:account_update).push(:first_name, :last_name, :birthday, :phone, :avatar, image_attributes: [:photo])
+    devise_parameter_sanitizer.for(:sign_up).push(:first_name, :last_name, :birthday, :phone, :invited_code, image_attributes: [:photo] )
+    devise_parameter_sanitizer.for(:account_update).push(:first_name, :last_name, :birthday, :phone, :avatar, :invited_code, image_attributes: [:photo])
   end
 end
