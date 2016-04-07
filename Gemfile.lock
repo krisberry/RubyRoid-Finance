@@ -61,6 +61,7 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.2)
+    byebug (8.2.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -156,6 +157,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -251,6 +255,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.3.6)
+  byebug
   coffee-rails (~> 4.1.0)
   devise
   erb2haml
@@ -262,7 +267,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   paperclip!
   pg
-  pry
+  pry-byebug
   quiet_assets
   rails (= 4.2.6)
   rspec-rails (~> 3.0)
