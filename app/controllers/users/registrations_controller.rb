@@ -1,7 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_filter :configure_permitted_parameters, only: [:create, :update]
-  prepend_before_action :require_no_authentication, only: [:new, :create, :cancel, :update]
-  prepend_before_action :authenticate_scope!, only: [:destroy, :edit]
+  skip_before_action :authenticate_scope!, only: [:update], unless: -> { current_user }
 
   def new
     if params[:invited_code] && (self.resource = User.where(invited_code: params[:invited_code]).first)
@@ -47,6 +46,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def update_resource(resource, params)
-    resource.update_without_password(params)
+    current_user ? resource.update_with_password(params) : resource.update_without_password(params)
   end
+
 end
