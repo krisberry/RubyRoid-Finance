@@ -9,7 +9,6 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    # binding.pry
     if params[:user]
       super
     elsif env["omniauth.auth"]
@@ -17,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
       set_flash_message(:notice, :signed_in)
       sign_in(resource_name, resource)
       yield resource if block_given?
-      redirect_to root_path
+      redirect_to resource.admin? ? admin_root_path : root_path 
     end
   end
 
