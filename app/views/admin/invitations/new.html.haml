@@ -1,7 +1,9 @@
 .container
-  %h2 Invite user
+  .col-md-3
+    %h4 Invite user
   = simple_form_for :user, action: 'send_invitation', method: :post do |f|
-    .form
-      .form-inputs.col-md-4.col-md-offset-4
-        = f.input :email, :placeholder => "E-mail"
-        = f.button :submit, 'Send invitation' 
+    .row
+      .input-group.col-md-6.pull-right
+        = f.input :email, :placeholder => "E-mail", label: false, class: 'form-control'
+        .input-group-btn
+          = f.button :submit, 'Send invitation'
