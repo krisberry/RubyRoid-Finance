@@ -4,6 +4,7 @@ class CreateImages < ActiveRecord::Migration
       t.integer :imageable_id
       t.string :imageable_type
       t.timestamps null: false
+      t.attachment :photo
     end
   end
 end

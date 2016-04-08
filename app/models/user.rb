@@ -8,11 +8,11 @@ class User < ActiveRecord::Base
   has_one :image, :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :image
 
-  enum role: { admin: '0', tax_collector: '1' }
+  enum role: { admin: '0', tax_collector: '1', user: '2' }
 
   def self.from_omniauth(auth)
     provider, uid = auth.slice(:provider, :uid)
-    includes(:authorizations, :image).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email , provider,  uid).references(:authorizations).first_or_initialize do |user|
+    includes(:authorizations, :image).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email, provider,  uid).references(:authorizations).first_or_initialize do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token(length = 30)
       user.first_name = auth.info.first_name

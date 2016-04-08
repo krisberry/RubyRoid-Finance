@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'users/auth/:provider/callback', to: 'users/sessions#create', as: 'omniauth'
     get 'signout', to: 'users/sessions#destroy'
+    get 'users/sign_up/:invited_code', to: 'users/registrations#new'
     # root 'users/sessions#new'
   end
 
