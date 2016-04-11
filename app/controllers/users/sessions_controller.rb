@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
     if params[:user]
       super
     elsif env["omniauth.auth"]
-      self.resource = User.from_omniauth(env["omniauth.auth"])
+      self.resource = User.from_omniauth_log_in(env["omniauth.auth"])
       set_flash_message(:notice, :signed_in)
       sign_in(resource_name, resource)
       yield resource if block_given?
