@@ -8,4 +8,22 @@
           = link_to 'Profile', edit_user_registration_path
         %li
           = link_to 'Log out', destroy_user_session_path, method: :delete
-    = render file: '/admin/invitations/new'
+        = render file: '/admin/invitations/new'
+    %br/
+    %table.table.table-hover.table-responsive.custom-table
+      %thead
+        %tr
+          %th Full name
+          %th=sort_link "email"
+          %th=sort_link "birthday"
+          %th.pull-right Action
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.full_name
+            %td= user.email
+            %td= user.birthday.strftime('%d-%m-%Y')
+            %td.pull-right
+              =link_to '', root_path, class: "btn btn-info glyphicon glyphicon-eye-open"
+              =link_to '', edit_user_registration_path, class: "btn btn-warning glyphicon glyphicon-pencil"
+              =link_to '', root_path, class: "btn btn-danger glyphicon glyphicon-trash"
