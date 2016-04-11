@@ -17,7 +17,7 @@
           .form-inputs.col-md-6.col-md-offset-3
             = f.input :first_name, autofocus: true, :placeholder => "First name"
             = f.input :last_name, :placeholder => "Last name"
-            = f.simple_fields_for :image do |ff|
+            = f.simple_fields_for :image, resource.image || resource.build_image  do |ff|
               = ff.input :photo, as: :file
             = f.label :birthday, "Born on"
             %br/

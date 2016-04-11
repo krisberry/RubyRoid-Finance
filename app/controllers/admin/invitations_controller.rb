@@ -1,17 +1,17 @@
 class Admin::InvitationsController < ApplicationController
   def new
-    @user = User.new
+    @invitation = Invitation.new
   end
 
   def create
-    if User.where(email: invitation_params[:email]).present?
+    if Invitation.where(email: invitation_params[:email]).present?
       flash[:danger] = "Invitation already sent"
       redirect_to :back
     else
-      @user = User.new(invitation_params)
-      @user.invited_code = Devise.friendly_token(length = 30)
-      if @user.save(:validate => false)
-        UserMailer.invitation_email(@user).deliver
+      @invitation = Invitation.new(invitation_params)
+      @invitation.invited_code = Devise.friendly_token(length = 30)
+      if @invitation.save
+        UserMailer.invitation_email(@invitation).deliver
       end
       redirect_to admin_root_path
     end
@@ -20,7 +20,7 @@ class Admin::InvitationsController < ApplicationController
   private
 
   def invitation_params
-    params.require(:user).permit(:email)
+    params.require(:invitation).permit(:email)
   end 
 end
 

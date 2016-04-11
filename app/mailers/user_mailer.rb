@@ -1,9 +1,9 @@
 class UserMailer < ApplicationMailer
   default from: 'my@exemple.com'
 
-  def invitation_email(user)
-    @user = user
+  def invitation_email(invitation)
+    @invitation = invitation
     # @invited_code = Devise.friendly_token(length = 60)
-    mail(to: @user.email, subject: 'Invitation')
+    mail(to: @invitation.email, subject: 'Invitation')
   end
 end
