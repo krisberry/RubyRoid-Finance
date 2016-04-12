@@ -1,0 +1,22 @@
+.row
+  .page-header
+    %div.col-lg-12
+      %h2 Invitations
+    = render 'admin/admin_bar'
+  %br/ 
+  %table.table.table-hover.table-responsive.custom-table
+    %thead
+      %tr
+        %th=sort_link "email"
+        %th=sort_link "updated_at", "Expired"
+        %th.pull-right Action
+    %tbody
+      - @invitations.each do |invitation|
+        %tr{ class: "#{'expired' if invitation.expired? }"}
+          %td= invitation.email
+          %td
+            = invitation.expired.localtime.strftime("%d.%m.%Y at %T")
+  
+          %td.pull-right
+            =link_to '', "#", class: "btn btn-info glyphicon glyphicon-send"
+            =link_to '', admin_invitation_path(invitation), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash"

@@ -1,32 +1,5 @@
-.container
-  .row
-    .col-lg-12
-      = flash_message
-  .row
-    .page-header
-      %div.col-lg-12
-        %h2 Dashboard
-      %ul.nav.nav-tabs
-        %li
-          = link_to 'Profile', edit_user_registration_path
-        %li
-          = link_to 'Log out', destroy_user_session_path, method: :delete
-        = render file: '/admin/invitations/new'
-    %br/
-    %table.table.table-hover.table-responsive.custom-table
-      %thead
-        %tr
-          %th=sort_link ["first_name", "last_name"], "Full name"
-          %th=sort_link "email"
-          %th=sort_link "birthday"
-          %th.pull-right Action
-      %tbody
-        - @users.each do |user|
-          %tr
-            %td= user.full_name
-            %td= user.email
-            %td= user.birthday.strftime('%d-%m-%Y')
-            %td.pull-right
-              =link_to '', root_path, class: "btn btn-info glyphicon glyphicon-eye-open"
-              =link_to '', edit_user_registration_path, class: "btn btn-warning glyphicon glyphicon-pencil"
-              =link_to '', root_path, class: "btn btn-danger glyphicon glyphicon-trash"
+.row
+  .page-header
+    %div.col-lg-12
+      %h2 Dashboard
+    = render 'admin/admin_bar'

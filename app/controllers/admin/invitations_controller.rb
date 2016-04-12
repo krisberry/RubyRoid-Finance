@@ -1,4 +1,9 @@
 class Admin::InvitationsController < ApplicationController
+  helper_method :sort_column, :sort_direction
+  def index
+    @invitations = Invitation.order(order_query)
+  end  
+
   def new
     @invitation = Invitation.new
   end
@@ -13,8 +18,15 @@ class Admin::InvitationsController < ApplicationController
       if @invitation.save
         UserMailer.invitation_email(@invitation).deliver
       end
-      redirect_to admin_root_path
+      flash[:success] = "Invitation was successfully sent"
+      redirect_to :back
     end
+  end
+
+  def destroy
+    @invitation = Invitation.find(params[:id]).destroy
+    flash[:success] = 'Invitation deleted'
+    redirect_to :back
   end
 
   private
