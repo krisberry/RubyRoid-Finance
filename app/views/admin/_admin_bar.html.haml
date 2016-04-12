@@ -1,0 +1,8 @@
+%ul.nav.nav-tabs
+  %li{ :class => "#{'active' if current_page?(admin_root_path)}" }
+    = link_to 'Dashboard', admin_root_path
+  %li{ :class => "#{'active' if current_page?(admin_users_path)}" }
+    = link_to 'Users', admin_users_path
+  %li{ :class => "#{'active' if current_page?(admin_invitations_path)}" }
+    = link_to 'Invitations', admin_invitations_path
+  = render file: '/admin/invitations/new'

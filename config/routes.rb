@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :admin do
+  get 'users/index'
+  end
+
+  get 'users/index'
+
   root 'home#index'
 
   devise_scope :user do
@@ -9,8 +15,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'dashboard#index'
-    get 'invitations', to: 'invitations#new'
-    post '/', to: 'invitations#create'
+    resources :users
+    resources :invitations
   end  
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations" }
