@@ -7,6 +7,7 @@
   %table.table.table-hover.table-responsive.custom-table
     %thead
       %tr
+        %th Image
         %th=sort_link ["first_name", "last_name"], "Full name"
         %th=sort_link "email"
         %th=sort_link "birthday"
@@ -14,6 +15,7 @@
     %tbody
       - @users.each do |user|
         %tr
+          %td= image_tag user.image.photo.url(:mini), class: "thumbnail"
           %td= user.full_name
           %td= user.email
           %td= user.birthday.strftime('%d-%m-%Y')
