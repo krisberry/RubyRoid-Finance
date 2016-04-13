@@ -41,7 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         respond_with resource
       end
     else
-      flash[:danger] = 'Access denied'
+      flash[:danger] = 'You can not registrate on this site. Ask admin to invite you, please.'
       redirect_to new_user_session_path
     end
   end
