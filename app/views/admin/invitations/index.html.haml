@@ -16,5 +16,5 @@
           %td= invitation.email
           %td= invitation.expired.localtime.strftime("%d.%m.%Y at %T")
           %td.pull-right
-            =link_to '', admin_invitation_path(invitation), method: :patch, class: "btn btn-info glyphicon glyphicon-send"
+            =link_to '', admin_invitation_path(invitation), method: :patch, remote: true, class: "btn btn-info glyphicon glyphicon-send"
             =link_to '', admin_invitation_path(invitation), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash"

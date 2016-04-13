@@ -35,8 +35,10 @@ class Admin::InvitationsController < ApplicationController
     if @invitation.update(updated_at: Time.now)
       UserMailer.invitation_email(@invitation).deliver
     end
-    flash[:success] = "Invitation was successfully sent"
-    redirect_to :back 
+    respond_to do |format|
+      format.html
+      format.js { flash[:success] = "Invitation was successfully sent" }
+    end
   end
 
   private
