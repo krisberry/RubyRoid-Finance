@@ -23,6 +23,12 @@ class Admin::InvitationsController < ApplicationController
     end
   end
 
+  def destroy
+    @invitation = Invitation.find(params[:id]).destroy
+    flash[:success] = 'Invitation deleted'
+    redirect_to :back
+  end
+
   private
 
   def invitation_params

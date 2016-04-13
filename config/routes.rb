@@ -15,8 +15,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'dashboard#index'
+    post '/', to: 'invitations#create'
     resources :users
-    resources :invitations
+    resources :invitations, except: [:create]
   end  
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations" }
