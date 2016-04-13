@@ -1,5 +1,5 @@
 .container
-  = simple_form_for :invitation, action: 'send_invitation', method: :post do |f|
+  = simple_form_for :invitation, url: admin_invitations_path, method: :post do |f|
     .row
       .input-group.col-md-6.pull-right
         = f.input :email, :placeholder => "E-mail", label: false, class: 'form-control'
