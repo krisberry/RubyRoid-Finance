@@ -10,4 +10,9 @@ class UserMailer < ApplicationMailer
     @invitation = invitation
     mail(to: @invitation.email, subject: 'Warning')
   end
+
+  def deleting_invitation_email(invitation)
+    @invitation = invitation
+    mail(to: @invitation.email, subject: 'Bad news')
+  end
 end
