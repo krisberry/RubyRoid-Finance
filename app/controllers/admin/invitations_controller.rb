@@ -17,7 +17,7 @@ class Admin::InvitationsController < ApplicationController
       @invitation = Invitation.new(invitation_params)
       @invitation.invited_code = Devise.friendly_token(length = 30)
       if @invitation.save
-        UserMailer.invitation_email(@invitation).deliver
+        UserMailer.invitation_email(@invitation).deliver_now
       end
       flash[:success] = "Invitation was successfully sent"
       redirect_to :back
