@@ -3,12 +3,7 @@ class UsersNotificationJob < ActiveJob::Base
 
   def perform
     Invitation.should_expire.each do |invitation|
-      UserMailer.notification_email(invitation).deliver_later
-    end
-
-    Invitation.should_delete.each do |invitation|
-      UserMailer.notification_email(invitation).deliver_later
-      invitation.destroy
+      UserMailer.notification_email(invitation).deliver_now
     end
   end
 end
