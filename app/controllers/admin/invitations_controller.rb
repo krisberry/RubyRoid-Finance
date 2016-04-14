@@ -1,5 +1,4 @@
 class Admin::InvitationsController < ApplicationController
-  helper_method :sort_column, :sort_direction
   before_action :invitation_params, only: [:create]
   def index
     @invitations = Invitation.order(order_query)

@@ -1,23 +1,18 @@
 Rails.application.routes.draw do
-  namespace :admin do
-  get 'users/index'
-  end
-
-  get 'users/index'
-
-  root 'home#index'
+  root 'dashboard#index'
+  resources :events
 
   devise_scope :user do
     get 'signout', to: 'users/sessions#destroy'
     get 'users/sign_up/:invited_code', to: 'users/registrations#new'
-    # root 'users/sessions#new'
   end
 
   namespace :admin do
     root 'dashboard#index'
+    get 'users/index'
     resources :users
     resources :invitations
-  end  
+  end
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations" }
 

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  helper_method :sort_column, :sort_direction
 
   def after_sign_in_path_for(resource)
     resource.admin? ? admin_root_path : root_path 
