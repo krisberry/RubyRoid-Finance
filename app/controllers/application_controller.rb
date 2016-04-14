@@ -20,14 +20,14 @@ class ApplicationController < ActionController::Base
       end  
 
       def sortable_columns
-        ["email", "birthday", "first_name", "last_name", "updated_at"]
+        ["id"]
       end
 
       def sort_column
         if params[:column].is_a? Array
-          params[:column].all? { |column| sortable_columns.include?(column) } ? params[:column] : "email"
+          params[:column].all? { |column| sortable_columns.include?(column) } ? params[:column] : "id"
         else
-          sortable_columns.include?(params[:column]) ? params[:column] : "email"
+          sortable_columns.include?(params[:column]) ? params[:column] : "id"
         end
       end
 

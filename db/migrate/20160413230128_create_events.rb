@@ -5,9 +5,9 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime :date
       t.string :paid_type, default: "free"
       t.decimal :price
-      t.integer :user_id
+      t.belongs_to :user, index: true
 
       t.timestamps null: false
-    end
+    end    
   end
 end

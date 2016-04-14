@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_one :image, :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :image
   has_and_belongs_to_many :events
+  has_many :created_events, class_name: 'Event'
+  has_one :budget
 
   enum role: { admin: '0', tax_collector: '1', user: '2' }
 

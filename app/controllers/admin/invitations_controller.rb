@@ -42,8 +42,14 @@ class Admin::InvitationsController < ApplicationController
 
   private
 
-  def invitation_params
-    params.require(:invitation).permit(:email)
-  end 
+    def invitation_params
+      params.require(:invitation).permit(:email)
+    end
+
+  protected
+
+    def sortable_columns
+      super.push("email", "updated_at")
+    end 
 end
 
