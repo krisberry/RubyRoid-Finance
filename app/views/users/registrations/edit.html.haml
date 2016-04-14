@@ -20,6 +20,7 @@
           = f.input :birthday, as: :date
           = f.input :phone, :placeholder => "Phone number"
           = f.input :email, required: true, autofocus: true
+          = f.input :money_rate, as: :select, collection: User::USER_RATES, include_blank: false
           - if devise_mapping.confirmable? && resource.pending_reconfirmation?
             %p
               Currently waiting confirmation for: #{resource.unconfirmed_email}

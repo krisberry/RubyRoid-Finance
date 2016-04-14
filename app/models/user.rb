@@ -3,14 +3,15 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :omniauth_providers => [:google_oauth2]
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauth_providers => [:facebook]
-
+  USER_RATES = { junior: 50, intermediate: 100, senior: 150 }
   has_many :authorizations
   has_one :image, :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :image
   has_and_belongs_to_many :events
   has_many :created_events, class_name: 'Event'
-  has_one :budget
-
+  has_many :payments
+  has_many :budgets, through: :payments
+  
   enum role: { admin: '0', tax_collector: '1', user: '2' }
 
   def self.from_omniauth_log_in(auth)

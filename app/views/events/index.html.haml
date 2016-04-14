@@ -14,7 +14,6 @@
         %td= event.date
         %td= event.paid_type
         %td.pull-right
-          =link_to '', edit_event_path(event), class: "btn btn-info glyphicon glyphicon-send"
           =link_to '', event_path(event), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash"
     %tr
       %td{colspan: '5'} 
@@ -26,5 +25,6 @@
         %td= event.date
         %td= event.paid_type
         %td.pull-right
-          =link_to '', edit_event_path(event), class: "btn btn-info glyphicon glyphicon-send"
+          =link_to '', event_path(event), class: "btn btn-success glyphicon glyphicon-eye-open"
+          =link_to '', edit_event_path(event), class: "btn btn-info glyphicon glyphicon-pencil"
           =link_to '', event_path(event), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash"

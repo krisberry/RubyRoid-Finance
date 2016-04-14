@@ -1,0 +1,23 @@
+.row
+  .page-header
+    %h2= "Show #{@event.name}"
+.container
+  .row
+    .well
+      %h4 Event description
+      %p= @event.description
+    .col-lg-6
+      %table.table.table-hover.custom-table
+        %thead
+          %th Participant name
+          %th.pull-right Participant payment
+        %tbody
+          - @event.participants.each do |participant|
+            %tr 
+              %td= participant.full_name
+              %td.pull-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%u %n")
+          %tr
+            %td
+              %h3 Total amount
+            %td.pull-right
+              %h3= @event.budget.amount

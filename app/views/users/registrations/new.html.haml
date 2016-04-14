@@ -11,6 +11,7 @@
       = f.date_select :birthday, {start_year: Date.today.year, end_year: Date.today.year - 50}, {class: 'date-color'}
       = f.input :phone, :placeholder => "Phone number"
       = f.input :email, required: true, autofocus: true, :placeholder => "Email"
+      = f.input :money_rate, as: :select, collection: User::USER_RATES, include_blank: false
       = f.input :password, required: true, :placeholder => "Password", hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
       = f.input :password_confirmation, required: true, :placeholder => "Password confirmation"
       = hidden_field_tag :invited_code, @invitation.invited_code
