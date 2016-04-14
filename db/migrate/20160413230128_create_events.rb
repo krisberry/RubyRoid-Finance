@@ -3,7 +3,7 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.string :name
       t.datetime :date
-      t.string :type, default: "free"
+      t.string :paid_type, default: "free"
       t.decimal :price
       t.integer :user_id
 

@@ -3,6 +3,12 @@
     %tr
       %th=sort_link "name", "Event"
       %th=sort_link "date"
-      %th=sort_link "type"
+      %th=sort_link "paid_type"
       %th.pull-right Action
   %tbody
+    / - @events.each do |event|
+    /   %tr
+    /     %td= event.name
+    /     %td= event.date
+    /     %td= event.paid_type
+    /     %td.pull-right
