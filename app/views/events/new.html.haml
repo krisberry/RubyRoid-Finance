@@ -1,2 +1,11 @@
-%h1 Events#new
-%p Find me in app/views/events/new.html.haml
+.row
+  .page-header
+    %h2 New event
+.container
+  .form.form-group
+    .form-inputs.col-md-6.col-md-offset-3.well
+      = simple_form_for :event, url: admin_invitations_path, method: :post do |f|
+        = f.input :name, :placeholder => "Name", label: false, class: 'form-control'
+        = f.input :price, :placeholder => "Price"
+        = f.input :date, as: :date
+        = f.button :submit, 'Create event', class: "btn-primary"

@@ -17,9 +17,7 @@
           = f.input :last_name, :placeholder => "Last name"
           = f.simple_fields_for :image, resource.image || resource.build_image  do |ff|
             = ff.input :photo, as: :file
-          = f.label :birthday, "Born on"
-          %br/
-          = f.date_select :birthday, {start_year: Date.today.year, end_year: Date.today.year - 50}, {class: 'date-color'}
+          = f.input :birthday, as: :date
           = f.input :phone, :placeholder => "Phone number"
           = f.input :email, required: true, autofocus: true
           - if devise_mapping.confirmable? && resource.pending_reconfirmation?
