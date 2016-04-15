@@ -5,4 +5,6 @@
     = link_to 'Users', admin_users_path
   %li{ :class => "#{'active' if current_page?(admin_invitations_path)}" }
     = link_to 'Invitations', admin_invitations_path
+  %li{ :class => "#{'active' if current_page?(admin_events_path)}" }
+    = link_to 'Events', admin_events_path
   = render file: '/admin/invitations/new'

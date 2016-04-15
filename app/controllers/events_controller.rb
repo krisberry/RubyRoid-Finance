@@ -1,5 +1,4 @@
 class EventsController < ApplicationController
-  before_filter :authenticate_user!
   before_action :event_params, only: [:create, :update]
 
   def show
@@ -47,12 +46,12 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    if current_user == @event.creator
+    if current_user == @event.creator || current_user.admin?
       @event.destroy
       flash[:success] = 'Event deleted'
       redirect_to :back
     else
-      flash[:danger] = 'Only creator can delete this event.'
+      flash[:danger] = 'Only creator or admin can delete this event.'
       redirect_to :back
     end
   end

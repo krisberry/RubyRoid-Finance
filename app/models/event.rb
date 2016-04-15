@@ -7,9 +7,12 @@ class Event < ActiveRecord::Base
   belongs_to :creator, class_name: "User", foreign_key: "user_id"
   has_one :budget, inverse_of: :event, dependent: :destroy
   accepts_nested_attributes_for :budget
+  has_many :payments, through: :budget
 
   validates :name, :description, presence: true
   validates_associated :budget
+
+  scope :unpaid, ->{ includes(budget: [:payments]).where('payments.amount < 0').references(:budget) }
 
   def select_all_participants
     self.participants = User.all

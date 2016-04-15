@@ -29,13 +29,21 @@
 }
 
 .expired {
-  background-color: #8E3C3C;
+  background-color: #FFE0DC;
 }
 
-.new-event {
+.right-button {
   margin-top: 25px;
 }
 
 .dashboard {
   display: inline-block;
+}
+
+.right-align{
+  text-align: right;
+}
+
+.glyphicon-margin a {
+  margin: 0px 5px;
 }

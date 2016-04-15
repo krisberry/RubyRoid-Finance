@@ -1,4 +1,5 @@
 class Admin::InvitationsController < ApplicationController
+  before_filter :admin_only
   before_action :invitation_params, only: [:create]
   def index
     @invitations = Invitation.order(order_query)

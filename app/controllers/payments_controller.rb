@@ -1,14 +1,12 @@
 class PaymentsController < ApplicationController
   def update
     @payment = Payment.find(params[:id])
-    if @payment.update(paymets_params)
-      flash[:success] = 'Event was successfully updated'
-      redirect_to root_path
+    respond_to do |format|
+      if @payment.pay
+        format.js { flash[:success] = 'Successfully paid' }
+      else
+        format.js { flash[:danger] = 'Try again' }
+      end
     end
   end
-
-private
-    def paymets_params
-      params.require(:payment).permit(:amount)
-    end
 end

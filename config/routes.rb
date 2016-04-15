@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'users/index'
     resources :users
     resources :invitations
+    resources :events, only: [:index]
   end
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations" }

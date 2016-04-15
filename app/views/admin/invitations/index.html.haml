@@ -1,22 +1,18 @@
 .row
-  .page-header
-    %div.col-lg-12
-      %h2 Invitations
-    = render 'admin/admin_bar'
-  %br/ 
-  %table.table.table-hover.table-responsive.custom-table
-    %thead
-      %tr
-        %th=sort_link "id"
-        %th=sort_link "email"
-        %th=sort_link "updated_at", "Expired"
-        %th.pull-right Action
-    %tbody
-      - @invitations.each do |invitation|
-        %tr{ class: "#{'expired' if invitation.will_expired? }"}
-          %td= invitation.id
-          %td= invitation.email
-          %td= invitation.expired.localtime.strftime("%d.%m.%Y at %T")
-          %td.pull-right
-            =link_to '', admin_invitation_path(invitation), method: :patch, remote: true, class: "btn btn-info glyphicon glyphicon-send"
-            =link_to '', admin_invitation_path(invitation), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash"
+  = render 'admin/admin_bar'
+  .hpanel
+    .panel-body
+      %table.table
+        %thead
+          %tr
+            %th=sort_link "email"
+            %th=sort_link "updated_at", "Expired"
+            %th.right-align Actions
+        %tbody
+          - @invitations.each do |invitation|
+            %tr{ class: "#{'expired' if invitation.will_expired? }"}
+              %td= invitation.email
+              %td= invitation.expired.localtime.strftime("%d.%m.%Y at %T")
+              %td.right-align.glyphicon-margin
+                =link_to '', admin_invitation_path(invitation), method: :patch, remote: true, class: "glyphicon glyphicon-send"
+                =link_to '', admin_invitation_path(invitation), method: :delete, class: "glyphicon glyphicon-trash"

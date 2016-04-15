@@ -1,7 +1,6 @@
 %table.table.table-hover.table-responsive.custom-table
   %thead
     %tr
-      %th=sort_link "id"
       %th=sort_link "name", "Event"
       %th=sort_link "date"
       %th=sort_link "paid_type"
@@ -9,9 +8,8 @@
   %tbody
     - @events.each do |event|
       %tr
-        %td= event.id
         %td= event.name
-        %td= event.date
+        %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         %td.pull-right
           =link_to '', event_path(event), class: "btn btn-success glyphicon glyphicon-eye-open"
@@ -22,7 +20,7 @@
       %tr
         %td= event.id
         %td= event.name
-        %td= event.date
+        %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         %td.pull-right
           =link_to '', event_path(event), class: "btn btn-success glyphicon glyphicon-eye-open"
