@@ -15,4 +15,10 @@ class UserMailer < ApplicationMailer
     @invitation = invitation
     mail(to: @invitation.email, subject: 'Bad news')
   end
+
+  def new_event_email(participant, event)
+    @participant = participant
+    @event = event
+    mail(to: @participant.email, subject: 'New event')
+  end
 end

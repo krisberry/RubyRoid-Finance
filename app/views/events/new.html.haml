@@ -8,10 +8,12 @@
         = f.input :name, required: true, placeholder: "Name", class: 'form-control'
         = f.input :description, required: true, placeholder: "Few words about event"
         = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid']
+        = f.input :default_amount, as: :boolean
         = f.simple_fields_for :budget, @event.budget || @event.build_budget do |ff|
           = ff.input :amount, required: true
         = f.input :date, as: :date
         = f.association :participants, label_method: :full_name, value_method: :id, include_blank: false
+        = f.input :select_all, as: :boolean
         = f.button :submit, 'Create event', class: "btn-primary"
         .pull-right
           =link_to 'Back', root_path, class: "btn btn-default"

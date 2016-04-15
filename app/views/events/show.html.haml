@@ -15,7 +15,7 @@
           - @event.participants.each do |participant|
             %tr 
               %td= participant.full_name
-              %td.pull-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%u %n")
+              %td.pull-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%n %u")
           %tr
             %td
               %h3 Total amount

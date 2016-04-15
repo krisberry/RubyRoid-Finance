@@ -10,7 +10,7 @@ class Budget < ActiveRecord::Base
 
   def create_payments 
     event.participants.each do |participant|
-      self.payments << participant.payments.create(amount: participant.money_rate)
+      self.payments << participant.payments.create(amount: -1 * participant.money_rate)
     end
   end
 end

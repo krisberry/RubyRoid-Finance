@@ -1,13 +1,14 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :omniauth_providers => [:google_oauth2]
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauth_providers => [:facebook]
+
   USER_RATES = { junior: 50, intermediate: 100, senior: 150 }
+
   has_many :authorizations
   has_one :image, :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :image
   has_and_belongs_to_many :events
+  has_and_belongs_to_many :celebrated_events, class_name: 'Event'
   has_many :created_events, class_name: 'Event'
   has_many :payments
   has_many :budgets, through: :payments
@@ -16,7 +17,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth_log_in(auth)
     provider, uid = auth.slice(:provider, :uid)
-    includes(:authorizations).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email, provider,  uid).references(:authorizations).first
+    includes(:authorizations).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email, provider, uid).references(:authorizations).first
   end
 
   def self.from_omniauth_sign_up(auth)
