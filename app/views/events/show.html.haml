@@ -21,3 +21,10 @@
               %h3 Total amount
             %td.pull-right
               %h3= @event.budget.amount
+    .container
+      .col-lg-6
+        .form.form-group
+          .form-inputs.col-md-6.col-md-offset-3.well
+            = simple_form_for @payment, url: payment_path(@payment), method: :patch do |f|
+              = f.input :amount
+              = f.button :submit, "Pay", class: "btn-primary"

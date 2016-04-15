@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
   resources :events
+  resources :payments, only: [:update]
 
   devise_scope :user do
     get 'signout', to: 'users/sessions#destroy'

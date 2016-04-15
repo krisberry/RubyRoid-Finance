@@ -4,6 +4,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @payment = current_user.payments.for_budget(@event.budget).first
   end
 
   def new
