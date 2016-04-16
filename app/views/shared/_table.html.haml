@@ -1,0 +1,18 @@
+%table.table
+  %thead
+    %tr
+      %th=sort_link "name", "Event"
+      %th=sort_link "date"
+      %th=sort_link "paid_type"
+      %th.text-right Actions
+  %tbody
+    - events.each do |event|
+      %tr
+        %td= event.name
+        %td= event.date.strftime('%d.%m.%Y')
+        %td= event.paid_type
+        %td.text-right.glyphicon-margin
+          - if event.creator == current_user
+            =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
+            =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
+          =link_to '', event_path(event), method: :delete, class: "glyphicon glyphicon-trash"

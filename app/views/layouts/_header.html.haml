@@ -2,7 +2,10 @@
   .container-fluid
     .navbar-header
       %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
-      = link_to 'RubyRoidFinance', root_path, class: 'navbar-brand'
+      - if current_user && current_user.admin?
+        = link_to 'RubyRoidFinance', admin_root_path, class: 'navbar-brand'
+      - else
+        = link_to 'RubyRoidFinance', root_path, class: 'navbar-brand'
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?

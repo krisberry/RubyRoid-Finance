@@ -1,4 +1,8 @@
 class PaymentsController < ApplicationController
+  def index
+    @payments = current_user.payments
+  end
+
   def update
     @payment = Payment.find(params[:id])
     respond_to do |format|

@@ -21,22 +21,25 @@
             %dd= @user.phone
           %dt Last sign in
           %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
-  .col-lg-6
-    .hpanel
-      .panel-heading
-        .panel-tools
-          =link_to '', "#", class: "showhide glyphicon glyphicon-chevron-up"
-        Unpaid events
-      .panel-body
-        = render 'table', events: @unpaid_events, user: @user
-      .panel-footer.right-align
-        =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
+  - if @user.events.unpaid.any?
+    .col-lg-6
+      .hpanel
+        .panel-heading
+          .panel-tools
+            =link_to "#", class: "showhide" do
+              %i{ class: "glyphicon glyphicon-chevron-up"}
+          Unpaid events
+        .panel-body
+          = render 'table', events: @unpaid_events, user: @user
+        .panel-footer.right-align
+          =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
     .col-lg-6
       .hpanel
         .panel-heading
           .panel-tools
-            =link_to '', "#", class: "showhide glyphicon glyphicon-chevron-up"
+            =link_to "#", class: "showhide" do
+              %i{ class: "glyphicon glyphicon-chevron-up"}
           Events created by #{@user.full_name}
         .panel-body
           = render 'table', events: @created_events, user: nil

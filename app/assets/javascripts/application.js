@@ -13,5 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require turbolinks
-//= require_tree .
+//= require homer/jquery-ui.min
+//= require homer/jquery.slimscroll.min
+//= require homer/metisMenu.min
+//= require homer/icheck.min
+//= require homer/jquery.sparkline
+//= require homer/homer           
+//= require_self

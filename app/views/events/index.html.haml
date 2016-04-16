@@ -1,28 +1,11 @@
-%table.table.table-hover.table-responsive.custom-table
-  %thead
-    %tr
-      %th=sort_link "name", "Event"
-      %th=sort_link "date"
-      %th=sort_link "paid_type"
-      %th.pull-right Action
-  %tbody
-    - @events.each do |event|
-      %tr
-        %td= event.name
-        %td= event.date.strftime('%d.%m.%Y')
-        %td= event.paid_type
-        %td.pull-right
-          =link_to '', event_path(event), class: "btn btn-success glyphicon glyphicon-eye-open"
-    %tr
-      %td{colspan: '5'} 
-        %h2 My events
-    - @my_events.each do |event|
-      %tr
-        %td= event.id
-        %td= event.name
-        %td= event.date.strftime('%d.%m.%Y')
-        %td= event.paid_type
-        %td.pull-right
-          =link_to '', event_path(event), class: "btn btn-success glyphicon glyphicon-eye-open"
-          =link_to '', edit_event_path(event), class: "btn btn-info glyphicon glyphicon-pencil"
-          =link_to '', event_path(event), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash"
+= render 'shared/user_bar'
+.row
+  .col-lg-12
+    .hpanel
+      .panel-heading
+        .panel-tools
+          =link_to "#", class: "showhide" do
+            %i{ class: "glyphicon glyphicon-chevron-up"}
+        Events
+      .panel-body
+        = render 'shared/table', events: @events

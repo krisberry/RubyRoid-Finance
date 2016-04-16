@@ -9,15 +9,17 @@
             %th=sort_link ["first_name", "last_name"], "Full name"
             %th=sort_link "email"
             %th=sort_link "birthday"
-            %th.right-align Actions
+            %th.text-right Actions
         %tbody
           - @users.each do |user|
             %tr
-              %td= image_tag user.image.photo.url(:mini), class: "img-circle m-b m-t-md"
+              %td
+                = image_tag user.image.photo.url(:mini), class: "img-circle m-b m-t-md" if user.image
               %td= user.full_name
               %td= user.email
-              %td= user.birthday.strftime('%d.%m.%Y')
-              %td.right-align.glyphicon-margin
+              %td
+                = user.birthday.strftime('%d.%m.%Y') if user.birthday
+              %td.text-right.glyphicon-margin
                 =link_to '', admin_user_path(user), class: "glyphicon glyphicon-eye-open"
                 =link_to '', edit_user_registration_path, class: "glyphicon glyphicon-pencil"
                 =link_to '', "#", class: "glyphicon glyphicon-trash"

@@ -42,7 +42,7 @@ $(document).ready(function () {
         footer.slideToggle(200);
 
         // Toggle icon from up to down
-        icon.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+        icon.toggleClass('glyphicon glyphicon-chevron-up').toggleClass('glyphicon glyphicon-chevron-down');
         hpanel.toggleClass('').toggleClass('panel-collapse');
         setTimeout(function () {
             hpanel.resize();

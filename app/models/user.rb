@@ -4,17 +4,18 @@ class User < ActiveRecord::Base
 
   USER_RATES = { junior: 50, intermediate: 100, senior: 150 }
 
+  enum role: { admin: '0', tax_collector: '1', user: '2' }
+
+  has_one :image, as: :imageable, dependent: :destroy
   has_many :authorizations
-  has_one :image, :as => :imageable, :dependent => :destroy
-  accepts_nested_attributes_for :image
-  has_and_belongs_to_many :events
-  has_and_belongs_to_many :celebrated_events, class_name: 'Event'
   has_many :created_events, class_name: 'Event'
   has_many :payments
   has_many :budgets, through: :payments
+  has_and_belongs_to_many :events
+  has_and_belongs_to_many :celebrated_events, class_name: 'Event'
   
-  enum role: { admin: '0', tax_collector: '1', user: '2' }
-
+  accepts_nested_attributes_for :image
+  
   def self.from_omniauth_log_in(auth)
     provider, uid = auth.slice(:provider, :uid)
     includes(:authorizations).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email, provider, uid).references(:authorizations).first

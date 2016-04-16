@@ -1,0 +1,11 @@
+.row
+  .col-lg-12
+    %ul.nav.nav-tabs
+      %li{ :class => ('active' if current_page?(root_path)) }
+        = link_to 'Dashboard', root_path
+      %li{ :class => ('active' if current_page?(events_path)) }
+        = link_to 'Events', events_path
+      %li{ :class => ('active' if current_page?(payments_path)) }
+        = link_to 'Payments', payments_path
+      %li.pull-right
+        =link_to "New event", new_event_path, class: "btn pull-right"

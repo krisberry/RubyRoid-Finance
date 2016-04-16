@@ -1,6 +1,14 @@
 class EventsController < ApplicationController
   before_action :event_params, only: [:create, :update]
 
+  def index
+    @events = if params[:user_id]
+      current_user.events
+    else params[:creator_id]
+      current_user.created_events
+    end
+  end
+
   def show
     @event = Event.find(params[:id])
     @payment = current_user.payments.for_budget(@event.budget).first

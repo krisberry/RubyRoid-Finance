@@ -10,7 +10,7 @@
             %th=sort_link "paid_type"
             %th Creator
             %th Celebrators
-            %th.right-align Actions
+            %th.text-right Actions
         %tbody
           - @events.each do |event|
             %tr
@@ -19,7 +19,7 @@
               %td= event.paid_type
               %td= event.creator.full_name
               %td
-              %td.right-align.glyphicon-margin
+              %td.text-right.glyphicon-margin
                 =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
                 =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
                 =link_to '', event_path(event), method: :delete, class: "glyphicon glyphicon-trash"

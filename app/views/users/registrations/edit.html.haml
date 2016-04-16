@@ -28,4 +28,6 @@
           = f.input :password_confirmation, required: false
           = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
           = f.button :submit, "Update", class: "btn-primary"
+          .pull-right
+            =link_to 'Back', :back, class: "btn btn-default"
             

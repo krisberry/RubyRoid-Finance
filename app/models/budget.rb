@@ -1,7 +1,9 @@
 class Budget < ActiveRecord::Base
   after_create :create_payments, if: :on_paid_event?
+  
   belongs_to :event, inverse_of: :budget
-  has_many :payments, autosave: true
+  has_many :payments, autosave: true, dependent: :destroy
+  
   validates :amount, presence: true, if: :on_paid_event?
 
   def on_paid_event?
