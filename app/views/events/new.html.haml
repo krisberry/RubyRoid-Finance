@@ -1,19 +1,22 @@
 .row
   .page-header
-    %h2 New event
-.container
-  .form.form-group
-    .form-inputs.col-md-6.col-md-offset-3.well
+    %h3 New event
+.hpanel.col-lg-6
+  .panel-body
+    .form.form-group
       = simple_form_for @event, method: :post do |f|
         = f.input :name, required: true, placeholder: "Name", class: 'form-control'
         = f.input :description, required: true, placeholder: "Few words about event"
-        = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "inline"}
+        .hr-line-dashed
+        = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
+        .hr-line-dashed
+        = f.input :calculate_amount, as: :boolean, label_html: { class: "pull-right"}
         = f.simple_fields_for :budget, @event.budget || @event.build_budget do |ff|
           = ff.input :amount, required: true
-        = f.input :default_amount, as: :boolean
+        .hr-line-dashed
         = f.input :date, as: :date
+        .hr-line-dashed
+        = f.input :add_all_users, as: :boolean, label_html: { class: "pull-right"}
         = f.association :participants, label_method: :full_name, value_method: :id, include_blank: false
-        = f.input :select_all, as: :boolean
         = f.button :submit, 'Create event', class: "btn-primary"
-        .pull-right
-          =link_to 'Back', :back, class: "btn btn-default"
+        =link_to 'Back', :back, class: "btn btn-default pull-right"

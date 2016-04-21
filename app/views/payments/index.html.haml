@@ -1,21 +1,20 @@
 .row
   = render 'shared/user_bar'
-.container
-  .row
-    .col-lg-6
-      .hpanel
-        .panel-heading
-          .panel-tools
-            =link_to "#", class: "showhide" do
-              %i{ class: "glyphicon glyphicon-chevron-up" }
-          Payments status
-        .panel-body
-          %table.table
-            %thead
-              %th Event
-              %th.text-right Payment
-            %tbody
-              - @payments.each do |payment|
-                %tr
-                  %td= payment.budget.event.name
-                  %td.text-right= number_to_currency(payment.amount, unit: "₴",format: "%n %u")
+.row
+  .col-lg-6
+    .hpanel
+      .panel-heading
+        .panel-tools
+          =link_to "#", class: "showhide" do
+            %i{ class: "glyphicon glyphicon-chevron-up" }
+        Payments status
+      .panel-body
+        %table.table
+          %thead
+            %th Event
+            %th.text-right Payment
+          %tbody
+            - @payments.each do |payment|
+              %tr
+                %td= payment.budget.event.name
+                %td.text-right= number_to_currency(payment.amount, unit: "₴",format: "%n %u")

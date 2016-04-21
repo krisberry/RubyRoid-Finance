@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessor :select_all, :default_amount
+  attr_accessor :add_all_users, :calculate_amount
 
   enum paid_type: { free: "free", paid: "paid" }
   

@@ -1,40 +1,39 @@
 .row
   .page-header
-    %h2.dashboard Show #{@event.name}
+    %h3.dashboard Show #{@event.name}
     =link_to "Back", :back, class: "btn pull-right right-button"
-.container
-  .row
-    .col-lg-6
-      .hpanel.hgreen
-        .panel-body
-          %dl
-            %dt Event
-            %dd= @event.name
-            %dt Description
-            %dd= @event.description
-            %dt Date
-            %dd= @event.date.strftime('%d.%m.%Y')
-            %dt Members
-            %dd= @event.participants.count
-    .col-lg-6
-      .hpanel
-        .panel-heading
-          .panel-tools
-            =link_to "#", class: "showhide" do
-              %i{ class: "glyphicon glyphicon-chevron-up" }
-          Unpaid events
-        .panel-body
-          %table.table
-            %thead
-              %th Full name
-              %th.text-right Payment
-            %tbody
-              - @event.participants.each do |participant|
-                %tr 
-                  %td= participant.full_name
-                  %td.text-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%n %u")
-              %tr
-                %td
-                  %h3 Total amount
-                %td.text-right
-                  %h3= @event.budget.amount
+.row
+  .col-lg-6
+    .hpanel.hgreen
+      .panel-body
+        %dl
+          %dt Event
+          %dd= @event.name
+          %dt Description
+          %dd= @event.description
+          %dt Date
+          %dd= @event.date.strftime('%d.%m.%Y')
+          %dt Members
+          %dd= @event.participants.count
+  .col-lg-6
+    .hpanel
+      .panel-heading
+        .panel-tools
+          =link_to "#", class: "showhide" do
+            %i{ class: "glyphicon glyphicon-chevron-up" }
+        Unpaid events
+      .panel-body
+        %table.table
+          %thead
+            %th Full name
+            %th.text-right Payment
+          %tbody
+            - @event.participants.each do |participant|
+              %tr 
+                %td= participant.full_name
+                %td.text-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%n %u")
+            %tr
+              %td
+                %h3 Total amount
+              %td.text-right
+                %h3= @event.budget.amount

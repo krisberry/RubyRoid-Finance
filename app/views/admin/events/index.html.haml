@@ -1,6 +1,11 @@
 .row
   = render 'admin/admin_bar'
   .hpanel
+    .panel-heading
+      .panel-tools
+        =link_to "#", class: "showhide" do
+          %i{ class: "glyphicon glyphicon-chevron-up"}
+      Events
     .panel-body
       %table.table
         %thead
