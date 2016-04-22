@@ -7,6 +7,7 @@ gem 'rails', '4.2.6'
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
+gem 'bootstrap-datepicker-rails', '1.5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -40,12 +41,12 @@ gem 'omniauth-facebook'
 gem "omniauth-google-oauth2"
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'sidekiq'
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-byebug'
-  gem 'pg'
   gem 'rspec-rails', '~> 3.0'
   gem 'quiet_assets'
 end
@@ -59,5 +60,9 @@ group :development do
   gem "erb2haml"
   gem "better_errors"
   gem "binding_of_caller"
+end
+
+group :production do
+  gem 'rails_12factor', '0.0.2'
 end
 

@@ -1,30 +1,32 @@
 .row
   = render 'admin/admin_bar'
-  .hpanel
-    .panel-heading
-      .panel-tools
-        =link_to "#", class: "showhide" do
-          %i{ class: "glyphicon glyphicon-chevron-up"}
-      Events
-    .panel-body
-      %table.table
-        %thead
-          %tr
-            %th=sort_link "name", "Event"
-            %th=sort_link "date"
-            %th=sort_link "paid_type"
-            %th Creator
-            %th Celebrators
-            %th.text-right Actions
-        %tbody
-          - @events.each do |event|
+.row
+  .col-lg-12 
+    .hpanel
+      .panel-heading
+        .panel-tools
+          =link_to "#", class: "showhide" do
+            %i{ class: "glyphicon glyphicon-chevron-up"}
+        Events
+      .panel-body
+        %table.table
+          %thead
             %tr
-              %td= event.name
-              %td= event.date.strftime('%d.%m.%Y')
-              %td= event.paid_type
-              %td= event.creator.full_name
-              %td
-              %td.text-right.glyphicon-margin
-                =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
-                =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
-                =link_to '', event_path(event), method: :delete, class: "glyphicon glyphicon-trash"
+              %th=sort_link "name", "Event"
+              %th=sort_link "date"
+              %th=sort_link "paid_type"
+              %th Creator
+              %th Celebrators
+              %th.text-right Actions
+          %tbody
+            - @events.each do |event|
+              %tr
+                %td= event.name
+                %td= event.date.strftime('%d.%m.%Y')
+                %td= event.paid_type
+                %td= event.creator.full_name
+                %td
+                %td.text-right.glyphicon-margin
+                  =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
+                  =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
+                  =link_to '', event_path(event), method: :delete, class: "glyphicon glyphicon-trash"

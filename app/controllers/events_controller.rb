@@ -19,11 +19,12 @@ class EventsController < ApplicationController
   end
 
   def create
+    params[:event].delete_if{ |key, value| ["calculate_amount" , "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
     @event = Event.new(event_params.merge(user_id: current_user.id))
 
-    @event.select_all_participants if event_params[:select_all] == "1"
-    @event.default_budget if event_params[:default_amount] == "1"
-   
+    @event.select_all_participants if event_params[:add_all_users] == "1"
+    @event.default_budget if event_params[:calculate_amount] == "1"
+
     if @event.save
       @event.participants.each do |participant|
         UserMailer.new_event_email(participant, @event).deliver_now
@@ -67,6 +68,6 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:name, :date, :description, :price, :paid_type, :select_all, :default_amount, budget_attributes: [:amount], participant_ids: [])
+      params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount], participant_ids: [])
     end
 end

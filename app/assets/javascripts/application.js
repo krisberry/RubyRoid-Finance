@@ -18,5 +18,6 @@
 //= require homer/metisMenu.min
 //= require homer/icheck.min
 //= require homer/jquery.sparkline
-//= require homer/homer           
+//= require homer/homer
+//= require custom
 //= require_self

@@ -1,7 +1,8 @@
-.container
-  = simple_form_for :invitation, url: admin_invitations_path, method: :post do |f|
-    .row
-      .input-group.col-md-6.pull-right
-        = f.input :email, :placeholder => "E-mail", label: false, class: 'form-control'
-        .input-group-btn
-          = f.button :submit, 'Send invitation'
+.row
+  .container
+    = simple_form_for :invitation, url: admin_invitations_path, method: :post do |f|
+      .row
+        .input-group.col-md-4.pull-right
+          = f.input :email, :placeholder => "E-mail", label: false, class: 'form-control'
+          .input-group-btn
+            = f.button :submit, 'Send invitation'
