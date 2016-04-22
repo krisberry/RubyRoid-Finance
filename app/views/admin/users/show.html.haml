@@ -10,8 +10,9 @@
           = image_tag @user.image.photo.url(:mini), class: "img-circle m-b m-t-md"
         %h3= @user.full_name
         %dl
-          %dt Born on
-          %dd= @user.birthday.strftime('%d.%m.%Y')
+          - if @user.birthday
+            %dt Born on
+            %dd= @user.birthday.strftime('%d.%m.%Y')
           %dt Email
           %dd= @user.email
           %dt Money rate

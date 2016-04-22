@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: 'my@exemple.com'
+  default from: 'my@heroku.com'
 
   def invitation_email(invitation)
     @invitation = invitation
