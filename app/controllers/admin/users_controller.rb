@@ -10,6 +10,12 @@ class Admin::UsersController < ApplicationController
     @created_events = @user.created_events.limit(5)
   end
 
+  def destroy
+    @user = User.find(params[:id]).destroy
+    flash[:success] = 'User was successfully deleted'
+    redirect_to :back    
+  end
+
   protected
 
     def sortable_columns

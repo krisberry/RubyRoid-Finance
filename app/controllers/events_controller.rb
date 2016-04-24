@@ -21,7 +21,7 @@ class EventsController < ApplicationController
   def create
     params[:event].delete_if{ |key, value| ["calculate_amount" , "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
     @event = Event.new(event_params.merge(user_id: current_user.id))
-
+    @event.date = DateTime.strptime(event_params[:date], "%m/%d/%Y").strftime("%Y-%m-%d %H:%M:%S")
     @event.select_all_participants if event_params[:add_all_users] == "1"
     @event.default_budget if event_params[:calculate_amount] == "1"
 

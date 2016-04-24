@@ -21,6 +21,6 @@ class Event < ActiveRecord::Base
   end
 
   def default_budget
-    budget.amount = participants.inject(0) { |sum, p| sum + p.money_rate }
+    self.budget.amount = participants.inject(0) { |sum, p| sum + p.money_rate }
   end
 end
