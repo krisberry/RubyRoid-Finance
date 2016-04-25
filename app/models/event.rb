@@ -7,14 +7,14 @@ class Event < ActiveRecord::Base
   has_one :budget, inverse_of: :event, dependent: :destroy
   has_many :payments, through: :budget
   has_and_belongs_to_many :participants, class_name: "User"
-  has_and_belongs_to_many :celebrators, class_name: "User"
+  # has_and_belongs_to_many :celebrators, class_name: "User"
   
   accepts_nested_attributes_for :budget
 
   validates :name, :description, :date, presence: true
   validates_associated :budget
 
-  scope :unpaid, ->{ includes(budget: [:payments]).where('payments.amount < 0').references(:budget) }
+  scope :unpaid, ->{ includes(budget: [:payments]).where('payments.user_id = events_users.user_id AND payments.amount < 0').references(:budget) }
 
   def select_all_participants
     self.participants = User.all

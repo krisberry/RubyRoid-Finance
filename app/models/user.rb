@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   has_one :image, as: :imageable, dependent: :destroy
   has_many :authorizations
-  has_many :created_events, class_name: 'Event'
+  has_many :created_events, class_name: 'Event', dependent: :destroy
   has_many :payments
   has_many :budgets, through: :payments
   has_and_belongs_to_many :events

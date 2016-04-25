@@ -1,0 +1,31 @@
+.row
+  .col-lg-12
+    .page-header
+      %h2 Edit #{@user.first_name.to_s.humanize} #{@user.last_name.to_s.humanize}
+.row
+  .col-lg-4
+    .hpanel.hgreen
+      .panel-body
+        - if @user.image
+          = image_tag @user.image.photo.url(:thumb), class: "thumbnail"
+  .hpanel.col-lg-6.pull-right
+    .panel-body
+      .form.form-group
+        = simple_form_for(@user, url: admin_user_path(@user), html: { method: :put, multipart: true }) do |f|
+          = f.input :first_name, autofocus: true, :placeholder => "First name"
+          = f.input :last_name, :placeholder => "Last name"
+          .hr-line-dashed
+          = f.simple_fields_for :image, @user.image || @user.build_image  do |ff|
+            = ff.input :photo, as: :file
+          .hr-line-dashed
+          = f.input :birthday, as: :date
+          .hr-line-dashed
+          = f.input :phone, :placeholder => "Phone number"
+          .hr-line-dashed
+          = f.input :email, required: true, autofocus: true
+          .hr-line-dashed
+          = f.input :money_rate, as: :select, collection: User::USER_RATES, include_blank: false
+          .hr-line-dashed
+          = f.button :submit, "Update", class: "btn-primary"
+          .pull-right
+            =link_to 'Back', :back, class: "btn btn-default"

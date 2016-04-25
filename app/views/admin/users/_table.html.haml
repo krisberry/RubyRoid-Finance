@@ -12,7 +12,9 @@
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         %td.right-align.glyphicon-margin
-          =link_to_if event.paid? && @user, '', payment_path(event.payments.for_user(@user.id)), method: :patch, remote: true, class: "glyphicon glyphicon-circle-arrow-down"
+          - if event.paid? && user
+            - payment = event.payments.for_user(user.id)
+            =link_to '', payment_path(payment), method: :patch, remote: true, class: "glyphicon glyphicon-circle-arrow-down"
           =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
           =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
           =link_to '', event_path(event), method: :delete, class: "glyphicon glyphicon-trash"
