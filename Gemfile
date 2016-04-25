@@ -40,6 +40,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem "omniauth-google-oauth2"
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+gem 'aws-sdk'
 gem 'sidekiq'
 gem 'pg'
 gem "figaro", "~> 0.7.0"
