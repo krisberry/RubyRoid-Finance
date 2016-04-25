@@ -11,7 +11,7 @@ class Event < ActiveRecord::Base
   
   accepts_nested_attributes_for :budget
 
-  validates :name, :description, presence: true
+  validates :name, :description, :date, presence: true
   validates_associated :budget
 
   scope :unpaid, ->{ includes(budget: [:payments]).where('payments.amount < 0').references(:budget) }
@@ -21,6 +21,6 @@ class Event < ActiveRecord::Base
   end
 
   def default_budget
-    self.budget.amount = participants.inject(0) { |sum, p| sum + p.money_rate }
+    (budget || create_budget).amount = participants.inject(0) { |sum, p| sum + p.money_rate }
   end
 end

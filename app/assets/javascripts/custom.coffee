@@ -1,5 +1,5 @@
 _custom_func = ->
-  $('*[data-toggle="input-datepicker"],.input-datepicker').datepicker()
+  $('*[data-toggle="input-datepicker"],.input-datepicker').datepicker({format: "dd/mm/yyyy"})
   $('#event_calculate_amount').click ()->
     $('#event_budget_attributes_amount').attr("disabled", $(this).prop("checked"))
 

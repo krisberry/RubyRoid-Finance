@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'signout', to: 'users/sessions#destroy'
-    get 'users/sign_up/:invited_code', to: 'users/registrations#new'
+    get 'users/sign_up/:invited_code', to: 'users/registrations#new', as: :new_registration
   end
 
   namespace :admin do
