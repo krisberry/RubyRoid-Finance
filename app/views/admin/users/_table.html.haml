@@ -7,13 +7,14 @@
       %th.right-align Actions
   %tbody
     - events.each do |event|
-      %tr
+      - if event.paid? && user
+        - payment = event.payments.for_user(user.id)
+      %tr{id: payment && dom_id(payment, :row)}
         %td= event.name
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         %td.right-align.glyphicon-margin
-          - if event.paid? && user
-            - payment = event.payments.for_user(user.id)
+          - if payment
             =link_to '', payment_path(payment), method: :patch, remote: true, class: "glyphicon glyphicon-circle-arrow-down"
           =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
           =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
