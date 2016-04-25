@@ -21,4 +21,9 @@ class UserMailer < ApplicationMailer
     @event = event
     mail(to: @participant.email, subject: 'New event')
   end
+
+  def send_password(user)
+    @user = user
+    mail(to: @user.email, subject: 'Password')
+  end
 end
