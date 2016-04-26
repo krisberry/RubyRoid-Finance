@@ -5,9 +5,10 @@ class CreateEvents < ActiveRecord::Migration
       t.text :description
       t.datetime :date
       t.string :paid_type, default: "free"
-      t.belongs_to :user, index: true
+      t.references :creator, index: true
 
       t.timestamps null: false
-    end    
+    end 
+    add_foreign_key :events, :users, column: :creator_id
   end
 end

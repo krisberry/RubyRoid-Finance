@@ -1,6 +1,9 @@
 class Payment < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :budget, inverse_of: :payments
+
+  belongs_to :event
+  belongs_to :participant, class_name: 'User'
+
+  # belongs_to :budget, inverse_of: :payments
   
   scope :for_budget, ->(budget_id) { includes(:budget).where(budgets: {id: budget_id}) }
   scope :unpaid, -> { where("amount < 0") }
