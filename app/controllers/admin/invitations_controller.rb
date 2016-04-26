@@ -25,7 +25,9 @@ class Admin::InvitationsController < ApplicationController
   end
 
   def destroy
-    @invitation = Invitation.find(params[:id]).destroy
+    @invitation = Invitation.find(params[:id])
+    UserMailer.deleting_invitation_email(@invitation).deliver_now
+    @invitation.destroy
     flash[:success] = 'Invitation deleted'
     redirect_to :back
   end

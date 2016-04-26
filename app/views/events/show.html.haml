@@ -15,25 +15,26 @@
           %dd= @event.date.strftime('%d.%m.%Y')
           %dt Members
           %dd= @event.participants.count
-  .col-lg-6
-    .hpanel
-      .panel-heading
-        .panel-tools
-          =link_to "#", class: "showhide" do
-            %i{ class: "glyphicon glyphicon-chevron-up" }
-        Unpaid events
-      .panel-body
-        %table.table
-          %thead
-            %th Full name
-            %th.text-right Payment
-          %tbody
-            - @event.participants.each do |participant|
-              %tr 
-                %td= participant.full_name
-                %td.text-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%n %u")
-            %tr
-              %td
-                %h3 Total amount
-              %td.text-right
-                %h3= @event.budget.amount
+  - if @event.paid?
+    .col-lg-6
+      .hpanel
+        .panel-heading
+          .panel-tools
+            =link_to "#", class: "showhide" do
+              %i{ class: "glyphicon glyphicon-chevron-up" }
+          Unpaid events
+        .panel-body
+          %table.table
+            %thead
+              %th Full name
+              %th.text-right Payment
+            %tbody
+              - @event.participants.each do |participant|
+                %tr 
+                  %td= participant.full_name
+                  %td.text-right= number_to_currency(participant.payments.for_budget(@event.budget).first.amount, unit: "₴",format: "%n %u")
+              %tr
+                %td
+                  %h3 Total amount
+                %td.text-right
+                  %h3= @event.budget.amount

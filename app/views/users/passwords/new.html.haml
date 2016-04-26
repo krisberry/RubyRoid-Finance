@@ -1,0 +1,17 @@
+.row
+  .login-container
+    .col-md-12
+      .text-center.m-b-md
+        %h3 Forgot your password?
+.hpanel.col-lg-6.col-lg-offset-3
+  .panel-body
+    .form.form-group
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+        .field
+          = f.label :email
+          %br/
+          = f.email_field :email, autofocus: true
+        %br/
+        .actions
+          = f.submit "Send me reset password instructions", class: 'btn btn-default'
+          = render "users/shared/links"

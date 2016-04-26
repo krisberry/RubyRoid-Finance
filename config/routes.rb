@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :events, only: [:index]
   end
 
-  devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations" }
+  devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }
 
   # The priority is based upon order of creation: first created -> highest iority.
   # See how all your routes lay out with "rake routes".

@@ -30,7 +30,7 @@ class EventsController < ApplicationController
         UserMailer.new_event_email(participant, @event).deliver_now
       end
       flash[:success] = "Event was successfully created"
-      redirect_to root_path
+      redirect_to :back
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :new
@@ -46,7 +46,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if @event.update(event_params)
       flash[:success] = 'Event was successfully updated'
-      redirect_to root_path
+      redirect_to :back
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :edit
