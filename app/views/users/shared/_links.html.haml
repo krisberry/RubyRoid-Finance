@@ -3,7 +3,7 @@
   = link_to "Facebook", "/users/auth/facebook", class: "btn btn-default"
   %br/
 - if devise_mapping.registerable? && controller_name != 'registrations' && controller_name != 'passwords'
-  = link_to "Sign up", new_registration_path(resource_name), class: "btn btn-default btn-block"
+  = link_to "Sign up", new_invitation_path, class: "btn btn-default btn-block"
   = link_to "Facebook",  "/users/auth/facebook", class: "btn btn-default btn-block"
   %br/
 - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   resources :events
   resources :payments, only: [:index, :update]
+  resources :invitations, only: [:new, :create]
 
   devise_scope :user do
     get 'signout', to: 'users/sessions#destroy'
@@ -12,7 +13,9 @@ Rails.application.routes.draw do
     root 'dashboard#index'
     get 'users/index'
     resources :users
-    resources :invitations
+    resources :invitations, except: [:update]
+    patch 'invitations/:id', to: 'invitations#resend', as: 'invitation_resend'
+    patch 'invitation/:id', to: 'invitations#approve_user', as: 'approve'
     resources :events, only: [:index]
   end
 

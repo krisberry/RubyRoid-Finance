@@ -9,7 +9,7 @@
     - events.each do |event|
       - if event.paid? && user
         - payment = event.payments.for_user(user.id)
-      %tr{id: payment && dom_id(payment, :row)}
+      %tr{id: (dom_id(payment, :row) if payment)}
         %td= event.name
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type

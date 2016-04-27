@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       self.resource.build_image
       respond_with self.resource
     else
-      flash[:danger] = 'You can not registrate on this site. Ask admin to invite you, please. (Email: tina.doskich@gmail.com)'
+      flash[:danger] = 'You can not register on this site. Ask admin to invite you, please. (Email: tina.doskich@gmail.com)'
       redirect_to new_user_session_path
     end
   end
@@ -41,7 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         respond_with resource
       end
     else
-      flash[:danger] = 'You can not registrate on this site. Ask admin to invite you, please. (Email: tina.doskich@gmail.com)'
+      flash[:danger] = 'You can not register on this site. Ask admin to invite you, please. (Email: tina.doskich@gmail.com)'
       redirect_to new_user_session_path
     end
   end
