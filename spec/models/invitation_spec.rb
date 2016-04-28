@@ -19,7 +19,7 @@ RSpec.describe Invitation, type: :model do
 
     it "return false if invitation will not be expired in next 12 hours" do
       invitation.approved = true
-      invitation.updated_at = "2016-04-27 12:30:00"
+      invitation.updated_at = Time.now
       expect(invitation.will_expired?).to be false 
     end
 

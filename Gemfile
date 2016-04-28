@@ -61,6 +61,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'faker'
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
 end
 
 
