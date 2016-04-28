@@ -9,4 +9,8 @@ class Payment < ActiveRecord::Base
   def pay
     update_attribute(:amount, amount * -1)
   end
+
+  def paid?
+    amount > 0
+  end
 end

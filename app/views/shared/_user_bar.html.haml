@@ -1,8 +1,8 @@
 .row.bar-margin
   .col-lg-12
     %ul.nav.nav-tabs
-      %li{ :class => ('active' if current_page?(root_path)) }
-        = link_to 'Dashboard', root_path
+      %li{ :class => ('active' if current_page?(authenticated_root_path)) }
+        = link_to 'Dashboard', authenticated_root_path
       %li{ :class => ('active' if current_page?(events_path)) }
         = link_to 'Events', events_path
       %li{ :class => ('active' if current_page?(payments_path)) }

@@ -32,6 +32,17 @@ class Admin::UsersController < ApplicationController
     redirect_to :back    
   end
 
+  def pay_for_event
+    @payment = Payment.find(params[:id])
+    respond_to do |format|
+      if @payment.pay
+        format.js { flash[:success] = 'Successfully paid' }
+      else
+        format.js { flash[:danger] = 'Try again' }
+      end
+    end
+  end
+
   private
 
     def user_params

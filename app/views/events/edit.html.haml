@@ -14,4 +14,4 @@
         = f.association :participants, label_method: :full_name, value_method: :id, include_blank: false
         = f.button :submit, 'Save changes', class: "btn-primary"
         .pull-right
-          =link_to 'Back', root_path, class: "btn btn-default"
+          =link_to 'Back', authenticated_root_path, class: "btn btn-default"

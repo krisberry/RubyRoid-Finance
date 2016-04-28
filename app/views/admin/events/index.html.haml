@@ -25,6 +25,6 @@
                 %td= event.paid_type
                 %td= event.creator.full_name
                 %td.text-right.glyphicon-margin
-                  =link_to '', event_path(event), class: "glyphicon glyphicon-eye-open"
-                  =link_to '', edit_event_path(event), class: "glyphicon glyphicon-pencil"
-                  =link_to '', event_path(event), method: :delete, class: "glyphicon glyphicon-trash"
+                  =link_to '', admin_event_path(event), toggle: "tooltip", title: "View event details", class: "glyphicon glyphicon-eye-open"
+                  =link_to '', edit_admin_event_path(event), toggle: "tooltip", title: "Edit event", class: "glyphicon glyphicon-pencil"
+                  =link_to '', admin_event_path(event), method: :delete, toggle: "tooltip", title: "Delete event", class: "glyphicon glyphicon-trash"

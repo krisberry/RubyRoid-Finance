@@ -7,6 +7,8 @@ _custom_func = ->
     if $(this).prop("checked")
       $('#event_participant_ids').attr("disabled", true)
     else
-      $('#event_participant_ids').attr("disabled", false)  
+      $('#event_participant_ids').attr("disabled", false)
+
+  $('[data-toggle="tooltip"]').tooltip()
 
 $(document).on "ready", _custom_func
