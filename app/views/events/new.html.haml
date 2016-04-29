@@ -1,25 +1,6 @@
 .row
   .page-header
     %h3 New event
-.hpanel.col-lg-6.col-lg-offset-3
-  .panel-body
-    .form.form-group
-      = simple_form_for @event, method: :post do |f|
-        = f.input :name, required: true, placeholder: "Name", class: 'form-control'
-        = f.input :description, required: true, placeholder: "Few words about event"
-        .hr-line-dashed
-        = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
-        .hr-line-dashed
-        = f.input :calculate_amount, as: :boolean, label_html: { class: "pull-right"}
-        = f.simple_fields_for :budget, @event.budget || @event.build_budget do |ff|
-          = ff.input :amount, required: true
-        .hr-line-dashed
-        .input-group.date.input-datepicker
-          %span.input-group-addon
-            %i.glyphicon.glyphicon-calendar
-          = f.input_field :date, as: :string, required: true, class: "form-control"
-        .hr-line-dashed
-        = f.input :add_all_users, as: :boolean, label_html: { class: "pull-right"}
-        = f.association :participants, label_method: :full_name, value_method: :id, include_blank: false
-        = f.button :submit, 'Create event', class: "btn-primary"
-        =link_to 'Back', :back, class: "btn btn-default pull-right"
+.row
+  = render 'shared/event_form', method: :post
+

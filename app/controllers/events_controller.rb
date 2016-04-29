@@ -19,11 +19,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    params[:event].delete_if{ |key, value| ["calculate_amount" , "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
+    params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
     @event = current_user.created_events.build(event_params)
-    @event.select_all_participants if event_params[:add_all_users] == "1"
-    @event.default_budget if event_params[:calculate_amount] == "1"
-
     if @event.save
       @event.participants.each do |participant|
         UserMailer.new_event_email(participant, @event).deliver_now
@@ -42,6 +39,8 @@ class EventsController < ApplicationController
   end
 
   def update
+    params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
+    params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
     @event = Event.find(params[:id])
     if @event.update(event_params)
       flash[:success] = 'Event was successfully updated'

@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
-  attr_accessor :add_all_users, :calculate_amount
-
+  before_save :select_all_participants, if: :add_all_users?
+  before_save :default_budget, if: :calculate_amount?
+  
   enum paid_type: { free: "free", paid: "paid" }
   
   belongs_to :creator, class_name: "User", foreign_key: "user_id"
@@ -21,6 +22,9 @@ class Event < ActiveRecord::Base
   end
 
   def default_budget
-    (budget || create_budget).amount = participants.inject(0) { |sum, p| sum + p.money_rate }
+    (budget || create_budget).tap do |b|
+      b.amount = participants.inject(0) { |sum, p| sum + p.money_rate } if paid?
+      b.save
+    end
   end
 end

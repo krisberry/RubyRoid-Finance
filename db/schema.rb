@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427085035) do
+ActiveRecord::Schema.define(version: 20160429150204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,10 +40,12 @@ ActiveRecord::Schema.define(version: 20160427085035) do
     t.string   "name"
     t.text     "description"
     t.datetime "date"
-    t.string   "paid_type",   default: "free"
+    t.string   "paid_type",        default: "free"
     t.integer  "user_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "calculate_amount"
+    t.boolean  "add_all_users"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
