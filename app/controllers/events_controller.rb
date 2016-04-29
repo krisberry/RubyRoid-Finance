@@ -2,11 +2,11 @@ class EventsController < ApplicationController
   before_action :event_params, only: [:create, :update]
 
   def index
-    @events = if params[:user_id]
-      current_user.events
-    else params[:creator_id]
-      current_user.created_events
-    end
+    @events = if params[:user_id].present?
+                current_user.events
+              else
+                current_user.created_events
+              end
   end
 
   def show
@@ -20,8 +20,7 @@ class EventsController < ApplicationController
 
   def create
     params[:event].delete_if{ |key, value| ["calculate_amount" , "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
-    @event = Event.new(event_params.merge(user_id: current_user.id))
-    # @event.date = DateTime.strptime(event_params[:date], "%m/%d/%Y").strftime("%Y-%m-%d %H:%M:%S") if event_params[:date].present?
+    @event = current_user.created_events.build(event_params)
     @event.select_all_participants if event_params[:add_all_users] == "1"
     @event.default_budget if event_params[:calculate_amount] == "1"
 
@@ -30,7 +29,7 @@ class EventsController < ApplicationController
         UserMailer.new_event_email(participant, @event).deliver_now
       end
       flash[:success] = "Event was successfully created"
-      redirect_to :back
+      redirect_to events_path
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :new
@@ -46,7 +45,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if @event.update(event_params)
       flash[:success] = 'Event was successfully updated'
-      redirect_to :back
+      redirect_to events_path
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :edit
@@ -57,7 +56,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if current_user == @event.creator || current_user.admin?
       @event.destroy
-      flash[:success] = 'Event deleted'
+      flash[:success] = 'Event was successfully deleted'
       redirect_to :back
     else
       flash[:danger] = 'Only creator or admin can delete this event.'

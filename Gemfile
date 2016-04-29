@@ -44,14 +44,14 @@ gem 'aws-sdk'
 gem 'sidekiq'
 gem 'pg'
 gem "figaro", "~> 0.7.0"
+gem 'premailer-rails'
+gem 'nokogiri'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-byebug'
   gem 'quiet_assets'
-  gem 'premailer-rails'
-  gem 'nokogiri'
   gem 'mailcatcher'
 end
 

@@ -4,6 +4,8 @@
       %th=sort_link "name", "Event"
       %th=sort_link "date"
       %th=sort_link "paid_type"
+      - if current_user.admin?
+        %th Creator
       %th.text-right Actions
   %tbody
     - events.each do |event|
@@ -11,8 +13,15 @@
         %td= event.name
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
+        - if current_user.admin?
+          %td= event.creator.full_name
         %td.text-right.glyphicon-margin
-          - if event.creator == current_user
-            =link_to '', event_path(event),  toggle: "tooltip", title: "View event details", class: "glyphicon glyphicon-eye-open"
-            =link_to '', edit_event_path(event), toggle: "tooltip", title: "Edit event", class: "glyphicon glyphicon-pencil"
-          =link_to '', event_path(event), method: :delete, toggle: "tooltip", title: "Delete event", class: "glyphicon glyphicon-trash"
+          - if current_user.admin?
+            =link_to '', admin_event_path(event), toggle: "tooltip", title: "View event details", class: "glyphicon glyphicon-eye-open"
+            =link_to '', edit_admin_event_path(event), toggle: "tooltip", title: "Edit event", class: "glyphicon glyphicon-pencil"
+            =link_to '', admin_event_path(event), method: :delete, toggle: "tooltip", title: "Delete event", class: "glyphicon glyphicon-trash"
+          - else
+            - if event.creator == current_user
+              =link_to '', event_path(event), toggle: "tooltip", title: "View event details", class: "glyphicon glyphicon-eye-open"
+              =link_to '', edit_event_path(event), toggle: "tooltip", title: "Edit event", class: "glyphicon glyphicon-pencil"
+            =link_to '', event_path(event), method: :delete, toggle: "tooltip", title: "Delete event", class: "glyphicon glyphicon-trash"

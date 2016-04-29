@@ -1,0 +1,11 @@
+.hpanel.hgreen
+  .panel-body
+    %dl
+      %dt Event
+      %dd= @event.name
+      %dt Description
+      %dd= @event.description
+      %dt Date
+      %dd= @event.date.strftime('%d.%m.%Y')
+      %dt Members
+      %dd= @event.participants.count

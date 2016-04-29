@@ -25,7 +25,7 @@ class Admin::EventsController < ApplicationController
     @event = Event.find(params[:id])
     if @event.update(event_params)
       flash[:success] = 'Event was successfully updated'
-      redirect_to :back
+      redirect_to admin_events_path
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :edit

@@ -9,22 +9,4 @@
             %i{ class: "glyphicon glyphicon-chevron-up"}
         Events
       .panel-body
-        %table.table
-          %thead
-            %tr
-              %th=sort_link "name", "Event"
-              %th=sort_link "date"
-              %th=sort_link "paid_type"
-              %th Creator
-              %th.text-right Actions
-          %tbody
-            - @events.each do |event|
-              %tr
-                %td= event.name
-                %td= event.date.strftime('%d.%m.%Y')
-                %td= event.paid_type
-                %td= event.creator.full_name
-                %td.text-right.glyphicon-margin
-                  =link_to '', admin_event_path(event), toggle: "tooltip", title: "View event details", class: "glyphicon glyphicon-eye-open"
-                  =link_to '', edit_admin_event_path(event), toggle: "tooltip", title: "Edit event", class: "glyphicon glyphicon-pencil"
-                  =link_to '', admin_event_path(event), method: :delete, toggle: "tooltip", title: "Delete event", class: "glyphicon glyphicon-trash"
+        = render 'shared/table', events: @events

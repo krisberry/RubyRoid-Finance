@@ -4,17 +4,7 @@
     =link_to "Back", :back, class: "btn pull-right right-button"
 .row
   .col-lg-6
-    .hpanel.hgreen
-      .panel-body
-        %dl
-          %dt Event
-          %dd= @event.name
-          %dt Description
-          %dd= @event.description
-          %dt Date
-          %dd= @event.date.strftime('%d.%m.%Y')
-          %dt Members
-          %dd= @event.participants.count
+    = render 'shared/show_event'
   - if @event.paid?
     .col-lg-6
       .hpanel

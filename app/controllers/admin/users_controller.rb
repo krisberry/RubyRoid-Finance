@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = 'User info was successfully updated'
-      redirect_to admin_root_path
+      redirect_to admin_users_path
     else
       flash[:danger] = "Some errors prohibited this user from being saved"
       render :edit

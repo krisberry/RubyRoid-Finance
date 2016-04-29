@@ -24,4 +24,4 @@
         .panel-body
           = render 'shared/table', events: @my_events
         .panel-footer.right-align
-          =link_to 'View all my events', events_path(created_id: current_user.id), class: "btn"
+          =link_to 'View all my events', events_path, class: "btn"
