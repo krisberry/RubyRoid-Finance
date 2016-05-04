@@ -11,4 +11,14 @@ _custom_func = ->
 
   $('[data-toggle="tooltip"]').tooltip()
 
+  check_payment = ->
+    if $('#event_paid_type_free').prop("checked")
+      $('div#disabled_for_free').hide()
+    if $('#event_paid_type_paid').prop("checked")
+      $('div#disabled_for_free').show()
+
+  check_payment()
+  $('#event_paid_type_free, #event_paid_type_paid').change ()->
+    check_payment()
+    
 $(document).on "ready", _custom_func

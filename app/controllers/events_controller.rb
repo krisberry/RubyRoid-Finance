@@ -12,6 +12,11 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @payment = current_user.payments.for_budget(@event.budget).first
+    if @event.paid?
+      @total_payments_amount = @event.paid_payments.inject(0) { |sum, p| sum + p.amount }
+      @balance_to_paid = @event.unpaid_payments.inject(0) { |sum, p| sum + p.amount }
+      @paid_percent = (@total_payments_amount/@event.budget.amount)*100
+    end
   end
 
   def new
@@ -42,7 +47,14 @@ class EventsController < ApplicationController
     params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
     params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
     @event = Event.find(params[:id])
+    @old_participant_ids = @event.participant_ids
     if @event.update(event_params)
+      @not_notify = @event.participant_ids & @old_participant_ids.map(&:to_i)
+      @event.participants.each do |participant|
+        unless @not_notify.include?(participant.id)
+          UserMailer.new_event_email(participant, @event).deliver_now
+        end
+      end
       flash[:success] = 'Event was successfully updated'
       redirect_to events_path
     else

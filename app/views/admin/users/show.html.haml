@@ -31,7 +31,7 @@
               %i{ class: "glyphicon glyphicon-chevron-up"}
           Unpaid events
         .panel-body
-          = render 'table', events: @unpaid_events, user: @user
+          = render 'table_show_user', events: @unpaid_events, user: @user
         .panel-footer.right-align
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
@@ -43,6 +43,6 @@
               %i{ class: "glyphicon glyphicon-chevron-up"}
           Events created by #{@user.full_name}
         .panel-body
-          = render 'table', events: @created_events, user: nil
+          = render 'table_show_user', events: @created_events, user: nil
         .panel-footer.right-align
           =link_to 'View all created events', admin_events_path(creator_id: @user.id), class: "btn"

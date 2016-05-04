@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
   validates_associated :budget
 
   scope :unpaid, ->{ includes(budget: [:payments]).where('payments.user_id = events_users.user_id AND payments.amount < 0').references(:budget) }
+  scope :should_notify, -> { where("date < ? ", (Time.now + 5.days)) }
 
   def select_all_participants
     self.participants = User.all
@@ -26,5 +27,13 @@ class Event < ActiveRecord::Base
       b.amount = participants.inject(0) { |sum, p| sum + p.money_rate } if paid?
       b.save
     end
+  end
+
+  def paid_payments
+    payments.includes(budget: [:payments]).references(budget: [:payments]).where('payments.amount > 0')
+  end
+
+  def unpaid_payments
+    payments.includes(budget: [:payments]).references(budget: [:payments]).where('payments.amount < 0')
   end
 end

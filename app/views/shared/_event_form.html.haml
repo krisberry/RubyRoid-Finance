@@ -7,10 +7,11 @@
         .hr-line-dashed
         = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
         .hr-line-dashed
-        = f.input :calculate_amount, label_html: { class: "pull-right"}
-        = f.simple_fields_for :budget, @event.budget || @event.build_budget do |ff|
-          = ff.input :amount, required: true, disabled: @event.calculate_amount?
-        .hr-line-dashed
+        %div#disabled_for_free
+          = f.input :calculate_amount, label_html: { class: "pull-right"}
+          = f.simple_fields_for :budget, @event.budget || @event.build_budget do |ff|
+            = ff.input :amount, required: true, disabled: @event.calculate_amount?
+          .hr-line-dashed
         .input-group.date.input-datepicker
           %span.input-group-addon
             %i.glyphicon.glyphicon-calendar

@@ -1,5 +1,15 @@
-%h3= "Hi #{@invitation.email}" 
-- if @invitation.approved?
-  %p Your invitation was deleted. Ask admin to send it again.
-- else
-  %p Unfortunatly we can not accept your request.
+%table.body-wrap{ bgcolor: "#f7f9fa"}
+  %tbody
+    %tr
+      %td
+      %td.container{ bgcolor: "#FFFFFF"}
+        .content
+          %table
+            %tbody
+              %tr
+                %td
+                  %strong= "Hi #{@invitation.email}"
+                  - if @invitation.approved?
+                    %p Your invitation was deleted. Ask admin to send it again.
+                  - else
+                    %p Unfortunatly we can not accept your request.

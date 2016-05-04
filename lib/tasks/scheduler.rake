@@ -10,3 +10,11 @@ task :send_notification_email => :environment do
     UserMailer.notification_email(invitation).deliver_now
   end
 end
+
+task :send_event_notification_email => :environment do
+  Event.should_notify.each do |event|
+    event.participants.each do |participant|
+      UserMailer.event_notification_email(participant, event).deliver_now
+    end
+  end
+end

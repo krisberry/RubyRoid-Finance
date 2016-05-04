@@ -1,11 +1,13 @@
 .row
   .page-header
-    %h3.dashboard Show #{@event.name}
+    %h3.dashboard Show Event
     =link_to "Back", :back, class: "btn pull-right right-button"
 .row
   .col-lg-6
     = render 'shared/show_event'
   - if @event.paid?
+    .col-lg-6
+      = render 'shared/payment_progress_for_event'
     .col-lg-6
       .hpanel
         .panel-heading
@@ -30,8 +32,3 @@
                     - else
                       %i.glyphicon.glyphicon-ok
                   %td.text-right.amount= number_to_currency(payment.amount, unit: "₴",format: "%n %u")
-              %tr
-                %td{colspan: "2"}
-                  %h3 Total amount
-                %td.text-right
-                  %h3= @event.budget.amount
