@@ -1,0 +1,26 @@
+%table.body-wrap{ bgcolor: "#f7f9fa"}
+  %tbody
+    %tr
+      %td
+      %td.container{ bgcolor: "#FFFFFF"}
+        .content
+          %table
+            %tbody
+              %tr
+                %td
+                  %strong= "Dear #{@participant.full_name}"
+                    %p= "Here list of participants who forget to pay the bill. You should kick each of them."
+                    %table.table
+                      %thead
+                        %tr
+                          %th Full name
+                          %th Bill
+                          %th 
+                      %tbody
+                        - @event.participants.each do |participant|
+                          - if (participant.payments.for_budget(@event.budget).first < 0)
+                            %tr
+                              %td= participant.full_name
+                              %td= participant.payments.for_budget(@event.budget).first
+                              %td Shame on you!
+                            

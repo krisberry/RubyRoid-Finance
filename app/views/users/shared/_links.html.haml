@@ -4,7 +4,10 @@
   %br/
 - if devise_mapping.registerable? && controller_name != 'registrations' && controller_name != 'passwords'
   = link_to "Sign up", new_invitation_path, class: "btn btn-default btn-block"
-  = link_to "Facebook",  "/users/auth/facebook", class: "btn btn-default btn-block"
+  / = link_to "Sign in with Facebook",  "/users/auth/facebook", class: "btn btn-default btn-block btn-social btn-facebook fa.fa-facebook"
+  %a.btn.btn-block.btn-social.btn-facebook{ href: "/users/auth/facebook"}
+    %span.fa.fa-facebook
+    Sign in with Facebook
   %br/
 - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
   = link_to "Forgot your password?", new_password_path(resource_name)

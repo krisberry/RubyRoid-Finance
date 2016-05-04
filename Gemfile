@@ -46,6 +46,7 @@ gem 'pg'
 gem "figaro", "~> 0.7.0"
 gem 'premailer-rails'
 gem 'nokogiri'
+gem "watu_table_builder", :require => "table_builder"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

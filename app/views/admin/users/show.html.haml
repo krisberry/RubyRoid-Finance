@@ -3,7 +3,7 @@
     %h3.dashboard User info
     =link_to "Back",:back, class: "btn pull-right right-button"
 .row
-  .col-lg-4
+  .col-lg-3
     .hpanel.hgreen
       .panel-body
         - if @user.image
@@ -16,12 +16,18 @@
           %dt Email
           %dd= @user.email
           %dt Money rate
-          %dd= @user.money_rate
+          %dd= User::USER_RATES.key(@user.money_rate)
           - if @user.phone
             %dt Phone
             %dd= @user.phone
           %dt Last sign in
           %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
+        %a.btn.btn-social-icon.btn-facebook
+          %span.fa.fa-facebook
+        %a.btn.btn-social-icon.btn-linkedin
+          %span.fa.fa-linkedin
+        %a.btn.btn-social-icon.btn-github
+          %span.fa.fa-github
   - if @user.events.unpaid.any?
     .col-lg-6
       .hpanel
