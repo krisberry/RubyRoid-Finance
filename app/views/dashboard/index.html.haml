@@ -10,7 +10,7 @@
               %i{ class: "glyphicon glyphicon-chevron-up"}
           Events
         .panel-body
-          = render 'shared/table', events: @events
+          = render 'shared/event_table', events: @events
         .panel-footer.right-align
           =link_to 'View all events', events_path(user_id: current_user.id), class: "btn"
   - if @my_events.present?
@@ -22,6 +22,6 @@
               %i{ class: "glyphicon glyphicon-chevron-up"}
           My events
         .panel-body
-          = render 'shared/table', events: @my_events
+          = render 'shared/event_table', events: @my_events
         .panel-footer.right-align
           =link_to 'View all my events', events_path, class: "btn"

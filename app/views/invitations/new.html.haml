@@ -11,4 +11,4 @@
       = simple_form_for :invitation, url: invitations_path, method: :post do |f|
         = f.input :email, required: true, :placeholder => "E-mail", label: false, class: 'form-control'
         .input-group-btn.text-center
-          = f.button :submit, 'Send request'
+          = f.submit 'Send request', name: false, class: "btn btn-success"

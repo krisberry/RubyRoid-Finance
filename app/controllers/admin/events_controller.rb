@@ -14,9 +14,10 @@ class Admin::EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @payment = current_user.payments.for_budget(@event.budget).first
-    @total_payments_amount = @event.paid_payments.inject(0) { |sum, p| sum + p.amount }
-    @balance_to_paid = @event.unpaid_payments.inject(0) { |sum, p| sum + p.amount }
-    @paid_percent = (@total_payments_amount/@event.budget.amount)*100
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def edit
@@ -52,6 +53,7 @@ class Admin::EventsController < ApplicationController
 
   def pay_for_event
     @payment = Payment.find(params[:id])
+    @event = @payment.budget.event
     respond_to do |format|
       if @payment.pay
         format.js { flash[:success] = 'Successfully paid' }

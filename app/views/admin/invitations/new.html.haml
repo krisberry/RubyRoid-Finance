@@ -5,4 +5,4 @@
         .input-group.col-md-4.pull-right
           = f.input :email, :placeholder => "E-mail", label: false, class: 'form-control'
           .input-group-btn
-            = f.button :submit, 'Send invitation'
+            = f.submit 'Send invitation', name: nil, class: 'btn btn-default'

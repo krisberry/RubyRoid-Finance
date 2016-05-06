@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
 
   scope :unpaid, ->{ includes(budget: [:payments]).where('payments.user_id = events_users.user_id AND payments.amount < 0').references(:budget) }
   scope :should_notify, -> { where("date < ? ", (Time.now + 5.days)) }
+  scope :shame_notify, -> { where("date < ? ", (Time.now + 3.days))}
 
   def select_all_participants
     self.participants = User.all
@@ -35,5 +36,17 @@ class Event < ActiveRecord::Base
 
   def unpaid_payments
     payments.includes(budget: [:payments]).references(budget: [:payments]).where('payments.amount < 0')
+  end
+
+  def total_payments_amount
+    paid_payments.inject(0) { |sum, p| sum + p.amount }
+  end
+
+  def balance_to_paid
+    unpaid_payments.inject(0) { |sum, p| sum + p.amount }
+  end
+
+  def paid_percent
+    (total_payments_amount/budget.amount)*100
   end
 end

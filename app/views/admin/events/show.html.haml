@@ -4,7 +4,7 @@
     =link_to "Back", :back, class: "btn pull-right right-button"
 .row
   .col-lg-6
-    = render 'shared/show_event'
+    = render 'shared/event_show'
   - if @event.paid?
     .col-lg-6
       = render 'shared/payment_progress_for_event'

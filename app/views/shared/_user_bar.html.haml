@@ -7,5 +7,7 @@
         = link_to 'Events', events_path
       %li{ :class => ('active' if current_page?(payments_path)) }
         = link_to 'Payments', payments_path
+      %li{ :class => ('active' if current_page?(calendar_path)) }
+        = link_to 'Calendar', calendar_path
       %li.pull-right
-        =link_to "New event", new_event_path, class: "btn pull-right"
+        =button_to "New event", new_event_path, method: :get, class: "btn btn-primary"

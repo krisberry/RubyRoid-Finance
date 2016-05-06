@@ -1,4 +1,4 @@
-.hpanel.stats
+.hpanel.stats#payments-progress
   .panel-body.h-200
     .stats-title.pull-left
       %h4 Payments activity
@@ -9,11 +9,11 @@
       %span.font-bold.no-margins
         Event amount
       .progress.m-t-xs.full.progress-small
-        .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@paid_percent}", :role => "progressbar", :style => "width: #{@paid_percent}%"}
+        .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@event.paid_percent}", :role => "progressbar", :style => "width: #{@event.paid_percent}%"}
       .row
         .col-xs-6
           %small.stats-label Balance
-          %h4= @balance_to_paid
+          %h4= @event.balance_to_paid
         .col-xs-6
           %small.stats-label % Paid
-          %h4= "#{@paid_percent}%"
+          %h4= "#{@event.paid_percent}%"

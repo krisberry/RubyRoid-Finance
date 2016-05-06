@@ -11,5 +11,11 @@
           = calendar.day(:day_method => :date) do |date, events|
             = date.day
             %ul
-              - for event in events
-                %li= link_to h(event.name), event
+              - events.each do |event|
+                %li
+                  %i{ toggle: "tooltip", title: "Paid event", class: ("glyphicon glyphicon-piggy-bank" if event.paid?) }
+                  - if current_user.admin?
+                    = link_to h(event.name), admin_event_path(event, format: :js), remote: true
+                  - else
+                    = link_to h(event.name), event_path(event, format: :js), remote: true
+                  

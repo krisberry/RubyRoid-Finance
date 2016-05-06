@@ -12,10 +12,9 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @payment = current_user.payments.for_budget(@event.budget).first
-    if @event.paid?
-      @total_payments_amount = @event.paid_payments.inject(0) { |sum, p| sum + p.amount }
-      @balance_to_paid = @event.unpaid_payments.inject(0) { |sum, p| sum + p.amount }
-      @paid_percent = (@total_payments_amount/@event.budget.amount)*100
+    respond_to do |format|
+      format.js
+      format.html
     end
   end
 

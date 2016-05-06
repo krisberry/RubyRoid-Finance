@@ -18,9 +18,10 @@
                           %th 
                       %tbody
                         - @event.participants.each do |participant|
-                          - if (participant.payments.for_budget(@event.budget).first < 0)
+                          - payment = participant.payments.for_budget(@event.budget).first
+                          - if (participant.payment < 0)
                             %tr
                               %td= participant.full_name
-                              %td= participant.payments.for_budget(@event.budget).first
+                              %td= participant.payment
                               %td Shame on you!
                             
