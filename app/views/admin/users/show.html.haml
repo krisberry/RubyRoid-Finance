@@ -22,12 +22,15 @@
             %dd= @user.phone
           %dt Last sign in
           %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
-        %a.btn.btn-social-icon.btn-facebook
-          %span.fa.fa-facebook
-        %a.btn.btn-social-icon.btn-linkedin
-          %span.fa.fa-linkedin
-        %a.btn.btn-social-icon.btn-github
-          %span.fa.fa-github
+        - if @user.facebook_url.present?
+          =link_to "#{@user.facebook_url}", class: "btn btn-social-icon btn-facebook" do
+            %span.fa.fa-facebook
+        - if @user.linkedin_url.present?
+          =link_to "#{@user.linkedin_url}", class: "btn btn-social-icon btn-linkedin" do
+            %span.fa.fa-linkedin
+        - if @user.github_url.present?
+          =link_to "#{@user.github_url}", class: "btn btn-social-icon btn-github" do
+            %span.fa.fa-github
   - if @user.events.unpaid.any?
     .col-lg-6
       .hpanel
@@ -41,7 +44,7 @@
         .panel-footer.right-align
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
-    .col-lg-6
+    .col-lg-6.col-lg-offset-3
       .hpanel
         .panel-heading
           .panel-tools

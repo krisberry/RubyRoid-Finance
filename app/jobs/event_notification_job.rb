@@ -4,7 +4,7 @@ class EventNotificationJob < ActiveJob::Base
   def perform
     Event.should_notify.each do |event|
       event.participants.each do |participant|
-        UserMailer.event_notification_email(participant, event).deliver_now
+        UserMailer.event_notification_email(participant, event).deliver_now unless event.celebrator_ids.include?(participant.id)
       end
     end
   end

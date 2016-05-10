@@ -27,10 +27,10 @@ class EventsController < ApplicationController
     @event = current_user.created_events.build(event_params)
     if @event.save
       @event.participants.each do |participant|
-        UserMailer.new_event_email(participant, @event).deliver_now
+        UserMailer.new_event_email(participant, @event).deliver_now unless @event.celebrator_ids.include?(participant.id)
       end
       flash[:success] = "Event was successfully created"
-      redirect_to events_path
+      redirect_to current_user.admin? ? admin_events_path : events_path
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :new
@@ -48,14 +48,12 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @old_participant_ids = @event.participant_ids
     if @event.update(event_params)
-      @not_notify = @event.participant_ids & @old_participant_ids.map(&:to_i)
+      @not_notify = (@event.participant_ids & @old_participant_ids.map(&:to_i)) | @event.celebrator_ids
       @event.participants.each do |participant|
-        unless @not_notify.include?(participant.id)
-          UserMailer.new_event_email(participant, @event).deliver_now
-        end
+        UserMailer.new_event_email(participant, @event).deliver_now unless @not_notify.include?(participant.id)
       end
       flash[:success] = 'Event was successfully updated'
-      redirect_to events_path
+      redirect_to current_user.admin? ? admin_events_path : events_path
     else
       flash[:danger] = "Some errors prohibited this event from being saved"
       render :edit
@@ -77,6 +75,6 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount], participant_ids: [])
+      params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount], participant_ids: [], celebrator_ids: [])
     end
 end

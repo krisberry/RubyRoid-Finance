@@ -6,6 +6,7 @@
       %th=sort_link "paid_type"
       - if current_user.admin?
         %th Creator
+        %th Celebrators
       %th.text-right Actions
   %tbody
     - events.each do |event|
@@ -15,6 +16,9 @@
         %td= event.paid_type
         - if current_user.admin?
           %td= event.creator.full_name
+          %td
+            - event.celebrators.each do |celebrator|
+              %p=celebrator.full_name
         %td.text-right.glyphicon-margin
           - if current_user.admin?
             =link_to '', admin_event_path(event), toggle: "tooltip", title: "View event details", class: "glyphicon glyphicon-eye-open"
