@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
 
   scope :unpaid, ->{ includes(budget: [:payments]).where('payments.user_id = events_users.user_id AND payments.amount < 0').references(:budget) }
   scope :should_notify, -> { where("date < ? AND date > ?", (Time.now + 5.days), Time.now) }
-  scope :shame_notify, -> { where("date < ? AND date > ?", (Time.now + 3.days), Time.now) }
+  scope :shame_notify, -> { where("date < ? AND date > ? AND paid_type = ?", (Time.now + 3.days), Time.now, "paid") }
 
   def select_all_participants
     self.participants = User.all

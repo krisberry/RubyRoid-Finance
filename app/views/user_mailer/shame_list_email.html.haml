@@ -9,18 +9,19 @@
               %tr
                 %td
                   %strong= "Dear #{@participant.full_name}"
-                    %p= "Here list of participants who forgot to pay the bill. You should kick each of them."
-                    %table.table
-                      %thead
-                        %tr
-                          %th Full name
-                          %th Bill
-                          %th 
-                      %tbody
-                        - @event.participants.each do |participant|
-                          - payment = participant.payments.for_budget(@event.budget).first
-                          - if (participant.payment < 0)
-                            %tr
-                              %td= participant.full_name
-                              %td= participant.payment
-                              %td Shame on you!
+                  %p= "Here list of participants who forgot to pay the bill. You should kick each of them."
+                  %table.table
+                    %thead
+                      %tr
+                        %th Full name
+                        %th Bill
+                        %th 
+                    %tbody
+                      - @event.participants.each do |participant|
+                        - payment = participant.payments.for_budget(@event.budget).first
+                        - binding.pry
+                        - unless payment.paid?
+                          %tr
+                            %td= participant.full_name
+                            %td= payment.amount
+                            %td Shame on you!
