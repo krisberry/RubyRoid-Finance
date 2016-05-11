@@ -2,8 +2,12 @@
   .modal-dialog{:role => "document"}
     .modal-content
       .modal-header
-        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-          %span{"aria-hidden" => "true"} &times;
         %h4.modal-title= @event.name
       .modal-body
         = render 'shared/event_show'
+      .modal-footer
+        - if current_user.admin? 
+          =link_to "View more details", admin_event_path(@event), class: "btn btn-primary"
+        - else
+          =link_to "View more details", event_path(@event), class: "btn btn-primary"
+        =link_to "Close", "#", "data-dismiss" => "modal", class: "btn btn-default"

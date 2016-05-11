@@ -15,8 +15,8 @@
             %dd= @user.birthday.strftime('%d.%m.%Y')
           %dt Email
           %dd= @user.email
-          %dt Money rate
-          %dd= User::USER_RATES.key(@user.money_rate)
+          %dt Position
+          %dd= @user.rate.name
           - if @user.phone
             %dt Phone
             %dd= @user.phone

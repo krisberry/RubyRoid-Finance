@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
 
   scope :unpaid, ->{ includes(budget: [:payments]).where('payments.user_id = events_users.user_id AND payments.amount < 0').references(:budget) }
   scope :should_notify, -> { where("date < ? AND date > ?", (Time.now + 5.days), Time.now) }
+  scope :with_missing_payment, -> { joins(:payments).where('payments.amount < 0').uniq }
   scope :shame_notify, -> { where("date < ? AND date > ? AND paid_type = ?", (Time.now + 3.days), Time.now, "paid") }
 
   def select_all_participants
@@ -25,7 +26,7 @@ class Event < ActiveRecord::Base
 
   def default_budget
     (budget || create_budget).tap do |b|
-      b.amount = participants.inject(0) { |sum, p| sum + p.money_rate } if paid?
+      b.amount = participants.inject(0) { |sum, p| sum + p.rate.amount } if paid?
       b.save
     end
   end

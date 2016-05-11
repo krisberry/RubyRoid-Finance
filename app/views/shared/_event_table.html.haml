@@ -11,7 +11,11 @@
   %tbody
     - events.each do |event|
       %tr
-        %td= event.name
+        %td
+          - if current_user.admin?
+            =link_to "#{event.name}", admin_event_path(event), toggle: "tooltip", title: "View event details"
+          - else
+            =link_to "#{event.name}", event_path(event), toggle: "tooltip", title: "View event details"
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         - if current_user.admin?

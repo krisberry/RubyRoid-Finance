@@ -9,7 +9,7 @@
               %tr
                 %td
                   %strong= "Dear #{@participant.full_name}"
-                  %p= "Here list of participants who forgot to pay the bill. You should kick each of them."
+                  %p= "Here list of participants who forgot to pay the bill for #{@event.name} celebration. You should kick each of them."
                   %table.table
                     %thead
                       %tr
@@ -19,7 +19,6 @@
                     %tbody
                       - @event.participants.each do |participant|
                         - payment = participant.payments.for_budget(@event.budget).first
-                        - binding.pry
                         - unless payment.paid?
                           %tr
                             %td= participant.full_name

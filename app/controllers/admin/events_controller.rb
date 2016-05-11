@@ -3,11 +3,11 @@ class Admin::EventsController < ApplicationController
 
   def index
     @events = if params[:user_id]
-      User.find(params[:user_id]).events.unpaid
+      User.find(params[:user_id]).events.unpaid.order(order_query)
     elsif params[:creator_id]
-      User.find(params[:creator_id]).created_events
+      User.find(params[:creator_id]).created_events.order(order_query)
     else
-      Event.all
+      Event.order(order_query)
     end
   end
 
@@ -28,10 +28,11 @@ class Admin::EventsController < ApplicationController
   def update
     params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
     params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
+    params[:event][:participant_ids] -= params[:event][:celebrator_ids]
     @event = Event.find(params[:id])
     @old_participant_ids = @event.participant_ids
     if @event.update(event_params)
-      @not_notify = (@event.participant_ids & @old_participant_ids.map(&:to_i)) | @event.celebrator_ids
+      @not_notify = (@event.participant_ids & @old_participant_ids.map(&:to_i))
       @event.participants.each do |participant|
         UserMailer.new_event_email(participant, @event).deliver_now unless @not_notify.include?(participant.id)
       end
@@ -65,5 +66,11 @@ class Admin::EventsController < ApplicationController
 
     def event_params
       params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount], participant_ids: [], celebrator_ids: [])
+    end
+
+  protected  
+
+    def sortable_columns
+      super.push("name", "date", "paid_type")
     end
 end

@@ -49,7 +49,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up).push(:first_name, :last_name, :birthday, :phone, :facebook_url, :github_url, :linkedin_url, image_attributes: [:photo, :id])
-      devise_parameter_sanitizer.for(:account_update).push(:first_name, :last_name, :birthday, :phone, :facebook_url, :github_url, :linkedin_url, image_attributes: [:photo, :id])
+      devise_parameter_sanitizer.for(:sign_up).push(:first_name, :last_name, :birthday, :phone, :facebook_url, :github_url, :linkedin_url, :rate_id, image_attributes: [:photo, :id])
+      devise_parameter_sanitizer.for(:account_update).push(:first_name, :last_name, :birthday, :phone, :facebook_url, :github_url, :linkedin_url, :rate_id, image_attributes: [:photo, :id])
     end
 end

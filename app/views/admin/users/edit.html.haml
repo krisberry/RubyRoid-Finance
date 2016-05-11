@@ -24,7 +24,7 @@
           .hr-line-dashed
           = f.input :email, required: true, autofocus: true
           .hr-line-dashed
-          = f.input :money_rate, as: :select, collection: User::USER_RATES, include_blank: false
+          = f.association :rate, label_method: :name, value_method: :id, include_blank: false
           .hr-line-dashed
           = f.button :submit, "Update", class: "btn-primary"
           .pull-right

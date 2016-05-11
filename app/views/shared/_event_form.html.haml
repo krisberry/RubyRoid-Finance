@@ -3,7 +3,7 @@
     .form.form-group
       = simple_form_for @event, method: method do |f|
         = f.input :name, required: true, placeholder: "Name", class: 'form-control'
-        = f.input :description, required: true, placeholder: "Few words about event"
+        = f.input :description, required: true, placeholder: "Few words about @event"
         .hr-line-dashed
         = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
         %div#disabled_for_free
