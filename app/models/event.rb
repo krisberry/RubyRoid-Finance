@@ -50,4 +50,14 @@ class Event < ActiveRecord::Base
   def paid_percent
     (total_payments_amount/budget.amount)*100
   end
+
+  def paid_participantcs_ids
+    paid_payments.pluck(:user_id).uniq
+  end
+
+  def notify_participants ids = nil
+    participants_should_be_notify = ids ? participants.find(ids) : participants
+    participants_should_be_notify.each{ |participant| UserMailer.new_event_email(participant, self).deliver_now }
+  end
+
 end

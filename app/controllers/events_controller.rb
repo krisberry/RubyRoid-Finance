@@ -23,13 +23,10 @@ class EventsController < ApplicationController
   end
 
   def create
-    params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
-    params[:event][:participant_ids] -= params[:event][:celebrator_ids]
+    refine_params_for_event
     @event = current_user.created_events.build(event_params)
     if @event.save
-      @event.participants.each do |participant|
-        UserMailer.new_event_email(participant, @event).deliver_now
-      end
+      @event.notify_participants
       flash[:success] = "Event was successfully created"
       redirect_to current_user.admin? ? admin_events_path : events_path
     else
@@ -44,16 +41,14 @@ class EventsController < ApplicationController
   end
 
   def update
-    params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
-    params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
-    params[:event][:participant_ids] -= params[:event][:celebrator_ids]
     @event = Event.find(params[:id])
-    @old_participant_ids = @event.participant_ids
+    old_participant_ids = @event.participant_ids
+
+    refine_params_for_event @event
+
     if @event.update(event_params)
-      @not_notify = (@event.participant_ids & @old_participant_ids.map(&:to_i))
-      @event.participants.each do |participant|
-        UserMailer.new_event_email(participant, @event).deliver_now unless @not_notify.include?(participant.id)
-      end
+      shoul_be_notify = @event.participant_ids - old_participant_ids
+      @event.notify_participants shoul_be_notify
       flash[:success] = 'Event was successfully updated'
       redirect_to current_user.admin? ? admin_events_path : events_path
     else
@@ -78,6 +73,13 @@ class EventsController < ApplicationController
 
     def event_params
       params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount], participant_ids: [], celebrator_ids: [])
+    end
+
+    def refine_params_for_event event=nil
+      params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
+      params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
+      params[:event][:participant_ids] -= params[:event][:celebrator_ids]
+      params[:event][:participant_ids] += event.paid_participantcs_ids.map(&:to_s) if event
     end
 
   protected    
