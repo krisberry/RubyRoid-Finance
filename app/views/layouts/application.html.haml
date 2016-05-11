@@ -5,7 +5,9 @@
     %title RubyRoidFinance
     %link{:href => "https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic", :rel => "stylesheet"}
     = stylesheet_link_tag 'application', media: 'all'
+    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
     = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/css/bootstrap-datepicker.css"
+    = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.css"
     = javascript_include_tag 'application'
     = javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/js/bootstrap-datepicker.js"
     = csrf_meta_tags
@@ -15,4 +17,5 @@
       .row
         #flash.col-lg-12
           = flash_message
+      #modals-container
       = yield

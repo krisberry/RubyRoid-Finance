@@ -3,7 +3,7 @@
     %h3.dashboard User info
     =link_to "Back",:back, class: "btn pull-right right-button"
 .row
-  .col-lg-4
+  .col-lg-3
     .hpanel.hgreen
       .panel-body
         - if @user.image
@@ -15,13 +15,22 @@
             %dd= @user.birthday.strftime('%d.%m.%Y')
           %dt Email
           %dd= @user.email
-          %dt Money rate
-          %dd= @user.money_rate
+          %dt Position
+          %dd= @user.rate.name
           - if @user.phone
             %dt Phone
             %dd= @user.phone
           %dt Last sign in
           %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
+        - if @user.facebook_url.present?
+          =link_to "#{@user.facebook_url}", class: "btn btn-social-icon btn-facebook" do
+            %span.fa.fa-facebook
+        - if @user.linkedin_url.present?
+          =link_to "#{@user.linkedin_url}", class: "btn btn-social-icon btn-linkedin" do
+            %span.fa.fa-linkedin
+        - if @user.github_url.present?
+          =link_to "#{@user.github_url}", class: "btn btn-social-icon btn-github" do
+            %span.fa.fa-github
   - if @user.events.unpaid.any?
     .col-lg-6
       .hpanel
@@ -31,11 +40,11 @@
               %i{ class: "glyphicon glyphicon-chevron-up"}
           Unpaid events
         .panel-body
-          = render 'table', events: @unpaid_events, user: @user
+          = render 'table_show_user', events: @unpaid_events, user: @user
         .panel-footer.right-align
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
-    .col-lg-6
+    .col-lg-6.col-lg-offset-3
       .hpanel
         .panel-heading
           .panel-tools
@@ -43,6 +52,6 @@
               %i{ class: "glyphicon glyphicon-chevron-up"}
           Events created by #{@user.full_name}
         .panel-body
-          = render 'table', events: @created_events, user: nil
+          = render 'table_show_user', events: @created_events, user: nil
         .panel-footer.right-align
           =link_to 'View all created events', admin_events_path(creator_id: @user.id), class: "btn"

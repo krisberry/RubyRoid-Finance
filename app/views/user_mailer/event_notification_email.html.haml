@@ -1,0 +1,15 @@
+%table.body-wrap{ bgcolor: "#f7f9fa"}
+  %tbody
+    %tr
+      %td
+      %td.container{ bgcolor: "#FFFFFF"}
+        .content
+          %table
+            %tbody
+              %tr
+                %td
+                  %strong= "Dear #{@participant.full_name}"
+                  - if @event.paid?
+                    %p= "We want to remind you that #{@event.name} celebration is coming. Don't forget to pay the bill #{@participant.rate.amount}"
+                  - else
+                    %p "We want to remind you that #{@event.name} celebration is coming."

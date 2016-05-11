@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = 'User info was successfully updated'
-      redirect_to admin_root_path
+      redirect_to admin_users_path
     else
       flash[:danger] = "Some errors prohibited this user from being saved"
       render :edit
@@ -32,10 +32,21 @@ class Admin::UsersController < ApplicationController
     redirect_to :back    
   end
 
+  def pay_for_event
+    @payment = Payment.find(params[:id])
+    respond_to do |format|
+      if @payment.pay
+        format.js { flash[:success] = 'Successfully paid' }
+      else
+        format.js { flash[:danger] = 'Try again' }
+      end
+    end
+  end
+
   private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :birthday, :phone, image_attributes: [:photo, :id])
+      params.require(:user).permit(:first_name, :last_name, :birthday, :phone, :rate_id, image_attributes: [:photo, :id])
     end
 
   protected

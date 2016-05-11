@@ -1,0 +1,34 @@
+.row
+  .page-header
+    %h3.dashboard Show Event
+    =link_to "Back", :back, class: "btn pull-right right-button"
+.row
+  .col-lg-6
+    = render 'shared/event_show'
+  - if @event.paid?
+    .col-lg-6
+      = render 'shared/payment_progress_for_event'
+    .col-lg-6.col-lg-offset-6
+      .hpanel
+        .panel-heading
+          .panel-tools
+            =link_to "#", class: "showhide" do
+              %i{ class: "glyphicon glyphicon-chevron-up" }
+          Participants 
+        .panel-body
+          %table.table
+            %thead
+              %th Full name
+              %th.text-right Status
+              %th.text-right Payment
+            %tbody
+              - @event.participants.each do |participant|
+                - payment = participant.payments.for_budget(@event.budget).first
+                %tr{id: dom_id(payment, :row)}
+                  %td= participant.full_name
+                  %td.text-right
+                    - unless payment.paid?
+                      =link_to '', pay_for_event_admin_event_path(payment), method: :patch, toggle: "tootip", title: "Pay for event", remote: true, class: "glyphicon glyphicon-circle-arrow-down"
+                    - else
+                      %i.glyphicon.glyphicon-ok
+                  %td.text-right.amount= number_to_currency(payment.amount, unit: "₴",format: "%n %u")

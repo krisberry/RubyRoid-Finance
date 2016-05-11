@@ -44,14 +44,28 @@ gem 'aws-sdk'
 gem 'sidekiq'
 gem 'pg'
 gem "figaro", "~> 0.7.0"
+gem 'premailer-rails'
+gem 'nokogiri'
+gem "watu_table_builder", :require => "table_builder"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 3.0'
   gem 'quiet_assets'
+  gem 'mailcatcher'
 end
+
+group :test do
+  gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+end
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

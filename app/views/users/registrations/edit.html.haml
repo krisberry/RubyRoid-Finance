@@ -27,10 +27,15 @@
           .hr-line-dashed
           = f.input :email, required: true, autofocus: true
           .hr-line-dashed
-          = f.input :money_rate, as: :select, collection: User::USER_RATES, include_blank: false
+          = f.association :rate, label_method: :name, value_method: :id, include_blank: false
           - if devise_mapping.confirmable? && resource.pending_reconfirmation?
             %p
               Currently waiting confirmation for: #{resource.unconfirmed_email}
+          .hr-line-dashed
+          %p Optional
+          = f.input :facebook_url, label: "Link to Facebook account"
+          = f.input :github_url, label: "Link to Github account"
+          = f.input :linkedin_url, label: "Link to Linkedin account"
           .hr-line-dashed
           = f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false
           = f.input :password_confirmation, required: false

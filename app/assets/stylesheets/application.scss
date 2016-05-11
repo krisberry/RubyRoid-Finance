@@ -52,3 +52,89 @@
   padding: 15px 20px;
   font-size: 18px;
 }
+
+.gi-3x {
+  font-size: 3em;
+}
+
+#calendar {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    td, th {
+      padding: 6px;
+      border: 1px solid #ddd;
+    }
+    
+    th {
+      font-size: 10px;
+      background: #f7f8fa;
+      color: #666;
+      text-align: center;
+      width: 14.2857142857143%;
+    }
+
+    td {
+      background: #FFF;
+      color: #777;
+      height: 120px;
+      vertical-align: top;
+      font-size: 16px;
+    }
+  }
+
+  .notmonth {
+    color: #CCC;
+  }
+
+  #month {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+
+    a, a:hover {
+      text-decoration: none;
+      padding: 0 10px;
+      color: #999;
+    }
+  }
+  
+  .today {
+    background-color: #fcf8e3;
+  }
+
+  ul {
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 2px 6px 0;
+      padding: 4px 6px;
+      text-decoration: none;
+      background-color:#62cb31;
+      border-color:#62cb31;
+      position: relative;
+      display: block;
+      border-radius: 3px;
+      a {
+        line-height: 1.3;
+        font-size: .8em;
+        color: #fff;
+        display: block;
+      }
+      i {
+        color: #fff;
+        float: left;
+        padding-right: 5px;
+      }
+    }
+  }      
+}
+
+.modal-header {
+  padding: 20px 30px;
+}

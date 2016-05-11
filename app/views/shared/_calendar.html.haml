@@ -1,0 +1,21 @@
+.col-lg-12
+  .hpanel
+    .panel-body
+      #calendar
+        %h2#month
+          = link_to "<", :month => l(@date.beginning_of_month - 1)
+          = h @date.strftime("%B %Y")
+          = link_to ">", :month => l(@date.end_of_month + 1)
+        = calendar_for @events, :year => @date.year, :month => @date.month do |calendar|
+          = calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
+          = calendar.day(:day_method => :date) do |date, events|
+            = date.day
+            %ul
+              - events.each do |event|
+                %li
+                  %i{ toggle: "tooltip", title: "Paid event", class: ("glyphicon glyphicon-piggy-bank" if event.paid?) }
+                  - if current_user.admin?
+                    = link_to h(event.name), admin_event_path(event, format: :js), remote: true
+                  - else
+                    = link_to h(event.name), event_path(event, format: :js), remote: true
+                  

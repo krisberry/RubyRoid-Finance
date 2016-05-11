@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :sort_column, :sort_direction
 
   def after_sign_in_path_for(resource)
-    resource.admin? ? admin_root_path : root_path 
+    resource.admin? ? admin_root_path : authenticated_root_path 
   end
 
   protected
@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
     def admin_only
       unless current_user.admin?
-        redirect_to root_path, :alert => "Access denied."
+        redirect_to authenticated_root_path, :alert => "Access denied."
       end
     end
 end

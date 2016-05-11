@@ -9,4 +9,5 @@
         = link_to 'Invitations', admin_invitations_path
       %li{ :class => "#{'active' if current_page?(admin_events_path)}" }
         = link_to 'Events', admin_events_path
+      =link_to "New event", new_event_path, class: "btn btn-primary pull-right"
       = render file: '/admin/invitations/new'

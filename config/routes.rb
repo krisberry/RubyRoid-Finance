@@ -1,19 +1,38 @@
 Rails.application.routes.draw do
-  root 'dashboard#index'
   resources :events
-  resources :payments, only: [:index, :update]
+  resources :invitations, only: [:new, :create]
+  get 'payments', to: 'payments#index'
 
   devise_scope :user do
     get 'signout', to: 'users/sessions#destroy'
     get 'users/sign_up/:invited_code', to: 'users/registrations#new', as: :new_registration
+
+    authenticated :user do
+      root 'dashboard#index', as: :authenticated_root
+      get 'calendar', to: 'dashboard#calendar'
+    end
+
+    unauthenticated do
+      root 'users/sessions#new', as: :unauthenticated_root
+    end
   end
 
   namespace :admin do
     root 'dashboard#index'
-    get 'users/index'
-    resources :users
-    resources :invitations
-    resources :events, only: [:index]
+    resources :users do
+      patch 'pay_for_event', on: :member
+    end
+
+    resources :invitations, except: [:update]
+    patch 'invitations/:id', to: 'invitations#resend', as: 'invitation_resend'
+    patch 'invitation/:id', to: 'invitations#approve_user', as: 'approve'
+
+    resources :events do
+      patch 'pay_for_event', on: :member
+    end
+
+    resources :payments, only: [:index]
+    resources :rates, only: [:edit, :update]
   end
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }

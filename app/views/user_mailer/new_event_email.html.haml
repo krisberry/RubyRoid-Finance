@@ -1,5 +1,15 @@
-%h3= "Dear #{@participant.full_name}"
-- if @event.paid?
-  %p= "Celebration is coming. Don't forget to pay the bill #{@participant.money_rate}"
-- else
-  %p We are happy to inform you about new event.
+%table.body-wrap{ bgcolor: "#f7f9fa"}
+  %tbody
+    %tr
+      %td
+      %td.container{ bgcolor: "#FFFFFF"}
+        .content
+          %table
+            %tbody
+              %tr
+                %td
+                  %strong= "Dear #{@participant.full_name}"
+                  - if @event.paid?
+                    %p= "Celebration is coming. Don't forget to pay the bill #{@participant.rate.amount}"
+                  - else
+                    %p We are happy to inform you about new event.

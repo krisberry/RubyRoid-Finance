@@ -11,11 +11,12 @@ class Admin::InvitationsController < ApplicationController
 
   def create
     if Invitation.where(email: invitation_params[:email]).present?
-      flash[:danger] = "Invitation already sent"
+      flash[:danger] = "Invitation has already been sent"
       redirect_to :back
     else
       @invitation = Invitation.new(invitation_params)
       @invitation.invited_code = Devise.friendly_token(length = 30)
+      @invitation.approved = true
       if @invitation.save
         UserMailer.invitation_email(@invitation).deliver_now
       end
@@ -32,7 +33,7 @@ class Admin::InvitationsController < ApplicationController
     redirect_to :back
   end
 
-  def update
+  def resend
     @invitation = Invitation.find(params[:id])
     if @invitation.update(updated_at: Time.now)
       UserMailer.invitation_email(@invitation).deliver
@@ -41,6 +42,15 @@ class Admin::InvitationsController < ApplicationController
       format.html
       format.js { flash[:success] = "Invitation was successfully sent" }
     end
+  end
+
+  def approve_user
+    @invitation = Invitation.find(params[:id])
+    if @invitation.update(approved: true, invited_code: Devise.friendly_token(length = 30))
+      UserMailer.invitation_email(@invitation).deliver
+    end
+    flash[:success] = "Invitation was successfully sent"
+    redirect_to :back
   end
 
   private

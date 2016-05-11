@@ -14,12 +14,18 @@
             %tr
               %th=sort_link "email"
               %th=sort_link "updated_at", "Expired"
+              %th Status
               %th.text-right Actions
           %tbody
             - @invitations.each do |invitation|
               %tr{ class: "#{'expired' if invitation.will_expired? }"}
                 %td= invitation.email
-                %td= invitation.expired.localtime.strftime("%d.%m.%Y at %T")
+                %td= invitation.expired.localtime.strftime("%d.%m.%Y at %T") if invitation.approved?
+                - unless invitation.approved?
+                  %td=link_to '', admin_approve_path(invitation), method: :patch, toggle: "tooltip", title: "Approve user request to registration", class: "glyphicon glyphicon-ban-circle"
+                - else
+                  %td
+                    %i.glyphicon.glyphicon-ok-circle
                 %td.text-right.glyphicon-margin
-                  =link_to '', admin_invitation_path(invitation), method: :patch, remote: true, class: "glyphicon glyphicon-send"
-                  =link_to '', admin_invitation_path(invitation), method: :delete, class: "glyphicon glyphicon-trash"
+                  =link_to '', admin_invitation_resend_path(invitation), method: :patch, remote: true, toggle: "tooltip", title: "Resend invitation", class: "glyphicon glyphicon-send" if invitation.approved?
+                  =link_to '', admin_invitation_path(invitation), method: :delete, toggle: "tooltip", title: "Delete invitation", class: "glyphicon glyphicon-trash"

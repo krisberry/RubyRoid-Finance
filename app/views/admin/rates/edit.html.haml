@@ -1,0 +1,8 @@
+.hpanel.col-lg-4.col-lg-offset-4
+  .panel-body
+    .form.form-group
+      = simple_form_for(@rate, url: admin_rate_path(@rate), html: { method: :put, multipart: true }) do |f|
+        = f.input :name
+        = f.input :amount
+        = f.input :description
+        = f.submit "Save", class: "btn btn-primary"

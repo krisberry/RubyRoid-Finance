@@ -22,6 +22,18 @@ class UserMailer < ApplicationMailer
     mail(to: @participant.email, subject: 'New event')
   end
 
+  def event_notification_email(participant, event)
+    @participant = participant
+    @event = event
+    mail(to: @participant.email, subject: 'Reminding')
+  end
+
+  def shame_list_email(participant, event)
+    @participant = participant
+    @event = event
+    mail(to: @participant.email, subject: 'Shameboard')
+  end
+
   def send_password(user)
     @user = user
     mail(to: @user.email, subject: 'Password')

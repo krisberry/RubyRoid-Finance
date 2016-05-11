@@ -1,0 +1,15 @@
+.hpanel.hgreen
+  .panel-body
+    %h3= @event.name
+    %b Description
+    %p= @event.description
+    %p
+      %b Date
+      %span= @event.date.strftime('%d.%m.%Y')
+    - if @event.celebrators.any?
+      %p
+        %b Celebrators
+        %span= @event.celebrators.map(&:full_name).join(", ")
+    %p
+      %b Members
+      %span= @event.participants.map(&:full_name).join(", ")
