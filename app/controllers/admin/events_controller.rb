@@ -13,7 +13,6 @@ class Admin::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @payment = current_user.payments.for_budget(@event.budget).first
     respond_to do |format|
       format.js
       format.html

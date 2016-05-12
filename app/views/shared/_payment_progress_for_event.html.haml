@@ -13,7 +13,7 @@
       .row
         .col-xs-6
           %small.stats-label Balance
-          %h4= @event.balance_to_paid
+          %h4= @event.balance_to_paid.round(2)
         .col-xs-6
           %small.stats-label % Paid
-          %h4= "#{@event.paid_percent}%"
+          %h4= "#{@event.paid_percent.round(2)}%"

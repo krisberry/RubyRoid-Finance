@@ -9,15 +9,6 @@ class CreateRates < ActiveRecord::Migration
     end
 
     add_reference :users, :rate, index:true, foreign_key: true
-
-    User::USER_RATES.each do |k, v|
-      @rate = Rate.create({name: k, amount:v})
-    end
-    
-    User.find_each do |user|
-      user.update_attributes(rate_id: @rate.id)
-    end
-
     remove_column :users, :money_rate, :decimal
   end
 

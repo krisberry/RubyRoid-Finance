@@ -11,7 +11,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         UserMailer.send_password(@user).deliver_now
         @invitation.destroy
         sign_in_with_facebook
-        redirect_to edit_user_registration_path
       else
         flash[:danger] = 'You can not registrate on this site. Ask admin to invite you, please.'
         redirect_to new_user_session_path

@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauth_providers => [:facebook]
 
-  USER_RATES = { junior: 50, intermediate: 100, senior: 150 }
-
   enum role: { admin: '0', tax_collector: '1', user: '2' }
 
   belongs_to :rate
@@ -30,6 +28,7 @@ class User < ActiveRecord::Base
       user.last_name = auth.info.last_name
       user.birthday = Date.strptime(auth.extra.raw_info.birthday, "%m/%d/%Y") if auth.extra.raw_info.birthday
       user.build_image({photo: open(auth.info.image)})
+      user.rate_id = 1
       user.authorizations.build({provider: auth.provider, uid: auth.uid, token: auth.credentials.token})
       user.save
       user

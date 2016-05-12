@@ -8,6 +8,8 @@
       .panel-body
         - if resource.image
           = image_tag resource.image.photo.url(:thumb), class: "thumbnail"
+        - else
+          = image_tag "thumb/missing_avatar.png", class: "img-circle m-b m-t-md"
         %h4 Cancel my account
         %p
           Unhappy? #{link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}

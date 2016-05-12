@@ -24,7 +24,7 @@
                   - if user.image
                     = image_tag user.image.photo.url(:mini), class: "img-circle m-b m-t-md"
                   - else
-                    = image_tag Image.new.photo.url(:mini), class: "img-circle m-b m-t-md"
+                    = image_tag "mini/missing_avatar.png", class: "img-circle m-b m-t-md"
                 %td= user.full_name
                 %td= user.email
                 %td

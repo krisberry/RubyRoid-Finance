@@ -8,6 +8,8 @@
       .panel-body
         - if @user.image
           = image_tag @user.image.photo.url(:mini), class: "img-circle m-b m-t-md"
+        - else
+          = image_tag "mini/missing_avatar.png", class: "img-circle m-b m-t-md"
         %h3= @user.full_name
         %dl
           - if @user.birthday
@@ -44,7 +46,7 @@
         .panel-footer.right-align
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
-    .col-lg-6.col-lg-offset-3
+    .col-lg-6
       .hpanel
         .panel-heading
           .panel-tools

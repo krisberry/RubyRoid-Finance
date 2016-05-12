@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   before_save :select_all_participants, if: :add_all_users?
   before_save :default_budget, if: :calculate_amount?
-  
+ 
   enum paid_type: { free: "free", paid: "paid" }
   
   belongs_to :creator, class_name: "User", foreign_key: "user_id", inverse_of: :created_events
@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
   scope :shame_notify, -> { where("date < ? AND date > ? AND paid_type = ?", (Time.now + 3.days), Time.now, "paid") }
 
   def select_all_participants
-    self.participants = User.all
+    self.participants = User.all - self.celebrators
   end
 
   def default_budget
@@ -50,4 +50,14 @@ class Event < ActiveRecord::Base
   def paid_percent
     (total_payments_amount/budget.amount)*100
   end
+
+  def paid_participantcs_ids
+    paid_payments.pluck(:user_id).uniq
+  end
+ 
+  def notify_participants ids = nil
+    participants_should_be_notify = ids ? participants.find(ids) : participants
+    participants_should_be_notify.each{ |participant| UserMailer.new_event_email(participant, self).deliver_now }
+  end
+
 end

@@ -8,6 +8,8 @@
       .panel-body
         - if @user.image
           = image_tag @user.image.photo.url(:thumb), class: "thumbnail"
+        - else
+          = image_tag "thumb/missing_avatar.png", class: "img-circle m-b m-t-md"
   .hpanel.col-lg-6.pull-right
     .panel-body
       .form.form-group
