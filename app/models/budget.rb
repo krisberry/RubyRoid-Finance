@@ -1,5 +1,7 @@
 class Budget < ActiveRecord::Base
-  after_save :create_payments, :remove_payments, if: :on_paid_event?
+  after_create :create_payments, if: :on_paid_event?
+  after_update :update_payments, if: :on_paid_event?
+  after_save :remove_payments, if: :on_paid_event?
   
   belongs_to :event, inverse_of: :budget
   has_many :payments, inverse_of: :budget, dependent: :destroy
@@ -11,8 +13,30 @@ class Budget < ActiveRecord::Base
   end
 
   def create_payments 
-    event.participants.each do |participant|
-      self.payments << participant.payments.create(amount: -1 * participant.rate.amount) unless participant.payments.for_budget(event.budget).first
+    if event.calculate_amount?
+      event.participants.each do |participant|
+        self.payments << participant.payments.create(amount: -1 * participant.rate.amount)
+      end
+    else
+      payment = self.amount/event.participants.size
+      event.participants.each do |participant|
+        self.payments << participant.payments.create(amount: -1 * payment)
+      end
+    end
+  end 
+
+  def update_payments
+    if event.calculate_amount?
+      event.participants.each do |participant|
+        participant.payments.unpaid_for_budget(self.id).last.update_attributes(amount: -1 * participant.rate.amount)
+      end
+    else
+      not_paid_participants = event.participants.not_paid
+      unpaid_amount = self.amount - event.total_payments_amount
+      payment = unpaid_amount/event.not_paid_participants.size
+      event.participants.each do |participant|
+        participant.payments.unpaid_for_budget(self.id).last.update_attributes(amount: -1 * payment.round(2))
+      end
     end
   end
 

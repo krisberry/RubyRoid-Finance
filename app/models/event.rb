@@ -51,7 +51,7 @@ class Event < ActiveRecord::Base
     (total_payments_amount/budget.amount)*100
   end
 
-  def paid_participantcs_ids
+  def paid_participants_ids
     paid_payments.pluck(:user_id).uniq
   end
  

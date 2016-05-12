@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :celebrated_events, foreign_key: :celebrator_id, class_name: 'Event', join_table: :celebrators_events
   
   accepts_nested_attributes_for :image
+
+  scope :not_paid, -> { includes(:payments).where('payments.amount < 0').references(:payments) }
+  scope :paid, -> { includes(:payments).where('payments.amount > 0').references(:payments) }
   
   def self.from_omniauth_log_in(auth)
     provider, uid = auth.slice(:provider, :uid)

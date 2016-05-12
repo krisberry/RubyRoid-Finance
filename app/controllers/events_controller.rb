@@ -81,8 +81,9 @@ class EventsController < ApplicationController
     def refine_params_for_event event = nil
       params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
       params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
+      params[:event][:participant_ids] = [] if event_params[:add_all_users] == "1"
       params[:event][:participant_ids] -= params[:event][:celebrator_ids]
-      params[:event][:participant_ids] += event.paid_participantcs_ids.map(&:to_s) if event
+      params[:event][:participant_ids] += event.paid_participants_ids.map(&:to_s) if event
     end
 
   protected    
