@@ -15,9 +15,6 @@ class User < ActiveRecord::Base
   
   accepts_nested_attributes_for :image
 
-  scope :not_paid, -> { includes(:payments).where('payments.amount < 0').references(:payments) }
-  scope :paid, -> { includes(:payments).where('payments.amount > 0').references(:payments) }
-  
   def self.from_omniauth_log_in(auth)
     provider, uid = auth.slice(:provider, :uid)
     includes(:authorizations).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email, provider, uid).references(:authorizations).first

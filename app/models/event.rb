@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   before_save :select_all_participants, if: :add_all_users?
-  before_save :default_budget, if: :calculate_amount?
+  before_create :create_payments, if: :paid?
+  after_update :update_payments, if: :paid?
+  after_save :remove_payments, if: :paid?
  
   enum paid_type: { free: "free", paid: "paid" }
   
@@ -24,27 +26,51 @@ class Event < ActiveRecord::Base
     self.participants = User.all - self.celebrators
   end
 
-  def default_budget
-    (budget || create_budget).tap do |b|
-      b.amount = participants.inject(0) { |sum, p| sum + p.rate.amount } if paid?
-      b.save
+  def create_payments 
+    if calculate_amount?
+      build_budget
+      participants.each do |participant|
+        budget.payments << participant.payments.create(amount: -participant.rate.amount)
+      end
+    else
+      payment = budget.amount/participants.size
+      participants.each do |participant|
+        budget.payments << participant.payments.create(amount: -payment.round(2))
+      end
     end
   end
 
-  def paid_payments
-    payments.includes(budget: [:payments]).references(budget: [:payments]).where('payments.amount > 0')
+  def update_payments
+    if calculate_amount?
+      unpaid_payments.each do |payment|
+        payment.update_attributes(amount: -payment.user.rate.amount) 
+      end
+    else
+      unpaid_amount = budget.amount - total_payments_amount
+      new_amount = unpaid_amount/unpaid_payments.size
+      unpaid_payments.each do |payment|
+        payment.update_attributes(amount: -new_amount.round(2))
+      end
+    end
+    budget.save
   end
 
   def unpaid_payments
-    payments.includes(budget: [:payments]).references(budget: [:payments]).where('payments.amount < 0')
+    payments.unpaid
   end
 
+  def remove_payments
+    payments.each do |payment|
+      payment.destroy unless participant_ids.include?(payment.user_id) || payment.amount > 0
+    end
+  end 
+
   def total_payments_amount
-    paid_payments.inject(0) { |sum, p| sum + p.amount }
+    payments.paid.inject(0) { |sum, p| sum + p.amount }
   end
 
   def balance_to_paid
-    unpaid_payments.inject(0) { |sum, p| sum + p.amount }
+    payments.unpaid.inject(0) { |sum, p| sum + p.amount }
   end
 
   def paid_percent
@@ -52,7 +78,7 @@ class Event < ActiveRecord::Base
   end
 
   def paid_participants_ids
-    paid_payments.pluck(:user_id).uniq
+    payments.paid.pluck(:user_id).uniq
   end
  
   def notify_participants ids = nil

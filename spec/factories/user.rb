@@ -7,6 +7,7 @@ FactoryGirl.define do
     birthday { Faker::Time.between(DateTime.now - 50.years, DateTime.now) }
     phone { Faker::PhoneNumber.cell_phone }
     role "2"
-    money_rate 50
+
+    rate
   end
 end

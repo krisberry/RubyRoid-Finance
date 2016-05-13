@@ -3,7 +3,8 @@ class Invitation < ActiveRecord::Base
   scope :should_delete, -> { where("updated_at < ? AND approved = ?", (Time.now - 2.days), true) }
  
   validates :email, presence: true
-
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  
   def expired
     updated_at + 2.days
   end

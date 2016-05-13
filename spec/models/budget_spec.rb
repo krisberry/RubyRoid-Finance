@@ -1,32 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Budget, type: :model do
-  let(:event) { FactoryGirl.create(:event) }
-  let(:budget) { FactoryGirl.create(:budget, event: event) }
-  
+  let!(:event) { FactoryGirl.create(:paid_event, :with_participants_and_payments, participants_count: 3) }
+  let!(:budget) { event.budget }
+
   describe "#on_paid_event?" do
     it "should return true if event has paid type" do
-      budget.event.paid_type = "paid"
       expect(budget.on_paid_event?).to be true
     end
 
     it "should return false if event has free type" do
+      budget.event.paid_type = "free"
       expect(budget.on_paid_event?).to be false
     end    
   end
 
-  describe "#create_payments" do
+  describe "#default_amount" do
     before do
-      3.times { event.participants << FactoryGirl.create(:user) }
-      budget.create_payments 
+      budget.default_amount
     end
 
-    it "should return 3 payments because event has 3 participants" do
-      expect(budget.payments.count).to eq(3)
+    it "should create budget if budget doesn't exist" do
+      expect(budget.persisted?).to be_truthy
     end
-    
-    it "should return reverse value of amount for each payment" do
-      expect(budget.payments.pluck(:amount)).to all( be < 0)
+
+    it "should create default value of budget as sum of user's payments" do
+      test_amount = budget.payments.inject(0) { |sum, p| sum + p.amount.abs }
+      expect(budget.amount).to eq(test_amount)
     end
   end
+
 end
