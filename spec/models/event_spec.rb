@@ -11,7 +11,7 @@ RSpec.describe Budget, type: :model do
   end
 
   describe "#create_payments" do
-    it "should return reverse value of amount for each payment" do
+    xit "should return reverse value of amount for each payment" do
       expect(paid_event.payments.pluck(:amount)).to all( be < 0 )
     end
 
@@ -47,18 +47,25 @@ RSpec.describe Budget, type: :model do
     end
   end
 
-  # describe "#remove_payments" do
-  #   context 'when payment paid' do 
+  describe "#total_payments_amount" do
+    it "should return sum of paid payments" do
+      test_amount = paid_event.payments.paid.inject(0) { |sum, p| sum + p.amount }
+      expect(paid_event.total_payments_amount).to eq(test_amount)
+    end
+  end
 
-  #     before do
-  #       paid_payment = paid_event.payments.first
-  #       paid_payment.update(amount: paid_payment.amount.abs)
-  #       paid_event.update_payments
-  #     end
+  describe "#balance_to_paid" do
+    it "should return sum of unpaid payments" do
+      test_amount = paid_event.payments.unpaid.inject(0) { |sum, p| sum + p.amount }
+      expect(paid_event.balance_to_paid).to eq(test_amount)
+    end
+  end
 
-  #     it "should delete payment" do
-  #       expect{ paid_event.remove_payments }.to change { paid_event.payments.count }.by(-1)
-  #     end
-  #   end
-  # end  
+  describe "#paid_percent" do
+    it "should return payments progress in percents" do
+      test_progress = (paid_event.total_payments_amount/paid_event.budget.amount)*100
+      expect(paid_event.paid_percent).to eq(test_progress)
+    end
+  end
+
 end

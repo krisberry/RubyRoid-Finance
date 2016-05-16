@@ -20,7 +20,7 @@ class Budget < ActiveRecord::Base
   end
 
   def amount_cannot_be_less_than_total_paid_payments
-    if amount < event.total_payments_amount
+    if amount && (amount < event.total_payments_amount)
       errors.add(:amount, "can't be less than total paid payments amount #{event.total_payments_amount}")
     end
   end

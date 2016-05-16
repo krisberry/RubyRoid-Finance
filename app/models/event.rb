@@ -2,7 +2,6 @@ class Event < ActiveRecord::Base
   before_save :select_all_participants, if: :add_all_users?
   before_create :create_payments, if: :paid?
   after_update :update_payments, if: :paid?
-  after_save :remove_payments, if: :paid?
  
   enum paid_type: { free: "free", paid: "paid" }
   
@@ -58,12 +57,6 @@ class Event < ActiveRecord::Base
   def unpaid_payments
     payments.unpaid
   end
-
-  def remove_payments
-    payments.each do |payment|
-      payment.destroy unless participant_ids.include?(payment.user_id) || payment.amount > 0
-    end
-  end 
 
   def total_payments_amount
     payments.paid.inject(0) { |sum, p| sum + p.amount }

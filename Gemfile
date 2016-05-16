@@ -64,6 +64,9 @@ group :test do
   gem 'faker'
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
+  gem 'capybara'
+  # gem 'capybara-webkit'
+  gem 'selenium-webdriver'
 end
 
 

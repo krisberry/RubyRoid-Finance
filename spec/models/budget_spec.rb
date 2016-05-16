@@ -15,6 +15,17 @@ RSpec.describe Budget, type: :model do
     end    
   end
 
+  describe "#calculate_amount?" do
+    it "should return true if checked calculate amount" do
+      expect(budget.calculate_amount?).to be true
+    end
+
+    it "should return false if unchecked calculate amount" do
+      event.calculate_amount = "0"
+      expect(budget.calculate_amount?).to be false
+    end
+  end
+
   describe "#default_amount" do
     before do
       budget.default_amount
