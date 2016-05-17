@@ -1,5 +1,5 @@
 class Budget < ActiveRecord::Base
-  before_save :default_amount
+  before_save :default_amount, if: :calculate_amount?
   
   belongs_to :event, inverse_of: :budget
   has_many :payments, inverse_of: :budget, dependent: :destroy

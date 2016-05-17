@@ -51,6 +51,14 @@ SimpleForm.setup do |config|
     # b.use :full_error, wrap_with: { tag: :span, class: :error }
   end
 
+  config.wrappers :datepicker, tag: 'div', error_class: 'has-error' do |mdf|
+    mdf.use :html5
+    mdf.wrapper tag: 'div', class: 'input-group' do |b|
+      b.use :input
+    end
+    mdf.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+  end
+
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
 

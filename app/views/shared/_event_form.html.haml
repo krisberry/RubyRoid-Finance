@@ -13,10 +13,10 @@
           .hr-line-dashed
         = f.association :celebrators, label_method: :full_name, value_method: :id, include_blank: false
         .hr-line-dashed
-        .input-group.date.input-datepicker
+        = f.input :date, label: false, wrapper: :datepicker do 
           %span.input-group-addon
             %i.glyphicon.glyphicon-calendar
-          = f.input_field :date, as: :string, required: true, class: "form-control"
+          = f.input_field :date, as: :string, class: 'form-control input-datepicker'
         .hr-line-dashed
         = f.input :add_all_users, label_html: { class: "pull-right"}
         = f.association :participants, label_method: :full_name, value_method: :id, include_blank: false, disabled: @event.add_all_users?

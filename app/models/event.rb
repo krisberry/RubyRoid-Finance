@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   before_save :select_all_participants, if: :add_all_users?
   before_create :create_payments, if: :paid?
-  after_update :update_payments, if: :paid?
+  before_update :update_payments, if: :paid?
  
   enum paid_type: { free: "free", paid: "paid" }
   
@@ -40,6 +40,8 @@ class Event < ActiveRecord::Base
   end
 
   def update_payments
+    create_payments unless budget.try(:persisted?)
+    budget.save
     if calculate_amount?
       unpaid_payments.each do |payment|
         payment.update_attributes(amount: -payment.user.rate.amount) 
@@ -51,7 +53,6 @@ class Event < ActiveRecord::Base
         payment.update_attributes(amount: -new_amount.round(2))
       end
     end
-    budget.save
   end
 
   def unpaid_payments
