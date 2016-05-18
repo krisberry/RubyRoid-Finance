@@ -3,13 +3,12 @@
     .form.form-group
       = simple_form_for @event, method: method do |f|
         = f.input :name, required: true, placeholder: "Name", class: 'form-control'
-        = f.input :description, required: true, placeholder: "Few words about @event"
+        = f.input :description, required: true, placeholder: "Few words about event"
         .hr-line-dashed
         = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
         %div#disabled_for_free
           = f.input :calculate_amount, label_html: { class: "pull-right"}
-          = f.simple_fields_for :budget, @event.budget || @event.build_budget do |ff|
-            = ff.input :amount, required: true, disabled: @event.calculate_amount?
+          = f.input :amount, required: true, disabled: @event.calculate_amount?
           .hr-line-dashed
         = f.association :celebrators, label_method: :full_name, value_method: :id, include_blank: false
         .hr-line-dashed

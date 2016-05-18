@@ -51,7 +51,7 @@ class Admin::EventsController < ApplicationController
 
   def pay_for_event
     @payment = Payment.find(params[:id])
-    @event = @payment.budget.event
+    @event = @payment.event
     respond_to do |format|
       if @payment.pay
         format.js { flash[:success] = 'Successfully paid' }
@@ -64,7 +64,7 @@ class Admin::EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount], participant_ids: [], celebrator_ids: [])
+      params.require(:event).permit(:name, :date, :description, :amount, :paid_type, :add_all_users, :calculate_amount, participant_ids: [], celebrator_ids: [])
     end
 
   protected  

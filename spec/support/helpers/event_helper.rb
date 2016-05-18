@@ -30,8 +30,14 @@ module EventHelper
     shared_event_form_fields(options)
     choose 'paid'
     check 'Calculate amount'
-    select options[:user_full_name], from: 'Participants'
+    check 'Add all users'
   end
+
+  def update_event_from_paid_to_free_with(options = {})
+    shared_event_form_fields(options)
+    choose 'free'
+    check 'Add all users'
+  end  
 
   private
 

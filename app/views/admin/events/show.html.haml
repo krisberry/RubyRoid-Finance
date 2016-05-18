@@ -23,7 +23,7 @@
               %th.text-right Payment
             %tbody
               - @event.participants.each do |participant|
-                - payment = participant.payments.for_budget(@event.budget).first
+                - payment = participant.payments.for_event(@event.id).first
                 %tr{id: dom_id(payment, :row)}
                   %td= participant.full_name
                   %td.text-right

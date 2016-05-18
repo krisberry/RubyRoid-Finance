@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511120053) do
+ActiveRecord::Schema.define(version: 20160518112951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,15 +26,6 @@ ActiveRecord::Schema.define(version: 20160511120053) do
   end
 
   add_index "authorizations", ["user_id"], name: "index_authorizations_on_user_id", using: :btree
-
-  create_table "budgets", force: :cascade do |t|
-    t.decimal  "amount"
-    t.integer  "event_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "budgets", ["event_id"], name: "index_budgets_on_event_id", using: :btree
 
   create_table "celebrators_events", id: false, force: :cascade do |t|
     t.integer "celebrator_id", null: false
@@ -53,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160511120053) do
     t.datetime "updated_at",                        null: false
     t.boolean  "calculate_amount"
     t.boolean  "add_all_users"
+    t.decimal  "amount"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
@@ -85,15 +77,24 @@ ActiveRecord::Schema.define(version: 20160511120053) do
     t.boolean  "approved",     default: false
   end
 
+  create_table "payment_items", force: :cascade do |t|
+    t.decimal "amount"
+    t.integer "payment_id"
+    t.integer "event_id"
+  end
+
+  add_index "payment_items", ["event_id"], name: "index_payment_items_on_event_id", using: :btree
+  add_index "payment_items", ["payment_id"], name: "index_payment_items_on_payment_id", using: :btree
+
   create_table "payments", force: :cascade do |t|
     t.decimal  "amount"
     t.integer  "user_id"
-    t.integer  "budget_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "event_id"
   end
 
-  add_index "payments", ["budget_id"], name: "index_payments_on_budget_id", using: :btree
+  add_index "payments", ["event_id"], name: "index_payments_on_event_id", using: :btree
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "rates", force: :cascade do |t|
@@ -132,5 +133,6 @@ ActiveRecord::Schema.define(version: 20160511120053) do
   add_index "users", ["rate_id"], name: "index_users_on_rate_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "payments", "events"
   add_foreign_key "users", "rates"
 end

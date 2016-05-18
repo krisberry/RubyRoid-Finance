@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Budget, type: :model do
+RSpec.describe Event, type: :model do
   let(:participants_count) { 3 }
   let!(:paid_event) { FactoryGirl.create(:paid_event, :with_participants_and_payments, participants_count: participants_count) }
   
@@ -47,6 +47,17 @@ RSpec.describe Budget, type: :model do
     end
   end
 
+  describe "#default_amount" do
+    before do
+      paid_event.default_amount
+    end
+
+    it "should create default value of event amount as sum of user's payments" do
+      test_amount = paid_event.payments.inject(0) { |sum, p| sum + p.amount.abs }
+      expect(paid_event.amount).to eq(test_amount)
+    end
+  end
+
   describe "#total_payments_amount" do
     it "should return sum of paid payments" do
       test_amount = paid_event.payments.paid.inject(0) { |sum, p| sum + p.amount }
@@ -63,7 +74,7 @@ RSpec.describe Budget, type: :model do
 
   describe "#paid_percent" do
     it "should return payments progress in percents" do
-      test_progress = (paid_event.total_payments_amount/paid_event.budget.amount)*100
+      test_progress = (paid_event.total_payments_amount/paid_event.amount)*100
       expect(paid_event.paid_percent).to eq(test_progress)
     end
   end

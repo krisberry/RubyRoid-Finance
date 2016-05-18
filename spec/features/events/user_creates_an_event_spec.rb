@@ -112,7 +112,7 @@ feature 'User creates an event' do
 
     expect(page.find('.event_name')).to have_content("can't be blank")
     expect(page.find('.event_description')).to have_content("can't be blank")
-    expect(page.find('.event_budget_amount')).to have_content("can't be blank")
+    expect(page.find('.event_amount')).to have_content("can't be blank")
     expect(page.find('.event_date')).to have_content("can't be blank")
     expect(page).to have_css '.alert-danger'
   end

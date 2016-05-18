@@ -11,7 +11,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @payment = current_user.payments.for_budget(@event.budget).first
+    @payment = current_user.payments.for_event(@event.id).first
     respond_to do |format|
       format.js
       format.html
@@ -75,12 +75,12 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:name, :date, :description, :price, :paid_type, :add_all_users, :calculate_amount, budget_attributes: [:amount, :id], participant_ids: [], celebrator_ids: [])
+      params.require(:event).permit(:name, :date, :amount, :description, :paid_type, :add_all_users, :calculate_amount, participant_ids: [], celebrator_ids: [])
     end
 
     def refine_params_for_event event = nil
-      params[:event].delete_if{ |key, value| ["calculate_amount", "budget_attributes"].include?(key)} if event_params[:paid_type] == "free"
-      params[:event].delete(:budget_attributes) if event_params[:calculate_amount] == "1"
+      # params[:event].delete_if{ |key, value| ["calculate_amount", "amount"].include?(key)} if event_params[:paid_type] == "free"
+      params[:event][:amount] = nil if event_params[:calculate_amount] == "1"
       params[:event][:participant_ids] = [] if event_params[:add_all_users] == "1"
       params[:event][:participant_ids] -= params[:event][:celebrator_ids]
       params[:event][:participant_ids] += event.paid_participants_ids.map(&:to_s) if event
