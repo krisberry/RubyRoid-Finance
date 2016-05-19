@@ -53,7 +53,7 @@ class Admin::EventsController < ApplicationController
     @payment = Payment.find(params[:id])
     @event = @payment.event
     respond_to do |format|
-      if @payment.pay
+      if @payment.items.create(amount: @payment.amount)
         format.js { flash[:success] = 'Successfully paid' }
       else
         format.js { flash[:danger] = 'Try again' }

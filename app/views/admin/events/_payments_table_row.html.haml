@@ -1,0 +1,13 @@
+%tr{id: dom_id(payment, :row)}
+  %td= payment.participant.full_name
+  %td.text-right
+    - if payment.balance_to_pay_per_user
+      =link_to '', pay_for_event_admin_event_path(payment), method: :post, toggle: "tootip", title: "Pay for event", remote: true, class: "glyphicon glyphicon-circle-arrow-down"
+    - else
+      %i.glyphicon.glyphicon-ok
+  %td.text-right= number_to_currency(payment.items.sum(:amount), unit: "₴",format: "%n %u")
+  %td.text-right
+    - if payment.balance_to_pay_per_user >= 0
+      = number_to_currency(payment.balance_to_pay_per_user, unit: "₴",format: "%n %u")
+    - else
+      = number_to_currency(payment.overpay, unit: "₴",format: "%n %u")

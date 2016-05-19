@@ -16,19 +16,12 @@
               %i{ class: "glyphicon glyphicon-chevron-up" }
           Participants 
         .panel-body
-          %table.table
+          %table.table#event-show-participants
             %thead
               %th Full name
               %th.text-right Status
-              %th.text-right Payment
+              %th.text-right Paid
+              %th.text-right Balance to pay
             %tbody
-              - @event.participants.each do |participant|
-                - payment = participant.payments.for_event(@event.id).first
-                %tr{id: dom_id(payment, :row)}
-                  %td= participant.full_name
-                  %td.text-right
-                    - unless payment.paid?
-                      =link_to '', pay_for_event_admin_event_path(payment), method: :patch, toggle: "tootip", title: "Pay for event", remote: true, class: "glyphicon glyphicon-circle-arrow-down"
-                    - else
-                      %i.glyphicon.glyphicon-ok
-                  %td.text-right.amount= number_to_currency(payment.amount, unit: "₴",format: "%n %u")
+              - @event.payments.each do |payment|
+                = render 'payments_table_row', payment: payment

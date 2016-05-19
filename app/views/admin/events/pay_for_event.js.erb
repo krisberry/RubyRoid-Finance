@@ -1,4 +1,3 @@
 $('#flash').html("<%=j flash_message %>");
-$('#<%= dom_id(@payment, :row) %>').find("td a").replaceWith("<i class='glyphicon glyphicon-ok'></i>");
-$('#<%= dom_id(@payment, :row) %>').find(".amount").html("<%= number_to_currency(@payment.amount, unit: "₴",format: "%n %u") %>");
+$("#<%= dom_id(@payment, :row) %>").replaceWith("<%=j render 'payments_table_row', payment: @payment %>");
 $("#payments-progress").html("<%=j render 'shared/payment_progress_for_event' %>");

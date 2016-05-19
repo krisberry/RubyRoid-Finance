@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     patch 'invitation/:id', to: 'invitations#approve_user', as: 'approve'
 
     resources :events do
-      patch 'pay_for_event', on: :member
+      post 'pay_for_event', on: :member
     end
 
     resources :payments, only: [:index]

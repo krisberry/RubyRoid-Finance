@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518112951) do
+ActiveRecord::Schema.define(version: 20160519114447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,14 +49,6 @@ ActiveRecord::Schema.define(version: 20160518112951) do
 
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
-  create_table "events_users", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "event_id"
-  end
-
-  add_index "events_users", ["event_id"], name: "index_events_users_on_event_id", using: :btree
-  add_index "events_users", ["user_id"], name: "index_events_users_on_user_id", using: :btree
-
   create_table "images", force: :cascade do |t|
     t.integer  "imageable_id"
     t.string   "imageable_type"
@@ -77,14 +69,14 @@ ActiveRecord::Schema.define(version: 20160518112951) do
     t.boolean  "approved",     default: false
   end
 
-  create_table "payment_items", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
     t.decimal "amount"
     t.integer "payment_id"
     t.integer "event_id"
   end
 
-  add_index "payment_items", ["event_id"], name: "index_payment_items_on_event_id", using: :btree
-  add_index "payment_items", ["payment_id"], name: "index_payment_items_on_payment_id", using: :btree
+  add_index "items", ["event_id"], name: "index_items_on_event_id", using: :btree
+  add_index "items", ["payment_id"], name: "index_items_on_payment_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
     t.decimal  "amount"

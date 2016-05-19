@@ -8,9 +8,10 @@ class User < ActiveRecord::Base
   has_one :image, as: :imageable, dependent: :destroy
   has_many :authorizations
   has_many :created_events, foreign_key: :user_id, class_name: 'Event', inverse_of: :creator, dependent: :destroy
+  
+  has_many :events, through: :payments
   has_many :payments
-  has_many :budgets, through: :payments
-  has_and_belongs_to_many :events
+
   has_and_belongs_to_many :celebrated_events, foreign_key: :celebrator_id, class_name: 'Event', join_table: :celebrators_events
   
   accepts_nested_attributes_for :image
