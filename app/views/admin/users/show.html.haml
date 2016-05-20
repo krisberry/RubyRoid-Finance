@@ -33,7 +33,7 @@
         - if @user.github_url.present?
           =link_to "#{@user.github_url}", class: "btn btn-social-icon btn-github" do
             %span.fa.fa-github
-  - if @user.events.unpaid.any?
+  - if @unpaid_events.present?
     .col-lg-6
       .hpanel
         .panel-heading

@@ -17,10 +17,9 @@
                         %th Bill
                         %th 
                     %tbody
-                      - @event.participants.each do |participant|
-                        - payment = participant.payments.for_budget(@event.budget).first
-                        - unless payment.paid?
+                      - @event.payments.each do |payment|
+                        - if payment.balance_to_pay_per_user
                           %tr
-                            %td= participant.full_name
-                            %td= payment.amount
+                            %td= payment.participant.full_name
+                            %td= payment.balance_to_pay_per_user
                             %td Shame on you!

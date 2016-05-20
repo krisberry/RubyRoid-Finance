@@ -6,8 +6,11 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @unpaid_events = @user.events.unpaid.limit(5)
-    @created_events = @user.created_events.limit(5)
+    @user.events.each do |event|
+      @unpaid_events = []
+      @unpaid_events << event if (event.amount > event.total)
+    end
+      @created_events = @user.created_events.limit(5)
   end
 
   def edit
@@ -34,8 +37,9 @@ class Admin::UsersController < ApplicationController
 
   def pay_for_event
     @payment = Payment.find(params[:id])
+    @event = @payment.event
     respond_to do |format|
-      if @payment.pay
+      if @payment.items.create(amount: @payment.amount - @payment.items.sum(:amount))
         format.js { flash[:success] = 'Successfully paid' }
       else
         format.js { flash[:danger] = 'Try again' }

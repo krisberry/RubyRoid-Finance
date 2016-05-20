@@ -21,7 +21,7 @@
               %th Full name
               %th.text-right Payment
             %tbody
-              - @event.participants.each do |participant|
+              - @event.payments.each do |payment|
                 %tr 
-                  %td= participant.full_name
-                  %td.text-right= number_to_currency(participant.payments.for_event(@event.id).first.amount, unit: "₴",format: "%n %u")
+                  %td= payment.participant.full_name
+                  %td.text-right= number_to_currency(payment.amount, unit: "₴",format: "%n %u")

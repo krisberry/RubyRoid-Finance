@@ -3,7 +3,9 @@ class Admin::EventsController < ApplicationController
 
   def index
     @events = if params[:user_id]
-      User.find(params[:user_id]).events.unpaid.order(order_query)
+      User.find(params[:user_id]).events.each do |event|
+        [] << event if (event.amount > event.total)
+      end
     elsif params[:creator_id]
       User.find(params[:creator_id]).created_events.order(order_query)
     else
@@ -53,7 +55,7 @@ class Admin::EventsController < ApplicationController
     @payment = Payment.find(params[:id])
     @event = @payment.event
     respond_to do |format|
-      if @payment.items.create(amount: @payment.amount)
+      if @payment.items.create(amount: @payment.amount - @payment.items.sum(:amount))
         format.js { flash[:success] = 'Successfully paid' }
       else
         format.js { flash[:danger] = 'Try again' }

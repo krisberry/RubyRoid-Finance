@@ -9,12 +9,12 @@ class InvitationsController < ApplicationController
   def create
     if Invitation.where(email: invitation_params[:email]).present?
       flash[:danger] = "Request has already been sent"
-      redirect_to :back
+      redirect_to unauthenticated_root_path
     else
       @invitation = Invitation.new(invitation_params)
       if @invitation.save
         flash[:success] = "Request was successfully sent"
-        redirect_to :back
+        redirect_to unauthenticated_root_path
       else
         flash[:danger] = "Something went wrong. Try again, please."
         redirect_to :back

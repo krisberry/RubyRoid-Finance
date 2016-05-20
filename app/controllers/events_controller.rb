@@ -11,7 +11,6 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @payment = current_user.payments.for_event(@event.id).first
     respond_to do |format|
       format.js
       format.html
@@ -86,7 +85,7 @@ class EventsController < ApplicationController
       params[:event][:participant_ids] += event.paid_participants_ids.map(&:to_s) if event
     end
 
-  protected    
+  protected
 
     def sortable_columns
       super.push("name", "date", "paid_type")

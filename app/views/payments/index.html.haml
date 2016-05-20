@@ -12,9 +12,15 @@
         %table.table
           %thead
             %th Event
-            %th.text-right Payment
+            %th.text-right Paid
+            %th.text-right Balance to pay
           %tbody
             - @payments.each do |payment|
               %tr
-                %td= payment.budget.event.name
-                %td.text-right= number_to_currency(payment.amount, unit: "₴",format: "%n %u")
+                %td= payment.event.name
+                %td.text-right= number_to_currency(payment.items.sum(:amount), unit: "₴",format: "%n %u")
+                %td.text-right
+                  - if payment.balance_to_pay_per_user >= 0
+                    = number_to_currency(payment.balance_to_pay_per_user, unit: "₴",format: "%n %u")
+                  - else
+                    = number_to_currency(payment.overpay, unit: "₴",format: "%n %u")

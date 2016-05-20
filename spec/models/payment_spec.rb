@@ -3,21 +3,10 @@ require 'rails_helper'
 RSpec.describe Payment, type: :model do
   let(:payment) { FactoryGirl.create(:payment) }
   
-  describe "#pay" do
-    it "should return true if updated attribute is reverse value of amount" do
-      payment.amount *= (-1)
-      expect(payment.pay).to be true
+  describe "#balance_to_pay_per_user" do
+    it "should return balance to pey for each user" do
+      test_balance = payment.amount - payment.items.sum(:amount)
+      expect(payment.balance_to_pay_per_user).to eq(test_balance)
     end
-  end
-
-  describe "#paid?" do
-    it "should return true if user had pay" do
-      expect(payment.paid?).to be true
-    end
-
-    it "should return false if hadn't user " do
-      payment.amount *= (-1)
-      expect(payment.paid?).to be false
-    end
-  end
+  end  
 end

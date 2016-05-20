@@ -14,7 +14,7 @@ Capybara.default_driver = :selenium
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app,
     :browser => :remote,
-    :url => "http://10.131.168.15:4444/wd/hub",
+    :url => "http://10.128.136.66:4444/wd/hub",
     :desired_capabilities => :chrome)
 end
 

@@ -14,12 +14,15 @@ class Event < ActiveRecord::Base
   
   validates :name, :description, :date, presence: true
   validates :amount, presence: true, if: :validate_amount?
-  validate :amount_cannot_be_less_than_total_paid_payments
+  validate :amount_cannot_be_less_than_total_paid_amount
+  validate :event_date_cannot_be_in_the_past
 
-  # scope :unpaid, -> { includes(payments: (:items)).where("events.amount > items.sum(items.amount)") }
   scope :should_notify, -> { where("date < ? AND date > ?", (Time.now + 5.days), Time.now) }
-  scope :with_missing_payment, -> { joins(:payments).where('payments.amount < 0').uniq }
   scope :shame_notify, -> { where("date < ? AND date > ? AND paid_type = ?", (Time.now + 3.days), Time.now, "paid") }
+
+  def total
+    self.items.sum(:amount)
+  end
 
   def not_calculate_amount?
     !calculate_amount?
@@ -70,7 +73,7 @@ class Event < ActiveRecord::Base
   end
 
   def paid_participants_ids
-    payments.paid.pluck(:user_id).uniq
+    items.pluck(:user_id).uniq
   end
  
   def notify_participants ids = nil
@@ -78,10 +81,12 @@ class Event < ActiveRecord::Base
     participants_should_be_notify.each{ |participant| UserMailer.new_event_email(participant, self).deliver_now }
   end
 
-  def amount_cannot_be_less_than_total_paid_payments
-    if amount && (amount < total_paid_amount)
-      errors.add(:amount, "can't be less than total paid payments amount #{total_payments_amount}")
-    end
+  def amount_cannot_be_less_than_total_paid_amount
+    errors.add(:amount, "can't be less than total paid payments amount #{total_payments_amount}") if amount && (amount < total_paid_amount)
+  end
+
+  def event_date_cannot_be_in_the_past
+    errors.add(:date, "event can't be created in the past") if date < Time.now
   end
 
 end

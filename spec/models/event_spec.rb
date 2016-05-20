@@ -10,25 +10,6 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe "#create_payments" do
-    xit "should return reverse value of amount for each payment" do
-      expect(paid_event.payments.pluck(:amount)).to all( be < 0 )
-    end
-
-    context 'new' do
-
-      subject { paid_event }
-
-      before(:each) do
-        subject.reload
-      end
-
-      it 'has one payment per participant' do
-        expect(subject.payments.count).to eq(participants_count)
-      end
-    end
-  end
-
   describe "#update_payments" do
     let!(:new_rate) { create(:rate) }
 
@@ -58,23 +39,24 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe "#total_payments_amount" do
-    it "should return sum of paid payments" do
-      test_amount = paid_event.payments.paid.inject(0) { |sum, p| sum + p.amount }
-      expect(paid_event.total_payments_amount).to eq(test_amount)
+  describe "#total_paid_amount" do
+    it "should return sum of paid payments items" do
+      test_amount = paid_event.items.inject(0) { |sum, p| sum + p.amount }
+      expect(paid_event.total_paid_amount).to eq(test_amount)
     end
   end
 
-  describe "#balance_to_paid" do
+  describe "#balance_to_pay" do
     it "should return sum of unpaid payments" do
-      test_amount = paid_event.payments.unpaid.inject(0) { |sum, p| sum + p.amount }
-      expect(paid_event.balance_to_paid).to eq(test_amount)
+      total_paid_amount = paid_event.total_paid_amount
+      test_amount = paid_event.amount - total_paid_amount
+      expect(paid_event.balance_to_pay).to eq(test_amount)
     end
   end
 
   describe "#paid_percent" do
     it "should return payments progress in percents" do
-      test_progress = (paid_event.total_payments_amount/paid_event.amount)*100
+      test_progress = (paid_event.total_paid_amount/paid_event.amount)*100
       expect(paid_event.paid_percent).to eq(test_progress)
     end
   end
