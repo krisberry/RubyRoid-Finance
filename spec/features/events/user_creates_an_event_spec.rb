@@ -4,7 +4,7 @@ feature 'User creates an event' do
   let(:name) { Faker::Name.title }
   let(:description) { Faker::Lorem.paragraph }
   let(:user) { FactoryGirl.create(:user) }
-  let(:day) { 15 }
+  let(:day) { 31 }
   let(:amount) { Faker::Number.decimal(4).to_f }
   
   background do

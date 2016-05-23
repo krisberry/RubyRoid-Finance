@@ -14,11 +14,13 @@ _custom_func = ->
   check_payment = ->
     if $('#event_paid_type_free').prop("checked")
       $('div#disabled_for_free').hide()
+    if $('#event_paid_type_custom').prop("checked")
+      $('div#disabled_for_free').hide()
     if $('#event_paid_type_paid').prop("checked")
       $('div#disabled_for_free').show()
 
   check_payment()
-  $('#event_paid_type_free, #event_paid_type_paid').change ()->
+  $('#event_paid_type_free, #event_paid_type_paid, #event_paid_type_custom').change ()->
     check_payment()
     
 $(document).on "ready", _custom_func

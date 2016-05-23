@@ -2,8 +2,9 @@ class Event < ActiveRecord::Base
   before_save :select_all_participants, if: :add_all_users?
   before_save :update_payments, if: :paid?
   before_save :remove_payments, if: :paid?
- 
-  enum paid_type: { free: "free", paid: "paid" }
+  before_create :create_null_amounts, if: :custom?
+
+  enum paid_type: { free: "free", paid: "paid", custom: "custom" }
   
   belongs_to :creator, class_name: "User", foreign_key: "user_id", inverse_of: :created_events
   has_many :participants, through: :payments
@@ -19,6 +20,11 @@ class Event < ActiveRecord::Base
 
   scope :should_notify, -> { where("date < ? AND date > ?", (Time.now + 5.days), Time.now) }
   scope :shame_notify, -> { where("date < ? AND date > ? AND paid_type = ?", (Time.now + 3.days), Time.now, "paid") }
+
+  def create_null_amounts
+    self.amount = 0
+    self.payments.any? ? payments.update_all(amount: 0) : payments.create(amount: 0)
+  end
 
   def total
     self.items.sum(:amount)
@@ -86,7 +92,7 @@ class Event < ActiveRecord::Base
   end
 
   def event_date_cannot_be_in_the_past
-    errors.add(:date, "event can't be created in the past") if date < Time.now
+    errors.add(:date, "event can't be created in the past") if (date && date < Time.now)
   end
 
 end

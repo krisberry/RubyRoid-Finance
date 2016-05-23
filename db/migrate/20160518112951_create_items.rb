@@ -4,6 +4,8 @@ class CreateItems < ActiveRecord::Migration
       t.decimal :amount
       t.belongs_to :payment, index: true
       t.belongs_to :event, index: true
+
+      t.timestamps null: false
     end
   end
 end

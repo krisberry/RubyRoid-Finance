@@ -2,7 +2,7 @@
   %td= payment.participant.full_name
   %td.text-right
     - unless payment.balance_to_pay_per_user == 0 || payment.overpay
-      =link_to '', pay_for_event_admin_event_path(payment), method: :post, toggle: "tootip", title: "Pay for event", remote: true, class: "glyphicon glyphicon-circle-arrow-down"
+      =link_to '', new_admin_item_path(event_id: @event.id, payment_id: payment.id), toggle: "tootip", title: "Pay for event", remote: true, class: "glyphicon glyphicon-circle-arrow-down"
     - else
       %i.glyphicon.glyphicon-ok
   %td.text-right= number_to_currency(payment.items.sum(:amount), unit: "₴",format: "%n %u")

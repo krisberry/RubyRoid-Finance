@@ -27,12 +27,11 @@ Rails.application.routes.draw do
     patch 'invitations/:id', to: 'invitations#resend', as: 'invitation_resend'
     patch 'invitation/:id', to: 'invitations#approve_user', as: 'approve'
 
-    resources :events do
-      post 'pay_for_event', on: :member
-    end
+    resources :events
 
     resources :payments, only: [:index]
     resources :rates, only: [:edit, :update]
+    resources :items, only: [:new, :create]
   end
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks", sessions: "users/sessions", registrations: "users/registrations", passwords: "users/passwords" }

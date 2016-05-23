@@ -25,3 +25,31 @@
             %tbody
               - @event.payments.each do |payment|
                 = render 'payments_table_row', payment: payment
+  - if @event.custom?
+    .row
+      .col-lg-6
+        = render 'shared/event_amount'
+    .row
+      .col-lg-6
+        = render 'shared/event_payments_history' if @event.items.any?
+      .col-lg-6
+        .hpanel
+          .panel-heading
+            .panel-tools
+              =link_to "#", class: "showhide" do
+                %i{ class: "glyphicon glyphicon-chevron-up" }
+            Participants 
+          .panel-body
+            %table.table#event-show-participants
+              %thead
+                %th Full name
+                %th.text-right Status
+                %th.text-right Paid
+              %tbody
+                - @event.payments.each do |payment|
+                  %tbody
+                    %tr
+                      %td= payment.participant.full_name
+                      %td.text-right
+                        =link_to '', new_admin_item_path(event_id: @event.id, payment_id: payment.id), toggle: "tootip", title: "Pay for event", remote: true, class: "glyphicon glyphicon-circle-arrow-down"
+                      %td.text-right= number_to_currency(payment.items.sum(:amount), unit: "₴",format: "%n %u")

@@ -70,9 +70,11 @@ ActiveRecord::Schema.define(version: 20160519114447) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.decimal "amount"
-    t.integer "payment_id"
-    t.integer "event_id"
+    t.decimal  "amount"
+    t.integer  "payment_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "items", ["event_id"], name: "index_items_on_event_id", using: :btree

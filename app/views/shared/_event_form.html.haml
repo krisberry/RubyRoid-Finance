@@ -5,7 +5,7 @@
         = f.input :name, required: true, placeholder: "Name", class: 'form-control'
         = f.input :description, required: true, placeholder: "Few words about event"
         .hr-line-dashed
-        = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
+        = f.input :paid_type, as: :radio_buttons, collection: ['free', 'paid', 'custom'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
         %div#disabled_for_free
           = f.input :calculate_amount, label_html: { class: "pull-right"}
           = f.input :amount, required: true, disabled: @event.calculate_amount?

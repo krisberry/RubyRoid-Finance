@@ -1,0 +1,20 @@
+.hpanel
+  .panel-heading
+    .panel-tools
+      =link_to "#", class: "showhide" do
+        %i{ class: "glyphicon glyphicon-chevron-up" }
+    Payments history
+  .panel-body
+    %table.table#event-show-participants
+      %thead
+        %th Full name
+        %th Date
+        %th.text-right Paid
+      %tbody
+        - @items.each do |item|
+          %tbody
+            %tr
+              %td= item.payment.participant.full_name
+              %td= item.created_at.strftime("%d.%m.%Y at %T")
+              %td.text-right= number_to_currency(item.amount, unit: "₴", format: "%n %u")
+    = will_paginate @items

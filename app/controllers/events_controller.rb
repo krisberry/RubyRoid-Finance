@@ -11,6 +11,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @items = @event.items.paginate(per_page: 10, page: params[:page])
     respond_to do |format|
       format.js
       format.html
