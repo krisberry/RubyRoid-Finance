@@ -5,3 +5,7 @@
     %h3.font-extra-bold.no-margins.text-success
       All Income
     %small This event has no fixed amount. You can pay as much as you wish.
+  .panel-footer
+    =link_to 'Take off', new_admin_item_path(@event, event_id: @event.id), remote: true, class: "btn btn-success"
+    %span
+      %h4.pull-right= number_to_currency(@event.credit_items.sum(:amount), unit: "₴", format: "-%n %u")

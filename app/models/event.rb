@@ -10,16 +10,22 @@ class Event < ActiveRecord::Base
   has_many :participants, through: :payments
   has_many :payments, dependent: :destroy
   has_many :items, through: :payments
+  has_many :credit_items, class_name: "Item"
 
   has_and_belongs_to_many :celebrators, association_foreign_key: :celebrator_id, class_name: "User", join_table: :celebrators_events
   
-  validates :name, :description, :date, presence: true
+  validates :name, :description, presence: true
+  validates :date, presence: true, if: :should_validate_date?
   validates :amount, presence: true, if: :validate_amount?
   validate :amount_cannot_be_less_than_total_paid_amount
   validate :event_date_cannot_be_in_the_past
 
   scope :should_notify, -> { where("date < ? AND date > ?", (Time.now + 5.days), Time.now) }
   scope :shame_notify, -> { where("date < ? AND date > ? AND paid_type = ?", (Time.now + 3.days), Time.now, "paid") }
+
+  def should_validate_date?
+    !self.custom?
+  end
 
   def create_null_amounts
     self.amount = 0

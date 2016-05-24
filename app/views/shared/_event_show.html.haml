@@ -4,8 +4,9 @@
     %b Description
     %p= @event.description
     %p
-      %b Date
-      %span= @event.date.strftime('%d.%m.%Y')
+      -if @event.date.present?
+        %b Date
+        %span= @event.date.strftime('%d.%m.%Y')
     - if @event.celebrators.any?
       %p
         %b Celebrators

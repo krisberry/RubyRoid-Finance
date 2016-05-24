@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 20160519114447) do
 
   create_table "items", force: :cascade do |t|
     t.decimal  "amount"
+    t.integer  "created_by"
+    t.boolean  "credit"
     t.integer  "payment_id"
     t.integer  "event_id"
     t.datetime "created_at", null: false

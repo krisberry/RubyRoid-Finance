@@ -14,7 +14,12 @@
         - @items.each do |item|
           %tbody
             %tr
-              %td= item.payment.participant.full_name
-              %td= item.created_at.strftime("%d.%m.%Y at %T")
-              %td.text-right= number_to_currency(item.amount, unit: "₴", format: "%n %u")
+              - if item.payment.present?
+                %td= item.payment.participant.full_name
+                %td= item.created_at.strftime("%d.%m.%Y at %T")
+                %td.text-right= number_to_currency(item.amount, unit: "₴", format: "%n %u")
+              - else
+                %td= item.created_by.full_name
+                %td= item.created_at.strftime("%d.%m.%Y at %T")
+                %td.text-right= number_to_currency(item.amount, unit: "₴", format: "-%n %u")
     = will_paginate @items

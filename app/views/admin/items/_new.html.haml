@@ -8,7 +8,8 @@
           = simple_form_for :item, url:  admin_items_path(event_id: @event.id, format: :js), method: :post do |f|
             = f.input :amount, required: true, :placeholder => "Amount", label: false, class: 'form-control'
             = f.input :event_id, as: :hidden, input_html: { value: @event.id }
-            = f.input :payment_id, as: :hidden, input_html: { value: @payment.id }
+            - if @payment.present?
+              = f.input :payment_id, as: :hidden, input_html: { value: @payment.id }
             .input-group-btn.text-center
               = f.submit 'Pay', name: false, class: "btn btn-success"
               =link_to "Close", "#", "data-dismiss" => "modal", class: "btn btn-default"
