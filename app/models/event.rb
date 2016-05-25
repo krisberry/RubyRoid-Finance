@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   has_many :participants, through: :payments
   has_many :payments, dependent: :destroy
   has_many :items, through: :payments
-  has_many :credit_items, class_name: "Item"
+  has_many :credit_items, -> { where(credit: true) },  class_name: "Item"
 
   has_and_belongs_to_many :celebrators, association_foreign_key: :celebrator_id, class_name: "User", join_table: :celebrators_events
   

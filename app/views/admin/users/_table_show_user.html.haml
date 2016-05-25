@@ -14,8 +14,10 @@
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         %td.text-right.glyphicon-margin
-          - if payment
-            =link_to '', pay_for_event_admin_user_path(payment), method: :patch, remote: true, toggle: "tootip", title: "Pay for event", class: "glyphicon glyphicon-circle-arrow-down"
+          - if event.custom?
+            =link_to '', new_admin_item_path(event_id: event.id), remote: true, toggle: "tootip", title: "Pay for event", class: "glyphicon glyphicon-circle-arrow-down"
+          - if event.paid?
+            =link_to '', new_admin_item_path(event_id: event.id, payment_id: payment.id), remote: true, toggle: "tootip", title: "Pay for event", class: "glyphicon glyphicon-circle-arrow-down"
           =link_to '', admin_event_path(event), toggle: "tootip", title: "Show event details", class: "glyphicon glyphicon-eye-open"
           =link_to '', edit_admin_event_path(event), toggle: "tootip", title: "Edit event", class: "glyphicon glyphicon-pencil"
           =link_to '', admin_event_path(event), method: :delete, toggle: "tootip", title: "Delete event", class: "glyphicon glyphicon-trash"

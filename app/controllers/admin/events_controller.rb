@@ -15,7 +15,7 @@ class Admin::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @items = @event.items.merge(@event.credit_items).paginate(per_page: 10, page: params[:page])
+    @items = (@event.items + @event.credit_items).paginate(per_page: 10, page: params[:page])
     respond_to do |format|
       format.js
       format.html

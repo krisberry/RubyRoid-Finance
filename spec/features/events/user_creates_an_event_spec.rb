@@ -117,4 +117,37 @@ feature 'User creates an event' do
     expect(page).to have_css '.alert-danger'
   end
 
+  scenario 'they see the correctly created custom event on the page' do
+    visit new_event_path
+
+    submit_custom_event_form_with(name: name, description: description, user_full_name: user.full_name, day: day)
+
+    within 'table' do
+      expect(page).to have_content(name)
+      expect(page).to have_content('custom')
+    end
+
+    expect(page).to have_css '.alert-success'
+
+    click_link name
+
+    within '.hpanel.hgreen' do
+      expect(page).to have_content(name)
+      expect(page).to have_content(description)
+      expect(page).to have_content(user.full_name)
+    end
+    
+    expect(page).to have_css('#event-show-participants')
+
+    within '#income-outcome' do
+      start_amount = 0
+      expect(page).to have_content(start_amount)
+    end
+
+    within '#event-show-participants' do
+      expect(page).to have_content(user.full_name)
+    end
+
+  end
+
 end

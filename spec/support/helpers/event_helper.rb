@@ -37,6 +37,14 @@ module EventHelper
     shared_event_form_fields(options)
     choose 'free'
     check 'Add all users'
+  end
+
+  def submit_custom_event_form_with(options = {})
+    shared_event_form_fields(options)
+    choose 'custom'
+    select options[:user_full_name], from: 'Participants'
+
+    click_button 'Save'
   end  
 
   private
