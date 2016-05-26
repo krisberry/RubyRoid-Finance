@@ -20,6 +20,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @event.date = DateTime.parse(params[:date]).strftime("%d/%m/%Y") if params[:date]
   end
 
   def create
@@ -78,8 +79,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name, :date, :amount, :description, :paid_type, :add_all_users, :calculate_amount, participant_ids: [], celebrator_ids: [])
     end
 
-    def refine_params_for_event event = nil
-      # params[:event].delete_if{ |key, value| ["calculate_amount", "amount"].include?(key)} if event_params[:paid_type] == "free"
+    def refine_params_for_event event = nil      
       params[:event][:amount] = nil if event_params[:calculate_amount] == "1"
       params[:event][:participant_ids] = [] if event_params[:add_all_users] == "1"
       params[:event][:participant_ids] -= params[:event][:celebrator_ids]

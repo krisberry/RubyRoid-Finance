@@ -5,7 +5,8 @@ class DashboardController < ApplicationController
   end
 
   def calendar
-    @events = current_user.events
+    @custom_events = current_user.events.where("date IS NULL")
+    @events = current_user.events.where("date IS NOT NULL")
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
   end
 

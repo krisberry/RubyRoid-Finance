@@ -10,4 +10,15 @@ FactoryGirl.define do
 
     rate
   end
+
+  factory :admin, parent: :user, class: "User" do
+    role "0"
+  end
+
+  factory :user_with_events, parent: :user, class: "User" do
+    after(:build) do |user|
+      user.created_events << FactoryGirl.create(:paid_event)
+      user.events << FactoryGirl.create(:paid_event, :with_participants_and_payments)
+    end
+  end
 end

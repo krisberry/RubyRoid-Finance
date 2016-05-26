@@ -22,5 +22,17 @@ _custom_func = ->
   check_payment()
   $('#event_paid_type_free, #event_paid_type_paid, #event_paid_type_custom').change ()->
     check_payment()
-    
+
+  setTimeout (->
+    $('#flash').remove()
+    return
+  ), 5000
+
+  $("tbody").find('td').each ()->
+    $('.future').mouseenter ()->
+      $(this).find('.new-event-hide-button').toggleClass('hidden show')
+  $('tbody').find('td').each ()->
+    $('.future').mouseleave ()->
+      $(this).find('.new-event-hide-button').toggleClass('show hidden')
+   
 $(document).on "ready", _custom_func

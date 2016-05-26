@@ -6,10 +6,10 @@ class Payment < ActiveRecord::Base
   scope :for_user, ->(user_id) { includes(:participant).where(users: {id: user_id}).references(:participants).first }
 
   def balance_to_pay_per_user
-    self.amount - self.items.sum(:amount)
+    self.amount - self.items.sum(:amount) if self.amount
   end
 
   def overpay
-    "OVERPAY " + "#{balance_to_pay_per_user.abs}" if balance_to_pay_per_user < 0
+    "OVERPAY " + "#{balance_to_pay_per_user.abs}" if balance_to_pay_per_user && balance_to_pay_per_user < 0
   end
 end

@@ -6,7 +6,7 @@ class Item < ActiveRecord::Base
   belongs_to :created_by, class_name: "User", foreign_key: "created_by"
 
   validates :amount, presence: true
-  validate :lach_of_amount
+  validate :lack_of_amount
 
   def should_update_amount?
     event && event.custom?
@@ -17,7 +17,7 @@ class Item < ActiveRecord::Base
     event.update_attribute(:amount, event.items.sum(:amount) - event.credit_items.sum(:amount))
   end
 
-  def lach_of_amount
+  def lack_of_amount
     errors.add(:amount, "can't be greater than event amount") if (amount && amount > event.amount)
   end
 end

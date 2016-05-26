@@ -1,1 +1,7 @@
-$('#modal-flash').html("<%=j flash_message %>");
+<% if @item.errors.any? %>
+  $('#modal-flash').html("<%=j flash_message %>");
+<% else %>
+  $("#<%= dom_id(@event, :modal) %>").modal('hide');
+  location.reload();
+  $('#flash').html("<%=j flash_message %>");
+<% end %>

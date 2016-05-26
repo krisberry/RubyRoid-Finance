@@ -115,8 +115,6 @@
       margin: 2px 6px 0;
       padding: 4px 6px;
       text-decoration: none;
-      background-color:#62cb31;
-      border-color:#62cb31;
       position: relative;
       display: block;
       border-radius: 3px;
@@ -135,6 +133,24 @@
   }      
 }
 
+.free-event {
+  background-color:#62cb31;
+  border-color:#62cb31;
+}
+.paid-event {
+  background-color:#ffb606;
+  border-color:#ffbf25;
+}
+.custom-event {
+  background-color:#3498db;
+  border-color:#3498db;
+}
+
 .modal-header {
   padding: 20px 30px;
+}
+
+.new-event-hide-button {
+  position: absolute;
+  z-index: 1;     
 }

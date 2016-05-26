@@ -9,14 +9,14 @@
     - events.each do |event|
       - if event.paid? && user
         - payment = event.payments.for_user(user.id)
-      %tr{id: (dom_id(payment, :row) if payment)}
+      %tr
         %td= event.name
         %td= event.date.strftime('%d.%m.%Y')
         %td= event.paid_type
         %td.text-right.glyphicon-margin
           - if event.custom?
             =link_to '', new_admin_item_path(event_id: event.id), remote: true, toggle: "tootip", title: "Pay for event", class: "glyphicon glyphicon-circle-arrow-down"
-          - if event.paid?
+          - if event.paid? && payment
             =link_to '', new_admin_item_path(event_id: event.id, payment_id: payment.id), remote: true, toggle: "tootip", title: "Pay for event", class: "glyphicon glyphicon-circle-arrow-down"
           =link_to '', admin_event_path(event), toggle: "tootip", title: "Show event details", class: "glyphicon glyphicon-eye-open"
           =link_to '', edit_admin_event_path(event), toggle: "tootip", title: "Edit event", class: "glyphicon glyphicon-pencil"

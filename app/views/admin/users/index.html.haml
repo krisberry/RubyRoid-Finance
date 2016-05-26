@@ -25,7 +25,7 @@
                     = image_tag user.image.photo.url(:mini), class: "img-circle m-b m-t-md"
                   - else
                     = image_tag "mini/missing_avatar.png", class: "img-circle m-b m-t-md"
-                %td= user.full_name
+                %td=link_to user.full_name, admin_user_path(user)
                 %td= user.email
                 %td
                   = user.birthday.strftime('%d.%m.%Y') if user.birthday

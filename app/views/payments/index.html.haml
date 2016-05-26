@@ -22,7 +22,7 @@
                 %td= payment.event.paid_type
                 %td.text-right= number_to_currency(payment.items.sum(:amount), unit: "₴",format: "%n %u")
                 %td.text-right
-                  - if payment.balance_to_pay_per_user >= 0 && payment.event.paid?
+                  - if payment.event.paid? && payment.balance_to_pay_per_user >= 0
                     = number_to_currency(payment.balance_to_pay_per_user, unit: "₴",format: "%n %u")
                   - else
                     = number_to_currency(payment.overpay, unit: "₴",format: "%n %u")

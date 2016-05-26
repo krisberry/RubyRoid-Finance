@@ -15,7 +15,6 @@ class Admin::ItemsController < ApplicationController
     respond_to do |format|
       if @item.save
         format.js { flash[:success] = 'Successfully paid' }
-        redirect_to admin_event_path(@event)
       else
         format.js { flash[:danger] = @item.errors.full_messages.first }
       end

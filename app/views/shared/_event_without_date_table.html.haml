@@ -1,0 +1,19 @@
+- if  @custom_events.any?
+  .col-lg-2
+    .hpanel
+      .panel-heading
+        .panel-tools
+          =link_to "#", class: "showhide" do
+            %i{ class: "glyphicon glyphicon-chevron-up"}
+        Custom events
+      .panel-body
+        %table.table
+          %tbody
+            - @custom_events.each do |event|
+              %tr
+                %td
+                  - if current_user.admin?
+                    %dt=link_to h(event.name), admin_event_path(event), remote: true, toggle: "tooltip", title: "View event details"
+                  - else
+                    %dt=link_to h(event.name), event_path(event), remote: true, toggle: "tooltip", title: "View event details"
+                  %dd.text-right=number_to_currency(event.amount, unit: "₴", format: "%n %u")

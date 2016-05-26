@@ -22,6 +22,7 @@
           - if @user.phone
             %dt Phone
             %dd= @user.phone
+        - if @user.last_sign_in_at
           %dt Last sign in
           %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
         - if @user.facebook_url.present?
@@ -35,7 +36,7 @@
             %span.fa.fa-github
   - if @unpaid_events.present?
     .col-lg-6
-      .hpanel
+      .hpanel#unpaid-events
         .panel-heading
           .panel-tools
             =link_to "#", class: "showhide" do
@@ -47,7 +48,7 @@
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
     .col-lg-6
-      .hpanel
+      .hpanel#created-events
         .panel-heading
           .panel-tools
             =link_to "#", class: "showhide" do
