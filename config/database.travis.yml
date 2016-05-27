@@ -1,0 +1,6 @@
+test:
+  adapter: postgresql
+  password: root
+  pool: 5
+  timeout: 5000
+  database: rubyroid_finance_test
