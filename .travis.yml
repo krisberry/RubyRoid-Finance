@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.3.0
+services:
+  - postgresql
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - postgresql -e 'create database rubyroid_finance_test;'
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:migrate
+  - bundle exec rake rspec

@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :event, :class => 'Event' do
     name { Faker::Name.title }
     description { Faker::Lorem.paragraph }
-    date { Faker::Time.forward(23, :morning) }
+    date { Time.now + 1.day }
     paid_type "free"
     add_all_users false
     calculate_amount false
@@ -20,6 +20,15 @@ FactoryGirl.define do
       after(:build) do |event, evaluator|
         event.participants << FactoryGirl.create_list(:user, evaluator.participants_count)
       end
+    end
+  end
+
+  factory :custom_event, parent: :event do
+    paid_type "custom"
+    date nil
+
+    after(:build) do |event|
+      event.participants << FactoryGirl.create(:user)
     end
   end
 end

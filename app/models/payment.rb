@@ -4,6 +4,7 @@ class Payment < ActiveRecord::Base
   has_many :items, dependent: :destroy
   
   scope :for_user, ->(user_id) { includes(:participant).where(users: {id: user_id}).references(:participants).first }
+  scope :only_paid, -> { joins(:event).where(events: {paid_type: ["paid","custom"]}) }
 
   def balance_to_pay_per_user
     self.amount - self.items.sum(:amount) if self.amount

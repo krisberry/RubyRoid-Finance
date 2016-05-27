@@ -17,7 +17,7 @@ FactoryGirl.define do
 
   factory :user_with_events, parent: :user, class: "User" do
     after(:build) do |user|
-      user.created_events << FactoryGirl.create(:paid_event)
+      user.created_events << FactoryGirl.create(:custom_event)
       user.events << FactoryGirl.create(:paid_event, :with_participants_and_payments)
     end
   end

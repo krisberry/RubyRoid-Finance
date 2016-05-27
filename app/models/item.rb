@@ -6,7 +6,7 @@ class Item < ActiveRecord::Base
   belongs_to :created_by, class_name: "User", foreign_key: "created_by"
 
   validates :amount, presence: true
-  validate :lack_of_amount
+  validate :lack_of_amount, if: "payment_id.nil?"
 
   def should_update_amount?
     event && event.custom?

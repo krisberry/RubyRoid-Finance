@@ -18,7 +18,7 @@
           %tbody
             - @payments.each do |payment|
               %tr
-                %td= payment.event.name
+                %td=link_to payment.event.name, event_path(payment.event), toggle: "tooltip", title: "View event details"
                 %td= payment.event.paid_type
                 %td.text-right= number_to_currency(payment.items.sum(:amount), unit: "₴",format: "%n %u")
                 %td.text-right

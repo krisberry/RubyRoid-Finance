@@ -11,7 +11,7 @@
         - payment = event.payments.for_user(user.id)
       %tr
         %td= event.name
-        %td= event.date.strftime('%d.%m.%Y')
+        %td= event.date.strftime('%d.%m.%Y') if event.date.present?
         %td= event.paid_type
         %td.text-right.glyphicon-margin
           - if event.custom?

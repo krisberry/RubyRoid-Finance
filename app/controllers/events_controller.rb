@@ -2,11 +2,8 @@ class EventsController < ApplicationController
   before_action :event_params, only: [:create, :update]
 
   def index
-    @events = if params[:user_id].present?
-                current_user.events.order(order_query)
-              else
-                current_user.created_events.order(order_query)
-              end
+    @events = current_user.events.order(order_query)
+    @my_events = current_user.created_events.order(order_query)
   end
 
   def show

@@ -6,11 +6,11 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @unpaid_events = []
     @user.events.each do |event|
-      @unpaid_events = []
       @unpaid_events << event if (event.amount > event.total)
     end
-      @created_events = @user.created_events.limit(5)
+    @created_events = @user.created_events.limit(5)
   end
 
   def edit

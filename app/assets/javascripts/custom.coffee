@@ -29,10 +29,10 @@ _custom_func = ->
   ), 5000
 
   $("tbody").find('td').each ()->
-    $('.future').mouseenter ()->
+    $('.future, .today').mouseenter ()->
       $(this).find('.new-event-hide-button').toggleClass('hidden show')
   $('tbody').find('td').each ()->
-    $('.future').mouseleave ()->
+    $('.future, .today').mouseleave ()->
       $(this).find('.new-event-hide-button').toggleClass('show hidden')
    
 $(document).on "ready", _custom_func
