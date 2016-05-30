@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "user updates an event" do
+feature "user updates an event", js: true do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:event) { FactoryGirl.create(:event, creator: user ) }
   let!(:paid_event) { FactoryGirl.create(:paid_event, creator: user) }

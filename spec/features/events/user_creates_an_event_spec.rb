@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature 'User creates an event' do
+feature 'User creates an event', js: true do
   let(:name) { Faker::Name.title }
   let(:description) { Faker::Lorem.paragraph }
   let(:user) { FactoryGirl.create(:user) }

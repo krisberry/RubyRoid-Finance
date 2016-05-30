@@ -9,13 +9,19 @@ require 'capybara/rspec'
 require 'selenium-webdriver'
 
 Capybara.run_server = true
-Capybara.app_host = "http://192.168.75.128:3000"
 Capybara.default_driver = :selenium
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app,
-    :browser => :remote,
-    :url => "http://10.128.136.66:4444/wd/hub",
-    :desired_capabilities => :chrome)
+Capybara.javascript_driver = :selenium
+if ENV['SPEC_URL']
+  Capybara.app_host = "http://192.168.75.128:3001"
+  Capybara.register_driver :selenium do |app|
+    Capybara::Selenium::Driver.new(app,
+      :browser => :remote,
+      :url => "http://10.128.136.66:4444/wd/hub",
+      :desired_capabilities => :chrome)
+  end
+else
+  Capybara.app_host = "http://localhost:3001"
+  Capybara.server_port = 3001
 end
 
 require 'spec_helper'

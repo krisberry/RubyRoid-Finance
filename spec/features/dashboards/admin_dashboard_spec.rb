@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature 'User creates an event' do
+feature 'User creates an event', js: true do
   let(:admin) { create(:admin) }
 
   background do

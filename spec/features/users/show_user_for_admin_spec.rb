@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature 'Admin go to show user page' do
+feature 'Admin go to show user page', js: true do
   let(:admin) { FactoryGirl.create(:admin) }
     
   background do
