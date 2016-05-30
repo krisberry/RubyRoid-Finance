@@ -26,6 +26,14 @@ module EventHelper
     click_button 'Save'
   end
 
+  def submit_custom_event_form_with(options = {})
+    shared_event_form_fields(options)
+    choose 'custom'
+    select options[:user_full_name], from: 'Participants'
+
+    click_button 'Save'
+  end
+
   def update_event_from_free_to_paid_with(options = {})
     shared_event_form_fields(options)
     choose 'paid'
@@ -39,13 +47,11 @@ module EventHelper
     check 'Add all users'
   end
 
-  def submit_custom_event_form_with(options = {})
+  def update_event_from_paid_to_custom_with(options = {})
     shared_event_form_fields(options)
     choose 'custom'
-    select options[:user_full_name], from: 'Participants'
-
-    click_button 'Save'
-  end  
+    check 'Add all users'
+  end
 
   private
 
