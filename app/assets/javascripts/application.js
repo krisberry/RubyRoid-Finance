@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require best_in_place
 //= require bootstrap-sprockets
 //= require homer/jquery-ui.min
 //= require homer/jquery.slimscroll.min

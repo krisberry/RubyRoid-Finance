@@ -48,6 +48,7 @@ gem 'premailer-rails'
 gem 'nokogiri'
 gem "watu_table_builder", :require => "table_builder"
 gem 'will_paginate'
+gem 'best_in_place'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

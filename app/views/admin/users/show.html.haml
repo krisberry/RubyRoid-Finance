@@ -47,7 +47,7 @@
         .panel-footer.right-align
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
-    .col-lg-6
+    .col-lg-6.col-lg-offset-3
       .hpanel#created-events
         .panel-heading
           .panel-tools

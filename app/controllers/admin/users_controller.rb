@@ -2,13 +2,14 @@ class Admin::UsersController < ApplicationController
   before_filter :admin_only
   def index
     @users = User.order(order_query)
+    @rates = Rate.all
   end
 
   def show
     @user = User.find(params[:id])
     @unpaid_events = []
     @user.events.each do |event|
-      @unpaid_events << event if (event.amount > event.total)
+      @unpaid_events << event if (event.amount && event.amount > event.total)
     end
     @created_events = @user.created_events.limit(5)
   end

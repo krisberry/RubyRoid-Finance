@@ -16,7 +16,7 @@ module ApplicationHelper
           content_tag :span, "&times;".html_safe, aria:{:hidden => "true"}
         end)
         concat msg
-      end      
+      end
     end.join.html_safe
   end
 end

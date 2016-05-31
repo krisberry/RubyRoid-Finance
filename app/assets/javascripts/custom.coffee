@@ -1,3 +1,16 @@
+@ajax_flash_error = (messages) ->
+  $.each messages, (i, val) ->
+    $("#flash")
+      .html(
+        $("<div/>").addClass("alert alert-danger alert-dismissible").attr("role", "alert")
+        .append(
+          $("<button/>").addClass("close").attr(type: "button", 'data-dismiss': "alert", 'aria-label': "Close")
+          .html(
+            $("<span/>").attr("aria-hidden", "true").html("&times;")
+          )
+        ).append(val)
+      )
+
 _custom_func = ->
   $('*[data-toggle="input-datepicker"],.input-datepicker').datepicker({format: "dd/mm/yyyy"})
   $('#event_calculate_amount').click ()->
@@ -34,5 +47,16 @@ _custom_func = ->
   $('tbody').find('td').each ()->
     $('.future, .today').mouseleave ()->
       $(this).find('.new-event-hide-button').toggleClass('show hidden')
-   
+
+  ### Activating Best In Place ###
+
+  jQuery('.best_in_place').best_in_place()
+
+  $('.best_in_place').bind "ajax:error", (e, jqXHR) ->
+    try
+      response = JSON.parse(jqXHR.responseText)
+    catch e
+      response = [jqXHR.responseText]
+    ajax_flash_error(response)
+
 $(document).on "ready", _custom_func

@@ -98,7 +98,7 @@ class Event < ActiveRecord::Base
   end
 
   def event_date_cannot_be_in_the_past
-    errors.add(:date, "event can't be created in the past") if (date && date < Time.now)
+    errors.add(:date, "event can't be created in the past") if (date && date < (Time.now - 1.days).midnight)
   end
 
 end

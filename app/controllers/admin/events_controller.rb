@@ -4,7 +4,7 @@ class Admin::EventsController < ApplicationController
   def index
     @events = if params[:user_id]
       User.find(params[:user_id]).events.each do |event|
-        [] << event if (event.amount > event.total)
+        [] << event if (event.amount && event.amount > event.total)
       end
     elsif params[:creator_id]
       User.find(params[:creator_id]).created_events.order(order_query)

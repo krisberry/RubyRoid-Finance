@@ -1,0 +1,21 @@
+.col-lg-6
+  .hpanel
+    .panel-heading
+      .panel-tools
+        =link_to "#", class: "showhide" do
+          %i{ class: "glyphicon glyphicon-chevron-up"}
+      Rates
+    .panel-body
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Amount
+            %th Description
+        %tbody
+          - @rates.each do |rate|
+            %tr
+              %td= best_in_place [:admin, rate], :name, as: :input, inner_class: "inline-form-control", ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
+              %td= best_in_place [:admin, rate], :amount, as: :input, inner_class: "inline-form-control", :display_with => :number_to_currency, :helper_options => {:unit => "₴", format: "%n %u" }, ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
+              %td= best_in_place [:admin, rate], :description, as: :input, inner_class: "inline-form-control", ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
+          
