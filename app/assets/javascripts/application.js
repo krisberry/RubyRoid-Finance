@@ -21,4 +21,6 @@
 //= require homer/jquery.sparkline
 //= require homer/homer
 //= require custom
+//= require twilio-ip-messaging.min
+//= require home
 //= require_self

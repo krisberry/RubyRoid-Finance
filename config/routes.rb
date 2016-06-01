@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :events
   resources :invitations, only: [:new, :create]
   get 'payments', to: 'payments#index'
+  get 'chat', to: 'home#index'
 
   devise_scope :user do
     get 'signout', to: 'users/sessions#destroy'
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
     unauthenticated do
       root 'users/sessions#new', as: :unauthenticated_root
     end
+
+    post 'tokens' => "tokens#create"
   end
 
   namespace :admin do

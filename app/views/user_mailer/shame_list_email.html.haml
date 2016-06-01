@@ -18,7 +18,7 @@
                         %th 
                     %tbody
                       - @event.payments.each do |payment|
-                        - if payment.balance_to_pay_per_user
+                        - if payment.balance_to_pay_per_user && payment.balance_to_pay_per_user > 0
                           %tr
                             %td= payment.participant.full_name
                             %td= payment.balance_to_pay_per_user

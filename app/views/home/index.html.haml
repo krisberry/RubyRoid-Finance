@@ -1,4 +1,19 @@
 .row
   .col-lg-12
-    - if current_user
-      %h2 Wellcome, #{current_user.first_name} #{current_user.last_name}
+    %h3
+      Welcome #{@user.full_name}
+.row
+  .col-md-12
+    .hpanel
+      .panel-heading.hbuilt
+        Chat room
+      .panel-body.no-padding
+        .row
+          .col-md-9
+            .chat-discussion
+      .panel-footer
+        .input-group
+          %input#chat-input.form-control{:placeholder => "Type your message here...", :type => "text"}
+            %span.input-group-btn
+              %button.btn.btn-success#chat-button
+                Send

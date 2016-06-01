@@ -50,6 +50,10 @@ gem "watu_table_builder", :require => "table_builder"
 gem 'will_paginate'
 gem 'best_in_place'
 
+gem 'twilio-ruby' # for interacting with twilio
+gem 'envyable' # for managing environment variables
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
