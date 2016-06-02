@@ -4,7 +4,8 @@ feature "user updates an event", js: true do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:event) { FactoryGirl.create(:event, creator: user ) }
   let!(:paid_event) { FactoryGirl.create(:paid_event, creator: user) }
-  let(:attributes) { { name: Faker::Name.title, description: Faker::Lorem.paragraph, amount: Faker::Number.decimal(4).to_f, day: 31 } }
+  let(:day) { Date.current.day }
+  let(:attributes) { { name: Faker::Name.title, description: Faker::Lorem.paragraph, amount: Faker::Number.decimal(4).to_f, day: day } }
 
   background do
     login_user(user)

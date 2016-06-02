@@ -1,7 +1,7 @@
 module EventHelper
   def submit_paid_event_form_with(options = {})
-    shared_event_form_fields(options)
     choose 'paid'
+    shared_event_form_fields(options)
     fill_in 'Amount', with: options[:amount]
     select options[:user_full_name], from: 'Participants'
 
@@ -9,16 +9,16 @@ module EventHelper
   end
 
   def submit_free_event_form_with(options = {})
-    shared_event_form_fields(options)
     choose 'free'
+    shared_event_form_fields(options)
     select user.full_name, from: 'Participants'
 
     click_button 'Save'
   end
 
   def submit_paid_event_form_checked_with(options = {})
-    shared_event_form_fields(options)
     choose 'paid'
+    shared_event_form_fields(options)
     fill_in 'Amount', with: options[:amount]
     check 'Calculate amount'
     check 'Add all users'
@@ -27,29 +27,29 @@ module EventHelper
   end
 
   def submit_custom_event_form_with(options = {})
-    shared_event_form_fields(options)
     choose 'custom'
+    shared_event_form_fields(options)
     select options[:user_full_name], from: 'Participants'
 
     click_button 'Save'
   end
 
   def update_event_from_free_to_paid_with(options = {})
-    shared_event_form_fields(options)
     choose 'paid'
+    shared_event_form_fields(options)
     check 'Calculate amount'
     check 'Add all users'
   end
 
   def update_event_from_paid_to_free_with(options = {})
-    shared_event_form_fields(options)
     choose 'free'
+    shared_event_form_fields(options)
     check 'Add all users'
   end
 
   def update_event_from_paid_to_custom_with(options = {})
-    shared_event_form_fields(options)
     choose 'custom'
+    shared_event_form_fields(options)
     check 'Add all users'
   end
 
@@ -60,7 +60,7 @@ module EventHelper
     fill_in 'Description', with: options[:description]
     find('.input-datepicker').click
     within '.datepicker-days' do
-      find('td.day', text: options[:day]).click
+      find('td.day:not(.new):not(.old)', text: options[:day], match: :prefer_exact).click
     end
   end
 

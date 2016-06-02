@@ -40,4 +40,9 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def get_image_url
+    build_image unless image
+    image.photo.url(:mini)
+  end
 end
