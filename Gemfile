@@ -51,7 +51,6 @@ gem 'will_paginate'
 gem 'best_in_place'
 
 gem 'twilio-ruby' # for interacting with twilio
-gem 'envyable' # for managing environment variables
 
 
 group :development, :test do
@@ -60,6 +59,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'quiet_assets'
   gem 'mailcatcher'
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
 end
 
 group :test do
