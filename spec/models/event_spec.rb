@@ -39,13 +39,17 @@ RSpec.describe Event, type: :model do
   end
 
   describe "#not_calculate_amount?" do
-    it "should return true if calculate amount not checked" do
-      paid_event.calculate_amount = false
-      expect(paid_event.not_calculate_amount?).to be true
+    context 'if calculate amount not checked' do
+      it "should return true" do
+        paid_event.calculate_amount = false
+        expect(paid_event.not_calculate_amount?).to be true
+      end
     end
 
-    it "should return false if calculate amount checked" do
-      expect(paid_event.not_calculate_amount?).to be false
+    context 'if calculate amount checked' do
+      it "should return false" do
+        expect(paid_event.not_calculate_amount?).to be false
+      end
     end
   end
 
@@ -70,18 +74,15 @@ RSpec.describe Event, type: :model do
   describe "#update_payments" do
     let!(:new_rate) { create(:rate) }
 
-    context 'on update event' do
+    before do
+      participant = paid_event.participants.first
+      participant.update(rate: new_rate)
+    end
 
-      before do
-        participant = paid_event.participants.first
-        participant.update(rate: new_rate)
-      end
-
-      it "should update payment attributes" do
-        expect { paid_event.update_payments }.to change {
-          paid_event.payments.pluck(:amount)
-        }
-      end
+    it "updates payment attributes" do
+      expect { paid_event.update_payments }.to change {
+        paid_event.payments.pluck(:amount)
+      }
     end
   end
 
@@ -119,11 +120,9 @@ RSpec.describe Event, type: :model do
   end
 
   describe "#paid_participants_ids" do
-
     it "should return uniq vlaue of users id" do
       test_ids = paid_event.items.pluck(:user_id).uniq
       expect(paid_event.paid_participants_ids).to eq(test_ids)
     end
   end
-
 end

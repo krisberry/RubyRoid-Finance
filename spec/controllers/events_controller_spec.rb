@@ -1,11 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe EventsController do
-  let(:admin) { create(:admin) }
-  let(:event) { create(:event) }
+  let(:admin)      { create(:admin) }
+  let(:user)       { create(:user) }
+  let!(:event)      { create(:event) }
+  let(:paid_event) { create(:paid_event) }
 
   before do
     sign_in(admin)
+    @request.env['HTTP_REFERER'] = 'http://localhost'
+  end
+
+  describe '#index' do
+    it 'should get index' do
+      get 'index'
+      expect(response).to render_template("index")
+    end
+
+    it 'assigns @events' do
+      get 'index'
+      expect(Event.all).to eq([event])
+    end
+  end
+
+  describe '#show' do
+    it 'should get show page' do
+      get 'show', { id: event.id }
+      expect(response).to render_template('show')
+    end
+  end
+
+  describe '#new' do
+    it 'should render new form' do
+      get 'new'
+      expect(response).to be_success
+    end
   end
 
   describe '#create' do
@@ -52,6 +81,13 @@ RSpec.describe EventsController do
     end
   end
 
+  describe '#edit' do
+    it 'should render form' do
+      get 'edit', { id: event.id }
+      expect(response).to be_success
+    end
+  end
+
   describe "#update" do
     before do
       patch :update, id: event.id, event: params
@@ -72,6 +108,50 @@ RSpec.describe EventsController do
 
       it 'updates an event' do
         expect(event.name).to eql params[:name]
+        expect(flash[:success]).to eq 'Event was successfully updated'
+      end
+    end
+
+    context 'with invalid params' do
+      let(:params) { { paid_type: "paid",
+                       calculate_amount: '0',
+                       add_all_users: '1',
+                       participant_ids: [],
+                       celebrator_ids: [] } }
+
+      it 'gets flash error message' do
+        expect(flash[:danger]).to eq 'Some errors prohibited this event from being saved'
+      end
+    end
+  end
+
+  describe '#destroy' do
+    context 'if current user admin' do
+      it 'deletes the event' do
+        delete :destroy, id: event.id
+        expect(flash[:success]).to eq 'Event was successfully deleted'
+      end
+    end
+
+    context 'if current user creator' do
+      before do
+        sign_in(paid_event.creator)
+      end
+
+      it 'deletes the event' do
+        delete :destroy, id: paid_event.id
+        expect(flash[:success]).to eq 'Event was successfully deleted'
+      end
+    end
+
+    context 'if current user not a creator or an admin' do
+      before do
+        sign_in(user)
+      end
+
+      it 'gets flash error message' do
+        delete :destroy, id: paid_event.id
+        expect(flash[:danger]).to eq 'Only creator or admin can delete this event.'
       end
     end
   end

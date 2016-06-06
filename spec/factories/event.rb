@@ -11,7 +11,7 @@ FactoryGirl.define do
   factory :paid_event, parent: :event do
     paid_type "paid"
     calculate_amount true
-    association :creator, factory: :admin
+    association :creator, factory: :user
 
     transient do
       participants_count 2
