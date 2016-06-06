@@ -94,7 +94,7 @@ class Event < ActiveRecord::Base
   end
 
   def amount_cannot_be_less_than_total_paid_amount
-    errors.add(:amount, "can't be less than total paid payments amount #{total_payments_amount}") if amount && (amount < total_paid_amount)
+    errors.add(:amount, "can't be less than total paid payments amount #{total_paid_amount}") if amount && (amount < total_paid_amount)
   end
 
   def event_date_cannot_be_in_the_past

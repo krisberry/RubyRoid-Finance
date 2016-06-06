@@ -38,7 +38,6 @@ _custom_func = ->
 
   setTimeout (->
     $('#flash').remove()
-    return
   ), 5000
 
   $("tbody").find('td').each ()->

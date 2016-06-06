@@ -11,6 +11,7 @@ FactoryGirl.define do
   factory :paid_event, parent: :event do
     paid_type "paid"
     calculate_amount true
+    association :creator, factory: :admin
 
     transient do
       participants_count 2
@@ -26,6 +27,7 @@ FactoryGirl.define do
   factory :custom_event, parent: :event do
     paid_type "custom"
     date nil
+    association :creator, factory: :admin
 
     after(:build) do |event|
       event.participants << FactoryGirl.create(:user)

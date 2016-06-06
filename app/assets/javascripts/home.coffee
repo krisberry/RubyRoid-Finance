@@ -46,5 +46,7 @@ $ ->
     if e.keyCode == 13
       chatChannel.sendMessage($input.val())
       $input.val ''
-    return
-  return
+
+  $button.on 'click', (e) ->
+    chatChannel.sendMessage($input.val())
+    $input.val ''    
