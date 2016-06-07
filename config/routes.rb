@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     authenticated :user do
       root 'dashboard#index', as: :authenticated_root
       get 'calendar', to: 'dashboard#calendar'
+      get 'users/autocomplete', to: 'users#autocomplete', as: 'autocomplete_users'
     end
 
     unauthenticated do

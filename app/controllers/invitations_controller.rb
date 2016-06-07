@@ -7,7 +7,7 @@ class InvitationsController < ApplicationController
   end
 
   def create
-    if Invitation.where(email: invitation_params[:email]).present?
+    if Invitation.where(email: invitation_params[:email]).any?
       flash[:danger] = "Request has already been sent"
       redirect_to unauthenticated_root_path
     else

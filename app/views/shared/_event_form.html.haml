@@ -18,6 +18,8 @@
           = f.input_field :date, as: :string, class: 'form-control input-datepicker'
         .hr-line-dashed
         = f.input :add_all_users, label_html: { class: "pull-right"}
-        = f.association :participants, label_method: :full_name, value_method: :id, include_blank: false, disabled: @event.add_all_users?
+        .form-group
+          = text_field_tag nil, nil, data: { autocomplete: autocomplete_users_path(format: :json) }, class: "form-control", id: "event_participant_autocomplete"
+          #participant-field
         = f.button :submit, 'Save', class: "btn-primary"
         =link_to 'Back', :back, class: "btn btn-default pull-right"
