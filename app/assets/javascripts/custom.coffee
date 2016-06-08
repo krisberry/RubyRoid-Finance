@@ -17,10 +17,9 @@ _custom_func = ->
     $('#event_amount').attr("disabled", $(this).prop("checked"))
 
   $('#event_add_all_users').click ()->
-    if $(this).prop("checked")
-      $('#event_participant_ids').attr("disabled", true)
-    else
-      $('#event_participant_ids').attr("disabled", false)
+    $('#event_participant_ids').attr("disabled", $(this).prop("checked"))
+    $('.js-example-basic-multiple').select2("destroy")
+    $('.js-example-basic-multiple').select2(tags: true)
 
   $('[data-toggle="tooltip"]').tooltip()
 
@@ -56,31 +55,9 @@ _custom_func = ->
       response = [jqXHR.responseText]
     ajax_flash_error(response)
 
-  participant_ids = []
-
-  $('#event_participant_autocomplete').autocomplete
-    source: $('#event_participant_autocomplete').data('autocomplete') 
-    select: (event, ui)->
-      ### return if $('#participant-field').find("div[data-value='"+ui.item.value+"']").length > 0 ###
-      unless participant_ids.includes(ui.item.value)
-        $('#participant-field')
-          .prepend(
-            $("<div class='col-lg-6'/>")
-              .html($('<fieldset class="form-control"/>')
-              .html($("<label class='string required'/>").text(ui.item.label))
-              .append($("<input type='hidden' name='event[participant_ids][]'/>").val(ui.item.value))
-              .append($("<span class='close'/>").attr("data-toggle", "kick").html("&times;"))))
-        participant_ids.push(ui.item.value)
-      $(this).val('')
-      false
-
-  jQuery ->
-    $('form'). on 'click', '.remove_fields', (event) ->
-      $(this).prev('input[type=hidden]').val(1)
-      $(this).closest('fieldset').remove()
-      event.preventDrefault
+  $('.js-example-basic-multiple').select2({
+    tags: true
+  })
 
 $(document).on "ready", _custom_func
 
-$(document).on 'click', '*[data-toggle="kick"]', (e) ->
-  $(this).parent().remove()

@@ -76,7 +76,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name, :date, :amount, :description, :paid_type, :add_all_users, :calculate_amount, participant_ids: [], celebrator_ids: [])
     end
 
-    def refine_params_for_event event = nil      
+    def refine_params_for_event event = nil
       params[:event][:amount] = nil if event_params[:calculate_amount] == "1"
       params[:event][:participant_ids] = [] if event_params[:add_all_users] == "1"
       params[:event][:participant_ids] -= params[:event][:celebrator_ids] if params[:event][:participant_ids]

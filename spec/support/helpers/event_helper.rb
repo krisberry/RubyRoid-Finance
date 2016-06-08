@@ -4,7 +4,7 @@ module EventHelper
     shared_event_form_fields(options)
     fill_in 'Amount', with: options[:amount]
     check 'Add all users'
-    
+
     click_button 'Save'
   end
 
