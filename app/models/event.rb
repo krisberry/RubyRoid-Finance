@@ -13,6 +13,8 @@ class Event < ActiveRecord::Base
   has_many :credit_items, -> { where(credit: true) },  class_name: "Item"
 
   has_and_belongs_to_many :celebrators, association_foreign_key: :celebrator_id, class_name: "User", join_table: :celebrators_events
+
+  accepts_nested_attributes_for :participants, allow_destroy: true
   
   validates :name, :description, presence: true
   validates :date, presence: true, if: :should_validate_date?

@@ -20,6 +20,17 @@
         = f.input :add_all_users, label_html: { class: "pull-right"}
         .form-group
           = text_field_tag nil, nil, data: { autocomplete: autocomplete_users_path(format: :json) }, class: "form-control", id: "event_participant_autocomplete"
-          #participant-field
+          %br
+          .row
+            #participant-field
+              - if @event.participants.any?
+                - @event.participants.each do |participant|
+                  = f.simple_fields_for :participant do |ff|
+                    .col-lg-6
+                      %fieldset.form-control
+                        = ff.label :full_name, label: "#{participant.full_name}", required: false
+                        = ff.hidden_field :_destroy, name: 'event[participant_ids][]', value: participant.id
+                        %span.remove_fields.close &times;
+        .hr-line-dashed          
         = f.button :submit, 'Save', class: "btn-primary"
         =link_to 'Back', :back, class: "btn btn-default pull-right"
