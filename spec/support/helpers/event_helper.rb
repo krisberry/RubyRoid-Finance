@@ -3,15 +3,15 @@ module EventHelper
     choose 'paid'
     shared_event_form_fields(options)
     fill_in 'Amount', with: options[:amount]
-    select options[:user_full_name], from: 'Participants'
-
+    check 'Add all users'
+    
     click_button 'Save'
   end
 
   def submit_free_event_form_with(options = {})
     choose 'free'
     shared_event_form_fields(options)
-    select user.full_name, from: 'Participants'
+    check 'Add all users'
 
     click_button 'Save'
   end
@@ -29,7 +29,7 @@ module EventHelper
   def submit_custom_event_form_with(options = {})
     choose 'custom'
     shared_event_form_fields(options)
-    select options[:user_full_name], from: 'Participants'
+    check 'Add all users'
 
     click_button 'Save'
   end
