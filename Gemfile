@@ -51,7 +51,8 @@ gem 'will_paginate'
 gem 'best_in_place'
 
 gem 'twilio-ruby' # for interacting with twilio
-
+gem 'rollbar'
+gem 'oj'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
