@@ -11,9 +11,10 @@
         = f.input :last_name, :placeholder => "Last name"
         = f.simple_fields_for :image do |ff|
           = ff.input :photo, as: :file
-        = f.label :birthday, "Born on"
-        %br/
-        = f.date_select :birthday, {start_year: Date.today.year, end_year: Date.today.year - 50}, {class: 'date-color'}
+        = f.input :birthday, label: "Born on", wrapper: :datepicker do 
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-calendar
+          = f.input_field :birthday, as: :string, class: 'form-control input-datepicker'
         = f.input :phone, :placeholder => "Phone number"
         = f.input :email, required: true, autofocus: true, :placeholder => "Email"
         = f.association :rate, label_method: :name, value_method: :id, include_blank: false

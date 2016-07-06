@@ -16,6 +16,9 @@ class User < ActiveRecord::Base
   
   accepts_nested_attributes_for :image
 
+  validates :email, presence: true
+  validate :user_birthday_can_not_be_in_the_future
+
   def self.from_omniauth_log_in(auth)
     provider, uid = auth.slice(:provider, :uid)
     includes(:authorizations).where("users.email = ? OR (authorizations.provider = ? AND authorizations.uid = ?)", auth.info.email, provider, uid).references(:authorizations).first
@@ -44,5 +47,9 @@ class User < ActiveRecord::Base
   def get_image_url
     build_image unless image
     image.photo.url(:mini)
+  end
+
+  def user_birthday_can_not_be_in_the_future
+    errors.add(:birthday, "user's birthday can't be in the future") if (birthday && birthday > (Time.now).midnight)
   end
 end

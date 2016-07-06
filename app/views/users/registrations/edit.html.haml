@@ -23,7 +23,10 @@
           = f.simple_fields_for :image, resource.image || resource.build_image  do |ff|
             = ff.input :photo, as: :file
           .hr-line-dashed
-          = f.input :birthday, as: :date
+          = f.input :birthday, label: false, wrapper: :datepicker do 
+            %span.input-group-addon
+              %i.glyphicon.glyphicon-calendar
+            = f.input_field :birthday, as: :string, class: 'form-control input-datepicker'
           .hr-line-dashed
           = f.input :phone, :placeholder => "Phone number"
           .hr-line-dashed

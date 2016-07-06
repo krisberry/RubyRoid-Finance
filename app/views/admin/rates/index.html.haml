@@ -1,4 +1,4 @@
-.col-lg-6
+.col-lg-12
   .hpanel
     .panel-heading
       .panel-tools
@@ -15,7 +15,7 @@
         %tbody
           - @rates.each do |rate|
             %tr
-              %td= best_in_place [:admin, rate], :name, as: :input, inner_class: "inline-form-control", ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
-              %td= best_in_place [:admin, rate], :amount, as: :input, inner_class: "inline-form-control", :display_with => :number_to_currency, :helper_options => {:unit => "₴", format: "%n %u" }, ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
-              %td= best_in_place [:admin, rate], :description, as: :input, inner_class: "inline-form-control", ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
+              %td= best_in_place [:admin, rate], :name, as: :input, inner_class: "inline-form-control col-lg-3", ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
+              %td= best_in_place [:admin, rate], :amount, as: :input, inner_class: "inline-form-control col-lg-3", :display_with => :number_to_currency, :helper_options => {:unit => "₴", format: "%n %u" }, ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
+              %td= best_in_place [:admin, rate], :description, as: :input, inner_class: "inline-form-control col-lg-3", ok_button: 'Save', ok_button_class: "btn btn-primary", cancel_button: 'Cancel', cancel_button_class: "btn btn-default"
           
