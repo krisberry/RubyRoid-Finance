@@ -11,14 +11,14 @@
             %i{ class: "glyphicon glyphicon-chevron-up"}
         Users
       .panel-body
-        %table.table
+        %table.table#users_table
           %thead
             %tr
               %th Image
               %th=sort_link ["first_name", "last_name"], "Full name"
               %th=sort_link "email"
               %th=sort_link "birthday"
-              %th=sort_link "rate_id", "name"
+              %th=sort_link "rate_id", "Rate"
               %th=sort_link "role"
               %th.text-right Actions
           %tbody

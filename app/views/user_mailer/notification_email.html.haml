@@ -9,7 +9,7 @@
               %tr
                 %td
                   %strong= "Hi #{@invitation.email}"
-                  %p= "If you don't accept the invitation, it'll be delete after #{@invitation.expired_at - Time.now} hours. Follow the link to register on RubyRoidFinance"
+                  %p= "If you don't accept the invitation, it'll be delete after #{@invitation.expired - Time.now} hours. Follow the link to register on RubyRoidFinance"
                   %table.btn.btn-primary{ cellpadding: "0", cellspacing: "0", border: "0"}
                     %tr
                       %td=link_to "register", new_registration_url(@invitation.invited_code)

@@ -40,6 +40,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def upcoming_birthday?
+    return false unless birthday
+    inteval = (Time.current + 3.weeks).to_date
+    birthday.month == inteval.month && birthday.day == inteval.day
+  end
+
+  def upcoming_birthday
+    DateTime.new(Time.current.year, birthday.month, birthday.day)
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end

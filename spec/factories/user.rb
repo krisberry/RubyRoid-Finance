@@ -9,6 +9,10 @@ FactoryGirl.define do
     role "2"
 
     rate
+
+    trait :with_coming_birthday do
+      birthday { Time.current - 1.years + 3.weeks }
+    end
   end
 
   factory :admin, parent: :user, class: "User" do
