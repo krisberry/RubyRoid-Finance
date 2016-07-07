@@ -40,12 +40,10 @@ _custom_func = ->
     $('#flash').remove()
   ), 5000
 
-  $("tbody").find('td').each ()->
-    $('.future, .today').mouseenter ()->
-      $(this).find('.new-event-hide-button').toggleClass('hidden show')
-  $('tbody').find('td').each ()->
-    $('.future, .today').mouseleave ()->
-      $(this).find('.new-event-hide-button').toggleClass('show hidden')
+  $('#calendar .future, #calendar .today').mouseenter ()->
+    $(this).find('.new-event-hide-button').toggleClass('hidden show')
+  $('#calendar .future, #calendar .today').mouseleave ()->
+    $(this).find('.new-event-hide-button').toggleClass('show hidden')
 
   ### Activating Best In Place ###
 

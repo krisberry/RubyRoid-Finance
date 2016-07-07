@@ -9,7 +9,8 @@
         = calendar_for @events, :year => @date.year, :month => @date.month do |calendar|
           = calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
           = calendar.day(:day_method => :date) do |date, events|
-            .new-event-hide-button.hidden=link_to "+", new_event_path(date: date), toggle: "tooltip", title: 'New event', class: "btn btn-primary"
+            .new-event-hide-button.hidden
+              =link_to "+", new_event_path(date: date), toggle: "tooltip", title: 'New event', class: "btn btn-primary"
             = date.day
             %ul
               - events.each do |event|
