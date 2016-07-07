@@ -30,7 +30,9 @@
           = f.input :email, required: true
           .hr-line-dashed
           = f.association :rate, label_method: :name, value_method: :id, include_blank: false
-          .hr-line-dashed
+          = f.label :role
+          = f.input :role, label: false, as: :radio_buttons, collection: ['admin', 'tax_collector', 'user'], item_wrapper_class: 'radio-inline', label_html: { class: "radio-inline"}
+          .hr-line-dashed          
           = f.button :submit, "Update", class: "btn-primary"
           .pull-right
             =link_to 'Back', :back, class: "btn btn-default"

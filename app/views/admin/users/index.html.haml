@@ -18,6 +18,8 @@
               %th=sort_link ["first_name", "last_name"], "Full name"
               %th=sort_link "email"
               %th=sort_link "birthday"
+              %th=sort_link "rate_id", "name"
+              %th=sort_link "role"
               %th.text-right Actions
           %tbody
             - @users.each do |user|
@@ -31,6 +33,8 @@
                 %td= user.email
                 %td
                   = user.birthday.strftime('%d.%m.%Y') if user.birthday
+                %td= user.rate.name
+                %td= user.role
                 %td.text-right.glyphicon-margin
                   =link_to '', admin_user_path(user), toggle: "tootip", title: "Show user info", class: "glyphicon glyphicon-eye-open"
                   =link_to '', edit_admin_user_path(user), toggle: "tootip", title: "Edit user info", class: "glyphicon glyphicon-pencil"

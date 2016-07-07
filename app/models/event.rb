@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
   validates :name, :description, presence: true
   validates :date, presence: true, if: :should_validate_date?
   validates :amount, presence: true, if: :validate_amount?
-  validate :amount_cannot_be_less_than_total_paid_amount
+  validate :amount_cannot_be_less_than_total_paid_amount, if: :should_validate_date?
   validate :event_date_cannot_be_in_the_past
 
   scope :should_notify, -> { where("date < ? AND date > ?", (Time.now + 5.days), Time.now) }

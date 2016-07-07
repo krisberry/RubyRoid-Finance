@@ -12,19 +12,19 @@
           = image_tag "mini/missing_avatar.png", class: "img-circle m-b m-t-md"
         %h3= @user.full_name
         %dl
-          - if @user.birthday
+          - if @user.birthday.present?
             %dt Born on
             %dd= @user.birthday.strftime('%d.%m.%Y')
           %dt Email
           %dd= @user.email
           %dt Position
           %dd= @user.rate.name
-          - if @user.phone
+          - if @user.phone.present?
             %dt Phone
             %dd= @user.phone
-        - if @user.last_sign_in_at
-          %dt Last sign in
-          %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
+          - if @user.last_sign_in_at
+            %dt Last sign in
+            %dd= @user.last_sign_in_at.strftime("%d.%m.%Y at %T")
         - if @user.facebook_url.present?
           =link_to "#{@user.facebook_url}", class: "btn btn-social-icon btn-facebook" do
             %span.fa.fa-facebook
@@ -47,7 +47,7 @@
         .panel-footer.right-align
           =link_to 'View all unpaid events', admin_events_path(user_id: @user.id), class: "btn"
   - if @user.created_events.any?
-    .col-lg-6.col-lg-offset-3
+    .col-lg-6
       .hpanel#created-events
         .panel-heading
           .panel-tools

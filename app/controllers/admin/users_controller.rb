@@ -51,12 +51,12 @@ class Admin::UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :birthday, :email, :phone, :rate_id, image_attributes: [:photo, :id])
+      params.require(:user).permit(:first_name, :last_name, :birthday, :email, :role, :phone, :rate_id, image_attributes: [:photo, :id])
     end
 
   protected
 
     def sortable_columns
-      super.push("email", "birthday", "first_name", "last_name")
+      super.push("email", "birthday", "first_name", "last_name", "role", "rate_id")
     end 
 end

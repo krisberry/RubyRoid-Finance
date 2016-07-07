@@ -36,7 +36,7 @@ class Admin::InvitationsController < ApplicationController
   def resend
     @invitation = Invitation.find(params[:id])
     if @invitation.update(updated_at: Time.now)
-      UserMailer.invitation_email(@invitation).deliver
+      UserMailer.invitation_email(@invitation).deliver_now
     end
     respond_to do |format|
       format.html
@@ -47,7 +47,7 @@ class Admin::InvitationsController < ApplicationController
   def approve_user
     @invitation = Invitation.find(params[:id])
     if @invitation.update(approved: true, invited_code: Devise.friendly_token(length = 30))
-      UserMailer.invitation_email(@invitation).deliver
+      UserMailer.invitation_email(@invitation).deliver_now
     end
     flash[:success] = "Invitation was successfully sent"
     redirect_to :back
