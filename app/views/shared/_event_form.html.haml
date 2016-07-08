@@ -18,19 +18,7 @@
           = f.input_field :date, as: :string, class: 'form-control input-datepicker'
         .hr-line-dashed
         = f.input :add_all_users, label_html: { class: "pull-right"}
-        .form-group
-          = text_field_tag nil, nil, data: { autocomplete: autocomplete_users_path(format: :json) }, class: "form-control", id: "event_participant_autocomplete"
-          %br
-          .row
-            #participant-field
-              - if @event.participants.any?
-                - @event.participants.each do |participant|
-                  = f.simple_fields_for :participant do |ff|
-                    .col-lg-6
-                      %fieldset.form-control
-                        = ff.label :full_name, label: "#{participant.full_name}", required: false
-                        = ff.hidden_field :_destroy, name: 'event[participant_ids][]', value: participant.id
-                        %span.remove_fields.close &times;
+        = select_tag 'event[participant_ids][]', options_for_select(User.all.collect{ |u| [u.full_name, u.id] }, @event.participants.collect(&:id)), multiple: "multiple", id: :event_participant_ids, class: 'form-control js-example-basic-multiple', disabled: @event.add_all_users?
         .hr-line-dashed          
         = f.button :submit, 'Save', class: "btn-primary"
         =link_to 'Back', :back, class: "btn btn-default pull-right"
